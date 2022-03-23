@@ -1,4 +1,4 @@
 library(testthat)
-library(ratio_scales)
+library(ratioScales)
 
-test_check("ratio_scales")
+test_check("ratioScales")
