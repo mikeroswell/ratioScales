@@ -1,4 +1,7 @@
 url: https://mikeroswell.github.io/ratioScales/
 template:
   bootstrap: 5
+articles:
+- title: Vignettes
+  contents:
 
