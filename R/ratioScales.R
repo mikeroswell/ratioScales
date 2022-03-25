@@ -140,8 +140,8 @@ breaks_divmult <- function(n = 6, ...){
 # rat_breaks takes pre-logged values
 # breaks_divmult takes the log internally
 
-# nice to see numbers like 0.5, 2, 20 (5 might be preferable to 7, but it's not terrible)
-exp(rat_breaks()(seq(0,5,0.2))
+# nice to see numbers like 0.5, 2, 20 (5 might be preferable to 7, but 7's not terrible)
+exp(rat_breaks()(seq(0,5,0.2)))
 # 1e5 seems useless; I want breaks inside my data
 breaks_divmult()(exp(seq(0,5,0.2)))
 
