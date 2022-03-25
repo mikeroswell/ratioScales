@@ -71,7 +71,7 @@ rat_breaks <- function( base = exp(1), n = 5){
         log(c( 1, 1+5*10^-z, 1+2*10^-z, 1+10^-z, 1+5*10^-(z+1)))}
       # not sure it will see these little numbers
     }
-    return(br)
+    return(unique(br))
   }
 }
 
@@ -93,7 +93,7 @@ rat_breaks <- function( base = exp(1), n = 5){
 #' divmultbreaks(c(0.02, 2))
 #' divmultbreaks(c(0.8, 20))
 
-divmultbreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
+divmultBreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
   if (anchor) v <- unique(c(v, 1))
   v <- log(v)
   neg <- min(v)
@@ -107,17 +107,42 @@ divmultbreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
   bigprop <- big/(pos + flip)
   bigticks <- ceiling(n*bigprop)
 
-  main <- grDevices::axisTicks(nint = bigticks, log = TRUE, usr = c(0, big))
+  draft <- grDevices::axisTicks(nint = bigticks, log = TRUE, usr = c(0, big))
+  # New: truncate the breaks beyond 1 after the biggest value in data
+  os <- min(draft[log(draft)>big])
+  main <- draft[draft<=os]
   edge <- pmin(bigticks, 1+sum(main<small))
-  if(edge<nmin)
-    other <- grDevices::axisTicks(nint = nmin, log = TRUE, usr = c(0, small))
-  else
-    other <- main[1:edge]
+  if(edge<nmin){
+    other_d <- grDevices::axisTicks(nint = nmin, log = TRUE, usr = c(0, small))
+    # New: truncate the breaks beyond 1 after biggest data value
+    os2 <- min(other_d[log(other_d)>small])
+    other <- other_d[other_d<=os2]
+  }
+  else{
+    other <- main[1:edge]}
+  # New: don't act weird if big == small
+  if(big == small){other <- main}
 
   breaks <- c(main, 1/other)
   if (flip > pos) breaks <- 1/breaks
   return(sort(unique(breaks)))
 }
 
+breaks_divmult <- function(n = 6, ...){
+  function(x, n=n, ...){
+    breaks <- divmultBreaks(v = range(x), ...)
+    breaks
+  }
+}
+
+# I think I might like how rat_breaks handles things better
+
+# rat_breaks takes pre-logged values
+# breaks_divmult takes the log internally
+
+# nice to see numbers like 0.5, 2, 20 (5 might be preferable to 7, but it's not terrible)
+exp(rat_breaks()(seq(0,5,0.2))
+# 1e5 seems useless; I want breaks inside my data
+breaks_divmult()(exp(seq(0,5,0.2)))
 
 
