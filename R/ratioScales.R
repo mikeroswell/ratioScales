@@ -87,11 +87,11 @@ rat_breaks <- function( base = exp(1), n = 5){
 #' @export
 #'
 #' @examples
-#' divmultbreaks(c(11))
-#' divmultbreaks(c(0.04))
-#' divmultbreaks(c(0.04, 11))
-#' divmultbreaks(c(0.02, 2))
-#' divmultbreaks(c(0.8, 20))
+#' divmultBreaks(c(11))
+#' divmultBreaks(c(0.04))
+#' divmultBreaks(c(0.04, 11))
+#' divmultBreaks(c(0.02, 2))
+#' divmultBreaks(c(0.8, 20))
 
 divmultBreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
   if (anchor) v <- unique(c(v, 1))
@@ -128,6 +128,17 @@ divmultBreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
   return(sort(unique(breaks)))
 }
 
+#' Idiomatic breaking function for ggplot
+#'
+#' @param n Integer, target number of breaks
+#' @param ... Additional arguments passed to divmultBreaks
+#'
+#' @return A function that takes a vector (e.g. range of data) as an argument
+#' and returns values for breaks on a log scale, but with original scale values
+#' @export
+#'
+#' @examples
+#' breaks_divmult()(exp(seq(0,5,0.2)))
 breaks_divmult <- function(n = 6, ...){
   function(x, n=n, ...){
     breaks <- divmultBreaks(v = range(x), ...)
