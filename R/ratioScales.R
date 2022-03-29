@@ -50,31 +50,42 @@ rat_breaks <- function( base = exp(1), n = 5){
   function(x){
     largest_integer = floor(exp(max(abs(x))))
     if(largest_integer >=2){
-      one_side = log(floor(exp(-max(abs(x)): max(abs(x)))))
-      both_sides = unique(c(one_side, -one_side))
-      trun = c(-log(2)
+      one_side = log(floor(seq(exp(seq(-max(abs(x)),  max(abs(x)), log(5^(1/4)))))))
+      both_sides = c(one_side, -one_side)
+      trun = sort(unique(c(-log(2)
                , both_sides[ifelse(min(x)<0, min(x), -1) < both_sides &
                               both_sides < ifelse(max(both_sides) >0
                                                   , 1.1 *max(both_sides), 2)]
-               , log(2))
-      br = trun}
-    if(largest_integer <2){
-      z = 0
-      while(floor(10^z*(exp(max(abs(x)))-1))<2){
-        z = z+1
-
+               , log(2))))
+      thnnd = sort(unique(c(0, trun[seq.int(1, length(trun), length.out = n)])))
+      br = c(thnnd[2:length(thnnd)-1], max(trun[length(trun)], thnnd[length(thnnd)]), min(thnnd[1], trun[1]))
       }
-      if(-sign(max(x))==sign(min(x))){
-        br = log(c( 1, 1+15*10^-z, 1+5*10^-z, 1/ (1+15*10^-z), 1/(1+5*10^-z)))
+    if(largest_integer <2){
+     g<- round(log10(max(abs(x))))
+     z<-ifelse(g ==0, -1, g)
+
+      if(-sign(max(x))==sign(min(x))|max(x)==0){
+        br = log(c( 1, 1+15*10^z, 1+5*10^z, 1/ (1+15*10^z), 1/(1+5*10^z)))
       }
       else{br = sign(max(x)) *
-        log(c( 1, 1+5*10^-z, 1+2*10^-z, 1+10^-z, 1+5*10^-(z+1)))}
+        log(c( 1, 5*10^z, 2*10^z, 10^z, 5*10^(z+1)))}
       # not sure it will see these little numbers
     }
-    return(unique(br))
+    return(sort(unique(br)))
   }
 }
 
+
+exp(rat_breaks()(c(-2,4)))
+exp(rat_breaks()(c(-2,1)))
+exp(rat_breaks()(c(-2,7)))
+exp(rat_breaks()(c(-2,1.2)))
+exp(rat_breaks()(c(-0.4,0)))
+exp(rat_breaks()(c(-1.5,0)))
+exp(rat_breaks()(c(-0.7, -0.3)))
+exp(rat_breaks()(c(-0.1, -0.3)))
+exp(rat_breaks()(c(0.1, 0.3)))
+exp(rat_breaks()(c(-0.1, 0.3)))
 
 #' Compute breaks for ratio scale
 #'
