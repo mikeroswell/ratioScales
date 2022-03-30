@@ -272,7 +272,7 @@ cut_vid %>%
   scale_y_continuous(
     trans = "log"
     , breaks = divmultBreaks()
-    , labels = print_operator()
+    , labels = label_divMult()
    , sec.axis = sec_axis( trans = ~log(.)*100
                           , breaks = scales::breaks_extended()
                           , name = "centinels")) + 
