@@ -52,7 +52,6 @@ limBreaks <- function(v, n=5){
 
 #' Compute breaks for ratio scale
 #'
-#' @param v Numeric vector
 #' @param n Scalar, target number of breaks
 #' @param nmin Scalar, forced minimum number of breaks
 #' @param anchor Logical, include origin (1 on the ratio scale)
@@ -61,24 +60,34 @@ limBreaks <- function(v, n=5){
 #' @export
 #'
 #' @examples
-#' dat <- exp(seq(-2,5,0.2))
-#' v <- log(dat) # data or data range
+#' y <- exp(seq(-2,5, length.out = 10))
+#' v <- log(y) # data or data range
 #' n <- 5
 #'
 #' # axisTicks takes giant steps, returns values way beyond data
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
 #' # divmultBreaks gives ~n breaks evenly within the data
-#' divmultBreaks(v = dat, n = n)
+#' divmultBreaks(n = n)(v = y)
 #'
 #' # if 1 is lower limit, only positive log(breaks)
-#' divmultBreaks(c(1, 11))
+#' divmultBreaks()(c(1, 11))
 #' # ditto, only negative log(breaks) if 1 is upper limit
-#' divmultBreaks(c(0.04, 1))
+#' divmultBreaks()(c(0.04, 1))
 #'
 #' # expanding range on one side of 1 doesn't leave the other side behind
-#' divmultBreaks(c(0.04, 2.2))
-#' divmultBreaks(c(0.04, 220))
-#' divmultBreaks(c(0.04, 2200))
+#' divmultBreaks()(c(0.04, 2.2))
+#' divmultBreaks()(c(0.04, 220))
+#' divmultBreaks()(c(0.04, 2200))
+#'
+#' x <- 1:10
+#' dat <- data.frame(x, y)
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
+#'      ggplot2::geom_point()+
+#'      ggplot2::scale_y_continuous(
+#'      trans = "log"
+#'      , breaks = divmultBreaks()
+#'      , labels = function(x){str2expression(print_operator(log(x)))}
+#'      )
 
 
 divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
@@ -111,18 +120,3 @@ divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
 }
 
 
-# x <- 1:10
-# y <- exp(seq(-2, 3, length.out = 10))
-# dat <- data.frame(x, y)
-#
-dat %>% ggplot2::ggplot(aes(x, y))+
-  ggplot2::geom_point()+
-  ggplot2::scale_y_continuous(
-    trans = "log"
-     , breaks = divmultBreaks()
-     , labels = function(x){str2expression(print_operator(log(x)))}
-  )
-#
-#
-#
-# divmultBreaks()(2)

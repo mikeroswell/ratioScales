@@ -4,11 +4,9 @@
 \alias{divmultBreaks}
 \title{Compute breaks for ratio scale}
 \usage{
-divmultBreaks(v, n = 6, nmin = 3, anchor = TRUE)
+divmultBreaks(n = 6, nmin = 3, anchor = TRUE)
 }
 \arguments{
-\item{v}{Numeric vector}
-
 \item{n}{Scalar, target number of breaks}
 
 \item{nmin}{Scalar, forced minimum number of breaks}
@@ -22,9 +20,32 @@ Vector of values to generate axis breaks
 Compute breaks for ratio scale
 }
 \examples{
-divmultBreaks(c(11))
-divmultBreaks(c(0.04))
-divmultBreaks(c(0.04, 11))
-divmultBreaks(c(0.02, 2))
-divmultBreaks(c(0.8, 20))
+y <- exp(seq(-2,5, length.out = 10))
+v <- log(y) # data or data range
+n <- 5
+
+# axisTicks takes giant steps, returns values way beyond data
+grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
+# divmultBreaks gives ~n breaks evenly within the data
+divmultBreaks(n = n)(v = y)
+
+# if 1 is lower limit, only positive log(breaks)
+divmultBreaks()(c(1, 11))
+# ditto, only negative log(breaks) if 1 is upper limit
+divmultBreaks()(c(0.04, 1))
+
+# expanding range on one side of 1 doesn't leave the other side behind
+divmultBreaks()(c(0.04, 2.2))
+divmultBreaks()(c(0.04, 220))
+divmultBreaks()(c(0.04, 2200))
+
+x <- 1:10
+dat <- data.frame(x, y)
+dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
+     ggplot2::geom_point()+
+     ggplot2::scale_y_continuous(
+     trans = "log"
+     , breaks = divmultBreaks()
+     , labels = function(x){str2expression(print_operator(log(x)))}
+     )
 }
