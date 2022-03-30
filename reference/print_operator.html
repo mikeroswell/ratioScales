@@ -48,27 +48,41 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">print_operator</span><span class="op">(</span><span class="va">x</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">print_operator</span><span class="op">(</span>logscale <span class="op">=</span> <span class="cn">F</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>x</dt>
-<dd><p>Numeric, on a logarithmic scale</p></dd>
+    <dl><dt>logscale</dt>
+<dd><p>Logical, is x already on the log scale?</p></dd>
 <dt>base</dt>
 <dd><p>Scalar, base of the logarithm used</p></dd>
+<dt>x</dt>
+<dd><p>Numeric</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>String to be evaluated with <code>str2expression</code></p>
+    <p>Expression for labeling ggplots based on breaks</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">print_operator</span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "NULL %/% 2.71828182845905" "bold(1)"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "NULL %*% 2.71828182845905" "NULL %*% 7.38905609893065"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "NULL %*% 20.0855369231877"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (logscale) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         x &lt;- x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         x &lt;- log(x, base = base)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     chars &lt;- ifelse(sign(x) == -1, paste("NULL", "%/%", base^abs(x)), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         ifelse(sign(x) == 1, paste("NULL", "%*%", base^abs(x)), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             paste0("bold(", base^x, ")")))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     return(str2expression(chars))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x557e9e59f1c8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x557e9ecc9d18&gt;</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
