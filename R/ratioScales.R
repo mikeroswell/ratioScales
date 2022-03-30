@@ -98,19 +98,20 @@ exp(rat_breaks()(c(-0.1, 0.3)))
 #' @export
 #'
 #' @examples
-#' divmultBreaks(c(11))
-#' divmultBreaks(c(0.04))
-#' divmultBreaks(c(0.04, 11))
-#' divmultBreaks(c(0.02, 2))
-#' divmultBreaks(c(0.8, 20))
+#' divmultbreaks(c(11))
+#' divmultbreaks(c(0.04))
+#' divmultbreaks(c(0.04, 11))
+#' divmultbreaks(c(0.02, 2))
+#' 1/divmultbreaks(c(0.8, 20))
+#' divmultbreaks(c(0.1, 102))
 
-divmultBreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
+divmultbreaks <- function(v, n=6, nmin=3, anchor=TRUE){
   if (anchor) v <- unique(c(v, 1))
   v <- log(v)
   neg <- min(v)
-  if (neg == 0) return(grDevices::axisTicks(nint=n, log=TRUE, usr=range(v)))
+  if (neg==0) return(limBreaks(v, n))
   pos <- max(v)
-  if (pos == 0) return(1/grDevices::axisTicks(nint=n, log=TRUE, usr=-range(v)))
+  if (pos==0) return(1/limBreaks(-v, n))
 
   flip <- -neg
   big <- pmax(pos, flip)
@@ -118,21 +119,12 @@ divmultBreaks <- function(v, n = 6, nmin = 3, anchor=TRUE){
   bigprop <- big/(pos + flip)
   bigticks <- ceiling(n*bigprop)
 
-  draft <- grDevices::axisTicks(nint = bigticks, log = TRUE, usr = c(0, big))
-  # New: truncate the breaks beyond 1 after the biggest value in data
-  os <- min(draft[log(draft)>big])
-  main <- draft[draft<=os]
-  edge <- pmin(bigticks, 1+sum(main<small))
-  if(edge<nmin){
-    other_d <- grDevices::axisTicks(nint = nmin, log = TRUE, usr = c(0, small))
-    # New: truncate the breaks beyond 1 after biggest data value
-    os2 <- min(other_d[log(other_d)>small])
-    other <- other_d[other_d<=os2]
-  }
-  else{
-    other <- main[1:edge]}
-  # New: don't act weird if big == small
-  if(big == small){other <- main}
+  main <- limBreaks(c(0, big), bigticks)
+  cut <- pmin(bigticks, 1+sum(main<small))
+  if(cut<nmin)
+    other <- limBreaks(c(0, small), nmin)
+  else
+    other <- main[1:cut]
 
   breaks <- c(main, 1/other)
   if (flip > pos) breaks <- 1/breaks
@@ -166,5 +158,15 @@ breaks_divmult <- function(n = 6, ...){
 exp(rat_breaks()(seq(0,5,0.2)))
 # 1e5 seems useless; I want breaks inside my data
 breaks_divmult()(exp(seq(0,5,0.2)))
+
+
+limBreaks <- function(v, n=5){
+  b <- axisTicks(nint=n, log=TRUE, usr=range(v))
+  upr <- min(b[log(b)>=max(v)])
+  lwr <- max(b[log(b)<=min(v)])
+  ## print(c(lwr=lwr, upr=upr))
+  return(b[(b>=lwr) & (b<=upr)])
+}
+
 
 
