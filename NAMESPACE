@@ -2,6 +2,6 @@
 
 export("%>%")
 export(divmultBreaks)
+export(label_divMult)
 export(limBreaks)
-export(print_operator)
 importFrom(magrittr,"%>%")

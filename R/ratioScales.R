@@ -2,7 +2,7 @@
 #'
 #'
 #' @param x Numeric
-#' @param logscale Logical, is x already on the log scale?
+#' @param logscale Logical, are breaks already on the log scale?
 #' @param base Scalar, base of the logarithm used
 #'
 #' @concept Visualization
@@ -11,9 +11,9 @@
 #' @export
 #'
 #' @examples
-#' print_operator(((-1:3)))
+#' label_divMult()(c(1:4,2))
 #'
-print_operator <- function(logscale = F, base = exp(1)){
+label_divMult <- function(logscale = F, base = exp(1)){
   function(x){
   if(logscale){x <- x}
   else{x <- log(x, base = base )}
@@ -29,7 +29,7 @@ print_operator <- function(logscale = F, base = exp(1)){
     }
 }
 
-print_operator()(c(1:4,2))
+
 
 #' Truncate log-scaled axis breaks to data range
 #'
@@ -94,7 +94,7 @@ limBreaks <- function(v, n=5){
 #'      ggplot2::scale_y_continuous(
 #'      trans = "log"
 #'      , breaks = divmultBreaks()
-#'      , labels = print_operator()
+#'      , labels = label_divMult()
 #'      )
 
 
