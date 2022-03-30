@@ -67,18 +67,18 @@ limBreaks <- function(v, n=5){
 #'
 #' # axisTicks takes giant steps, returns values way beyond data
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
-#' # divmultbreaks gives ~n breaks evenly within the data
-#' divmultbreaks(v = dat, n = n)
+#' # divmultBreaks gives ~n breaks evenly within the data
+#' divmultBreaks(v = dat, n = n)
 #'
 #' # if 1 is lower limit, only positive log(breaks)
-#' divmultbreaks(c(1, 11))
+#' divmultBreaks(c(1, 11))
 #' # ditto, only negative log(breaks) if 1 is upper limit
-#' divmultbreaks(c(0.04, 1))
+#' divmultBreaks(c(0.04, 1))
 #'
 #' # expanding range on one side of 1 doesn't leave the other side behind
-#' divmultbreaks(c(0.04, 2.2))
-#' divmultbreaks(c(0.04, 220))
-#' divmultbreaks(c(0.04, 2200))
+#' divmultBreaks(c(0.04, 2.2))
+#' divmultBreaks(c(0.04, 220))
+#' divmultBreaks(c(0.04, 2200))
 
 
 divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
