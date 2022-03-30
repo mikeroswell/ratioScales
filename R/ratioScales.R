@@ -23,69 +23,32 @@ print_operator <- function(x, base = exp(1)){
 }
 
 
-#' Compute breaks for ratio scale
+
+#' Truncate log-scaled axis breaks to data range
 #'
-#' Function to compute tick marks evenly spaced on the log scale but with pretty
-#' numbers on the ratio scale (DEPRECATED, USE divmultbreaks)
+#' @param v Numeric vector, data or data range
+#' @param n Integer, target number of breaks
 #'
-#' @param base Scalar, base of the logarithm in use (not implemented)
-#' @param n scalar, target number of breaks (not implemented)
-#'
-#'
-#' @return Function to apply over a vector of values to generate axis breaks
-#' @noRd
+#' @return Vector of numeric values for axis breaks
+#' @export
 #'
 #' @examples
-#' ggplot2::ggplot(data = data.frame(x= 1:6, y = seq(-1, 1.5, 0.5))
-#'        , ggplot2::aes(x, y))+
-#'              ggplot2::geom_point()+
-#'              ggplot2::scale_y_continuous(
-#'              , breaks = rat_breaks()
-#'              ) +
-#'              ggplot2::geom_hline(yintercept = 0, size = 0.2)
-
-
-
-rat_breaks <- function( base = exp(1), n = 5){
-  function(x){
-    largest_integer = floor(exp(max(abs(x))))
-    if(largest_integer >=2){
-      one_side = log(floor(seq(exp(seq(-max(abs(x)),  max(abs(x)), log(5^(1/4)))))))
-      both_sides = c(one_side, -one_side)
-      trun = sort(unique(c(-log(2)
-               , both_sides[ifelse(min(x)<0, min(x), -1) < both_sides &
-                              both_sides < ifelse(max(both_sides) >0
-                                                  , 1.1 *max(both_sides), 2)]
-               , log(2))))
-      thnnd = sort(unique(c(0, trun[seq.int(1, length(trun), length.out = n)])))
-      br = c(thnnd[2:length(thnnd)-1], max(trun[length(trun)], thnnd[length(thnnd)]), min(thnnd[1], trun[1]))
-      }
-    if(largest_integer <2){
-     g<- round(log10(max(abs(x))))
-     z<-ifelse(g ==0, -1, g)
-
-      if(-sign(max(x))==sign(min(x))|max(x)==0){
-        br = log(c( 1, 1+15*10^z, 1+5*10^z, 1/ (1+15*10^z), 1/(1+5*10^z)))
-      }
-      else{br = sign(max(x)) *
-        log(c( 1, 5*10^z, 2*10^z, 10^z, 5*10^(z+1)))}
-      # not sure it will see these little numbers
-    }
-    return(sort(unique(br)))
-  }
+#' dat <- exp(seq(-2,5,0.2))
+#' v <- log(dat) # data or data range
+#' n <- 5
+#' # axisTicks returns values way beyond data
+#' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
+#' # limBreaks reels this in
+#' limBreaks(v = v, n = n)
+limBreaks <- function(v, n=5){
+  b <- grDevices::axisTicks(nint=n, log=TRUE, usr=range(v))
+  # suppressWarnings for max(NULL) etc.
+  upr <- suppressWarnings(min(b[log(b)>=max(v)]))
+  lwr <- suppressWarnings(max(b[log(b)<=min(v)]))
+  ## print(c(lwr=lwr, upr=upr))
+  return(b[(b>=lwr) & (b<=upr)])
 }
 
-
-exp(rat_breaks()(c(-2,4)))
-exp(rat_breaks()(c(-2,1)))
-exp(rat_breaks()(c(-2,7)))
-exp(rat_breaks()(c(-2,1.2)))
-exp(rat_breaks()(c(-0.4,0)))
-exp(rat_breaks()(c(-1.5,0)))
-exp(rat_breaks()(c(-0.7, -0.3)))
-exp(rat_breaks()(c(-0.1, -0.3)))
-exp(rat_breaks()(c(0.1, 0.3)))
-exp(rat_breaks()(c(-0.1, 0.3)))
 
 #' Compute breaks for ratio scale
 #'
@@ -98,75 +61,66 @@ exp(rat_breaks()(c(-0.1, 0.3)))
 #' @export
 #'
 #' @examples
-#' divmultbreaks(c(11))
-#' divmultbreaks(c(0.04))
-#' divmultbreaks(c(0.04, 11))
-#' divmultbreaks(c(0.02, 2))
-#' 1/divmultbreaks(c(0.8, 20))
-#' divmultbreaks(c(0.1, 102))
-
-divmultbreaks <- function(v, n=6, nmin=3, anchor=TRUE){
-  if (anchor) v <- unique(c(v, 1))
-  v <- log(v)
-  neg <- min(v)
-  if (neg==0) return(limBreaks(v, n))
-  pos <- max(v)
-  if (pos==0) return(1/limBreaks(-v, n))
-
-  flip <- -neg
-  big <- pmax(pos, flip)
-  small <- pmin(pos, flip)
-  bigprop <- big/(pos + flip)
-  bigticks <- ceiling(n*bigprop)
-
-  main <- limBreaks(c(0, big), bigticks)
-  cut <- pmin(bigticks, 1+sum(main<small))
-  if(cut<nmin)
-    other <- limBreaks(c(0, small), nmin)
-  else
-    other <- main[1:cut]
-
-  breaks <- c(main, 1/other)
-  if (flip > pos) breaks <- 1/breaks
-  return(sort(unique(breaks)))
-}
-
-#' Idiomatic breaking function for ggplot
+#' dat <- exp(seq(-2,5,0.2))
+#' v <- log(dat) # data or data range
+#' n <- 5
 #'
-#' @param n Integer, target number of breaks
-#' @param ... Additional arguments passed to divmultBreaks
+#' # axisTicks takes giant steps, returns values way beyond data
+#' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
+#' # divmultbreaks gives ~n breaks evenly within the data
+#' divmultbreaks(v = dat, n = n)
 #'
-#' @return A function that takes a vector (e.g. range of data) as an argument
-#' and returns values for breaks on a log scale, but with original scale values
-#' @export
+#' # if 1 is lower limit, only positive log(breaks)
+#' divmultbreaks(c(1, 11))
+#' # ditto, only negative log(breaks) if 1 is upper limit
+#' divmultbreaks(c(0.04, 1))
 #'
-#' @examples
-#' breaks_divmult()(exp(seq(0,5,0.2)))
-breaks_divmult <- function(n = 6, ...){
-  function(x, n=n, ...){
-    breaks <- divmultBreaks(v = range(x), ...)
-    breaks
+#' # expanding range on one side of 1 doesn't leave the other side behind
+#' divmultbreaks(c(0.04, 2.2))
+#' divmultbreaks(c(0.04, 220))
+#' divmultbreaks(c(0.04, 2200))
+
+
+divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
+  function(v){
+    if (anchor) v <- unique(c(v, 1))
+    v <- log(v)
+    neg <- min(v)
+    if (neg==0) return(limBreaks(v, n))
+    pos <- max(v)
+    if (pos==0) return(1/limBreaks(-v, n))
+
+    flip <- -neg
+    big <- pmax(pos, flip)
+    small <- pmin(pos, flip)
+    bigprop <- big/(pos + flip)
+    bigticks <- ceiling(n*bigprop)
+
+    main <- limBreaks(c(0, big), bigticks)
+    cut <- pmin(bigticks, 1+sum(main<small))
+    if(cut<nmin)
+      other <- limBreaks(c(0, small), nmin)
+    else
+      other <- main[1:cut]
+
+    breaks <- c(main, 1/other)
+    if (flip > pos) breaks <- 1/breaks
+    return(sort(unique(breaks)))
   }
 }
 
-# I think I might like how rat_breaks handles things better
 
-# rat_breaks takes pre-logged values
-# breaks_divmult takes the log internally
-
-# nice to see numbers like 0.5, 2, 20 (5 might be preferable to 7, but 7's not terrible)
-exp(rat_breaks()(seq(0,5,0.2)))
-# 1e5 seems useless; I want breaks inside my data
-breaks_divmult()(exp(seq(0,5,0.2)))
-
-
-limBreaks <- function(v, n=5){
-  b <- axisTicks(nint=n, log=TRUE, usr=range(v))
-  upr <- min(b[log(b)>=max(v)])
-  lwr <- max(b[log(b)<=min(v)])
-  ## print(c(lwr=lwr, upr=upr))
-  return(b[(b>=lwr) & (b<=upr)])
-}
-
-
-
+# x <- 1:10
+# y <- exp(seq(-2, 3, length.out = 10))
+# dat <- data.frame(x, y)
+#
+# dat %>% ggplot2::ggplot(aes(x, y))+
+#   ggplot2::geom_point()+
+#   ggplot2::scale_y_continuous(
+#      breaks = function(x)divmultBreaks(x)
+#     # , labels = function(x){str2expression(print_operator(log(x)))}
+#   )
+#
+#
+#
+# divmultBreaks()(2)
