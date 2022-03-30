@@ -172,7 +172,7 @@ cut_vid %>%
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   geom_hline(yintercept = 0, size = 0.1) +
-  labs(x = "date", y = "Cases relative to my reference \n(nels)") +
+  labs(x = "date", y = "Cases relative to my reference \n(centinels)") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 ```
@@ -263,18 +263,20 @@ translating, I'll have an easier time when I see "2," "4," and "8."
 
 cut_vid %>% 
   filter(state %in% near_states) %>% 
-  ggplot(aes(date, nel_rate))+
+  ggplot(aes(date, prop_rate))+
   geom_point(size = 0.2)+
   facet_wrap(~state) +
   theme_classic() +
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   scale_y_continuous(
-    labels = function(x){str2expression(print_operator(x))}
-   , breaks = ratioScales:::rat_breaks()
-   , sec.axis = sec_axis( trans = function(x){x*100}
+    trans = "log"
+    , breaks = divmultBreaks()
+    , labels = function(x){str2expression(print_operator(log(x)))}
+   , sec.axis = sec_axis( trans = ~log(.)*100
+                          , breaks = scales::breaks_extended()
                           , name = "centinels")) + 
-  geom_hline(yintercept = 0, size = 0.1) +
+  geom_hline(yintercept = 1, size = 0.1) +
   labs(x = "date", y = "Cases relative to my reference \n(ratio scale)" ) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 

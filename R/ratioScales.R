@@ -83,6 +83,7 @@ limBreaks <- function(v, n=5){
 
 divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
   function(v){
+    print(v)
     if (anchor) v <- unique(c(v, 1))
     v <- log(v)
     neg <- min(v)
@@ -114,12 +115,13 @@ divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
 # y <- exp(seq(-2, 3, length.out = 10))
 # dat <- data.frame(x, y)
 #
-# dat %>% ggplot2::ggplot(aes(x, y))+
-#   ggplot2::geom_point()+
-#   ggplot2::scale_y_continuous(
-#      breaks = function(x)divmultBreaks(x)
-#     # , labels = function(x){str2expression(print_operator(log(x)))}
-#   )
+dat %>% ggplot2::ggplot(aes(x, y))+
+  ggplot2::geom_point()+
+  ggplot2::scale_y_continuous(
+    trans = "log"
+     , breaks = divmultBreaks()
+     , labels = function(x){str2expression(print_operator(log(x)))}
+  )
 #
 #
 #
