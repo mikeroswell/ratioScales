@@ -1,28 +1,35 @@
 #' Ratio labels
 #'
 #'
-#' @param x Numeric, on a logarithmic scale
+#' @param x Numeric
+#' @param logscale Logical, is x already on the log scale?
 #' @param base Scalar, base of the logarithm used
 #'
 #' @concept Visualization
 #'
-#' @return String to be evaluated with \code{str2expression}
+#' @return Expression for labeling ggplots based on breaks
 #' @export
 #'
 #' @examples
 #' print_operator(((-1:3)))
 #'
-print_operator <- function(x, base = exp(1)){
-  ifelse(sign(x) == -1,
-         paste("NULL","%/%", base^abs(x))
-         , ifelse(sign(x) == 1,
-                  paste("NULL", "%*%", base^abs(x))
-                  , paste0("bold(", base^x, ")")
-         )
-  )
+print_operator <- function(logscale = F, base = exp(1)){
+  function(x){
+  if(logscale){x <- x}
+  else{x <- log(x, base = base )}
+  chars <- ifelse(sign(x) == -1,
+           paste("NULL","%/%", base^abs(x))
+           , ifelse(sign(x) == 1,
+                    paste("NULL", "%*%", base^abs(x))
+                    , paste0("bold(", base^x, ")")
+             )
+       )
+
+    return(str2expression(chars))
+    }
 }
 
-
+print_operator()(c(1:4,2))
 
 #' Truncate log-scaled axis breaks to data range
 #'
@@ -87,7 +94,7 @@ limBreaks <- function(v, n=5){
 #'      ggplot2::scale_y_continuous(
 #'      trans = "log"
 #'      , breaks = divmultBreaks()
-#'      , labels = function(x){str2expression(print_operator(log(x)))}
+#'      , labels = print_operator()
 #'      )
 
 

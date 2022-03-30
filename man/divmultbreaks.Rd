@@ -47,6 +47,6 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::scale_y_continuous(
      trans = "log"
      , breaks = divmultBreaks()
-     , labels = function(x){str2expression(print_operator(log(x)))}
+     , labels = print_operator()
      )
 }

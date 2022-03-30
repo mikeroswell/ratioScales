@@ -272,12 +272,12 @@ cut_vid %>%
   scale_y_continuous(
     trans = "log"
     , breaks = divmultBreaks()
-    , labels = function(x){str2expression(print_operator(log(x)))}
+    , labels = print_operator()
    , sec.axis = sec_axis( trans = ~log(.)*100
                           , breaks = scales::breaks_extended()
                           , name = "centinels")) + 
   geom_hline(yintercept = 1, size = 0.1) +
-  labs(x = "date", y = "Cases relative to my reference \n(ratio scale)" ) +
+  labs(x = "date", y = "Cases relative to my reference \n(divMult scale)" ) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 ```

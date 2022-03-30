@@ -4,15 +4,17 @@
 \alias{print_operator}
 \title{Ratio labels}
 \usage{
-print_operator(x, base = exp(1))
+print_operator(logscale = F, base = exp(1))
 }
 \arguments{
-\item{x}{Numeric, on a logarithmic scale}
+\item{logscale}{Logical, is x already on the log scale?}
 
 \item{base}{Scalar, base of the logarithm used}
+
+\item{x}{Numeric}
 }
 \value{
-String to be evaluated with \code{str2expression}
+Expression for labeling ggplots based on breaks
 }
 \description{
 Ratio labels
