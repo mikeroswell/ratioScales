@@ -29,5 +29,5 @@ dat <- data.frame(x, y)
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::geom_point()+
      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
-     scale_y_ratio() +
+     scale_y_ratio()
 }
