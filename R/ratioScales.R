@@ -1,13 +1,12 @@
 #' Ratio labels
 #'
 #'
-#' @param x Numeric
 #' @param logscale Logical, are breaks already on the log scale?
 #' @param base Scalar, base of the logarithm used
 #'
 #' @concept Visualization
 #'
-#' @return Expression for labeling ggplots based on breaks
+#' @return Function for generating labeling expressions based on breaks
 #' @export
 #'
 #' @examples

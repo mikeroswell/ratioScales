@@ -10,11 +10,9 @@ label_divMult(logscale = F, base = exp(1))
 \item{logscale}{Logical, are breaks already on the log scale?}
 
 \item{base}{Scalar, base of the logarithm used}
-
-\item{x}{Numeric}
 }
 \value{
-Expression for labeling ggplots based on breaks
+Function for generating labeling expressions based on breaks
 }
 \description{
 Ratio labels
