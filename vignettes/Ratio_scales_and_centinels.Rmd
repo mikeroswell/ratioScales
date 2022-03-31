@@ -254,7 +254,7 @@ them more. But it will take some practice to become fluent in interpreting them.
 I rely on benchmarks: Beyond the 1% thing, I also know that 70 centinels is
 roughly doubling, 140 is doubling ~2x, and 210 is doubling ~3x. To get
 to know centinels better, though, I need to get more familiar with centinel
-values on the "ratio scale:" instead of "69.3," "138.6," and "207.9," and
+values on the "divMult scale:" instead of "69.3," "138.6," and "207.9," and
 translating, I'll have an easier time when I see "2," "4," and "8."
 
 ## Ratio scales
@@ -271,7 +271,7 @@ cut_vid %>%
   scale_x_date() +
   scale_y_ratio(
      sec.axis = sec_axis( trans = ~log(.)*100
-                          , breaks = scales::breaks_extended()
+                          , breaks = scales::breaks_extended(n = 6)
                           , name = "centinels")) + 
   geom_hline(yintercept = 1, size = 0.1) +
   labs(x = "date", y = "Cases relative to my reference \n(divMult scale)" ) +

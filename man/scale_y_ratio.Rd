@@ -7,11 +7,13 @@
 scale_y_ratio(tickVal = "divMult", trans = "log", ...)
 }
 \arguments{
-\item{tickVal}{Character, one of "divMult", "nel", "centiNel", or "propChange"}
+\item{tickVal}{Character, one of "divMult", "nel", "centiNel", or
+"propChange"}
 
 \item{trans}{Function or Character name of transformation, most likely "log"}
 
-\item{...}{Additional arguments passed to scale_y_continuous}
+\item{...}{Additional arguments passed to
+\code{\link[ggplot2]{scale_y_continuous}}}
 }
 \description{
 \code{scale_x_ratio} and \code{scale_y_ratio} are alternatives to  traditional

@@ -28,6 +28,58 @@ label_divMult <- function(logscale = F, base = exp(1)){
     }
 }
 
+#' 100x Natural log (centinel) transformation of breaks
+#'
+#' @return Function used as argument to `labels` in `scale_*_*`
+#' @export
+#'
+label_centiNel <- function(){
+  function(x){100*log(x)}
+}
+
+#' Natural log (nel) transformation of breaks
+#'
+#' @return Function used as argument to `labels` in `scale_*_*`
+#' @export
+#'
+label_nel <- function(){
+  log
+}
+
+#' Natural log transformation... with breaking control
+#'
+#' @param n Integer, desired number of breaks
+#' @seealso \code{\link[scales]{log_breaks}}
+#'
+#' @export
+#'
+#' @examples
+#' dat<-data.frame(x = 1:10, y = exp(-2:7))
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
+#'   ggplot2::geom_point() +
+#'     ggplot2::scale_y_continuous(
+#'        trans = "nel"
+#'        # default breaks aren't perfect; sometimes adding more helps
+#'        #  trans = nel_trans(n = 9)
+#'        , labels = label_nel()
+#'        , sec.axis = ggplot2::sec_axis(
+#'            labels = function(x) {x}
+#'            , trans = ~.
+#'            , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+#'            , name = "original data"
+#'          )
+#'        ) +
+#'      ggplot2::labs(y = "nel (natural log) scale") +
+#'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'
+nel_trans <- function(n = 7){
+  scales::trans_new(
+    "nel"
+    , trans <- "log"
+    , inv <- "exp"
+    , breaks <- scales::log_breaks(base = exp(1), n = n)
+  )
+}
 
 
 #' Truncate log-scaled axis breaks to data range
@@ -72,18 +124,18 @@ limBreaks <- function(v, n=5){
 #'
 #' # axisTicks takes giant steps, returns values way beyond data
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
-#' # divmultBreaks gives ~n breaks evenly within the data
-#' divmultBreaks(n = n)(v = y)
+#' # divMultBreaks gives ~n breaks evenly within the data
+#' divMultBreaks(n = n)(v = y)
 #'
 #' # if 1 is lower limit, only positive log(breaks)
-#' divmultBreaks()(c(1, 11))
+#' divMultBreaks()(c(1, 11))
 #' # ditto, only negative log(breaks) if 1 is upper limit
-#' divmultBreaks()(c(0.04, 1))
+#' divMultBreaks()(c(0.04, 1))
 #'
 #' # expanding range on one side of 1 doesn't leave the other side behind
-#' divmultBreaks()(c(0.04, 2.2))
-#' divmultBreaks()(c(0.04, 220))
-#' divmultBreaks()(c(0.04, 2200))
+#' divMultBreaks()(c(0.04, 2.2))
+#' divMultBreaks()(c(0.04, 220))
+#' divMultBreaks()(c(0.04, 2200))
 #'
 #' x <- 1:10
 #' dat <- data.frame(x, y)
@@ -92,12 +144,12 @@ limBreaks <- function(v, n=5){
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
 #'      ggplot2::scale_y_continuous(
 #'      trans = "log"
-#'      , breaks = divmultBreaks()
+#'      , breaks = divMultBreaks()
 #'      , labels = label_divMult()
 #'      )
 
 
-divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
+divMultBreaks <- function(n=6, nmin=3, anchor=TRUE){
   function(v){
     print(v)
     if (anchor) v <- unique(c(v, 1))
@@ -141,9 +193,12 @@ divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
 #' values represent a multiplicative change from a reference point. These scales
 #' may be especially useful for highlighting proportional changes.
 #'
-#' @param tickVal Character, one of "divMult", "nel", "centiNel", or "propChange"
+#' @param tickVal Character, one of "divMult", "nel", "centiNel", or
+#'   "propChange"
 #' @param trans Function or Character name of transformation, most likely "log"
-#' @param ... Additional arguments passed to scale_y_continuous
+#' @param ... Additional arguments passed to
+#'    \code{\link[ggplot2]{scale_y_continuous}}
+#'
 #'
 #' @export
 #'
@@ -161,9 +216,21 @@ scale_y_ratio <- function(tickVal = "divMult"
                           , ... ){
   if(tickVal %in% c("divmult", "divMult")){
     ggplot2::scale_y_continuous( trans = trans
-                        , breaks = divmultBreaks()
+                        , breaks = divMultBreaks()
                         , labels = label_divMult()
                         , ...
+    )
+  }
+  if(tickVal %in% c("nel", "Nel")){
+    ggplot2::scale_y_continuous( trans = nel_trans()
+                                 , labels = label_nel()
+                                 , ...
+    )
+  }
+  if(tickVal %in% c("centinel", "centiNel")){
+    ggplot2::scale_y_continuous( trans = nel_trans()
+                                 , labels = label_centiNel()
+                                 , ...
     )
   }
 }
@@ -175,7 +242,7 @@ scale_y_ratio <- function(tickVal = "divMult"
 #                           , ... ){
 #   if(tickVal %in% c("divmult", "divMult")){
 #     scale_x_continuous( trans = trans
-#                         , breaks = divmultBreaks()
+#                         , breaks = divMultBreaks()
 #                         , labels = label_divMult()
 #                         )
 #   }
