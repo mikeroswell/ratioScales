@@ -163,6 +163,7 @@ scale_y_ratio <- function(tickVal = "divMult"
     ggplot2::scale_y_continuous( trans = trans
                         , breaks = divmultBreaks()
                         , labels = label_divMult()
+                        , ...
     )
   }
 }
