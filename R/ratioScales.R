@@ -127,3 +127,59 @@ divmultBreaks <- function(n=6, nmin=3, anchor=TRUE){
 }
 
 
+
+
+
+
+#' Ratio-based position scales for continuous data (x & y)
+#'
+#' `scale_x_ratio` and `scale_y_ratio` are alternatives to  traditional
+#' `scale_*_continuous` scales for continuous x and y aesthetics, to explicitly
+#' highlight multiplicative or geometric value changes. Rather than traditional
+#' log transformations (as in `scale_*_log10()`), which rescale the axis and
+#' return tickmarks on the original scale of the data, `scale_*_ratio` axis tick
+#' values represent a multiplicative change from a reference point. These scales
+#' may be especially useful for highlighting proportional changes.
+#'
+#' @param tickVal Character, one of "divMult", "nel", "centiNel", or "propChange"
+#' @param trans Function or Character name of transformation, most likely "log"
+#' @param ... Additional arguments passed to scale_y_continuous
+#'
+#' @export
+#'
+#' @examples
+#' y <- exp(seq(-2,5, length.out = 10))
+#' x <- 1:10
+#' dat <- data.frame(x, y)
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
+#'      ggplot2::geom_point()+
+#'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
+#'      scale_y_ratio() +
+
+scale_y_ratio <- function(tickVal = "divMult"
+                          , trans = "log"
+                          , ... ){
+  if(tickVal %in% c("divmult", "divMult")){
+    ggplot2::scale_y_continuous( trans = trans
+                        , breaks = divmultBreaks()
+                        , labels = label_divMult()
+    )
+  }
+}
+
+
+
+# scale_x_ratio <- function(tickVal = "divMult"
+#                           , trans = "log"
+#                           , ... ){
+#   if(tickVal %in% c("divmult", "divMult")){
+#     scale_x_continuous( trans = trans
+#                         , breaks = divmultBreaks()
+#                         , labels = label_divMult()
+#                         )
+#   }
+# }
+
+
+
+
