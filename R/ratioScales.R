@@ -12,7 +12,7 @@
 #' @examples
 #' label_divMult()(c(1:4,2))
 #'
-label_divMult <- function(logscale = F, base = exp(1)){
+label_divMult <- function(logscale = FALSE, base = exp(1)){
   function(x){
   if(logscale){x <- x}
   else{x <- log(x, base = base )}
