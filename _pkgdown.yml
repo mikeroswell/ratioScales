@@ -1,7 +1,6 @@
 url: https://mikeroswell.github.io/ratioScales/
 template:
   bootstrap: 5
-template:
   includes:
     in_header: |
        <!-- Global site tag (gtag.js) - Google Analytics -->
