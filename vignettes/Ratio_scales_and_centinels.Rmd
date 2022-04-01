@@ -1,8 +1,8 @@
 ---
-title: "Ratio_scales_and_centinels"
+title: "Ratio scales and centinels"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Ratio_scales_and_centinels}
+  %\VignetteIndexEntry{Ratio scales and centinels}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,9 +16,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(ratioScales)
 library(tidyverse)
+theme_set(theme_classic() +
+          theme(axis.text.x = element_text(angle = 45,
+                                           vjust = 1, hjust = 1)))
+
 ```
 ## Hook
 
@@ -39,7 +43,7 @@ First, grab the data, which are freely available on github:
 
 ## Data acquisition, crunching
 
-```{r get nyt data}
+```{r get_nyt_data}
 
 vid <- read.csv("https://github.com/nytimes/covid-19-data/raw/master/rolling-averages/us-states.csv")
 
@@ -56,7 +60,7 @@ reference point.
 
 ref_date <- vid %>% filter(date =="2021-10-17") %>%  select(state, ref_case_rate = cases_avg_per_100k)
 
-new_vid<-vid %>% left_join(ref_date)
+new_vid<-vid %>% left_join(ref_date, by = "state")
 ```
 
 Just to make my life easier, I'm going to add a couple columns that rescale the
@@ -65,11 +69,12 @@ on the arithmetic scale and the other on the log scale. Also, to make life
 easier I'll drop all states except my imediate neighbors in Maryland.
 
 ```{r rescale data and filter states }
-nel_vid<-new_vid %>% mutate(nel_rate = log(cases_avg_per_100k/ref_case_rate)
-                            , prop_rate = cases_avg_per_100k/ref_case_rate
-                            , date = as.Date(date))
-
 near_states <-c("Maryland", "Virginia", "Delaware", "District of Columbia", "West Virginia", "Pennsylvania")
+
+nel_vid<-new_vid %>% mutate(nel_rate = log(cases_avg_per_100k/ref_case_rate)
+                          , prop_rate = cases_avg_per_100k/ref_case_rate
+                          , date = as.Date(date)) %>%
+  filter(state %in% near_states) 
 ```
 
 # Scales
@@ -78,18 +83,15 @@ I've grown accustomed to staring at the data on an arithmetic scale. Here, "1"
 represents a rate equivalent to the one on that date when I was somewhat 
 comfortable with >150 other maskless, vaccinated people: 
 
-```{r plot arithmetic}
+```{r plot_arithmetic}
 nel_vid %>%  
-  filter(state %in% near_states) %>% 
   ggplot(aes(date, prop_rate))+
   geom_point(size = 0.2)+
   facet_wrap(~state) +
-  theme_classic() +
   geom_hline(yintercept = 1, size = 0.1) +
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
-  labs(y = "Cases relative to my reference", x = "date") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  labs(y = "Cases relative to my reference", x = "date")
 
 ```
 
@@ -98,7 +100,7 @@ means the cases were 1/5 as high. The first thing that jumped out to me is that,
 in all the neighboring states, cases are now lower than they were on my
 reference date! But, on this scale, it's very hard to see by how much.
 
-An alternative to using the arithmetic scale is to use a \\[natural\\]
+An alternative to using the arithmetic scale is to use a *natural*
 logarithmic scale. Whereas in the graph above, 2 represented double my reference
 case rate, on the natural log scale, 2 means... "*2 nels*". The really nice
 thing is that "nels" are symmetrical in terms of changes in the case rate: if
@@ -106,20 +108,15 @@ the rate *doubles*, the graph goes up by about 0.7 nels, and if it *halves*, the
 graphs go down by the same about (about 0.7 nels).
 
 Let's look at the graph plotted in "nels": 
-```{r first nel plot}
+```{r first_nel_plot}
 nel_vid %>%  
-  filter(state %in% near_states) %>% 
   ggplot(aes(date, nel_rate))+
   geom_point(size = 0.2)+
   facet_wrap(~state) +
-  theme_classic() +
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   geom_hline(yintercept = 0, size = 0.1) +
-  labs(x = "date", y = "Cases relative to my reference \n(nels)") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
-
-
+  labs(x = "date", y = "Cases relative to my reference \n(nels)")
 ```
 
 WOW! I see so many things in this graph! The first thing to jump out is how
@@ -144,37 +141,30 @@ instead. This is the same idea as changing from a proportion to a percent.
 
 # Centinels!!!
 
-```{r nel to centinel}
+```{r nel_to_centinel}
 # drop before april 2020
 cut_vid <-nel_vid %>% filter(date > as.Date("2020-04-01"))
 
 # we are used to using percents instead of proportions
 cut_vid %>%  
-  filter(state %in% near_states) %>% 
   ggplot(aes(date, prop_rate))+
   geom_point(size = 0.2)+
   facet_wrap(~state) +
-  theme_classic() +
   geom_hline(yintercept = 1, size = 0.1) +
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   scale_y_continuous(labels = scales::percent) +
-  labs(y = "Cases relative to my reference", x = "date") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  labs(y = "Cases relative to my reference", x = "date")
 
 # now "centinels" instead of "nels"
 cut_vid %>% 
-  filter(state %in% near_states) %>% 
   ggplot(aes(date, nel_rate*100))+
   geom_point(size = 0.2)+
   facet_wrap(~state) +
-  theme_classic() +
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   geom_hline(yintercept = 0, size = 0.1) +
-  labs(x = "date", y = "Cases relative to my reference \n(centinels)") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
-
+  labs(x = "date", y = "Cases relative to my reference \n(centinels)")
 ```
 
 "Centinels" look like they could be nice units for staring at this, but what the
@@ -183,7 +173,7 @@ centinel is pretty close to a 1% increase!
 
 let's take a look:
 
-```{r centinels vs. percents}
+```{r centinels_vs_percents}
 
 x <- c(100, 5, pi)
 # 1% increase
@@ -259,14 +249,12 @@ translating, I'll have an easier time when I see "2," "4," and "8."
 
 ## Ratio scales
 
-```{r centinels and ratios}
+```{r centinels_and_ratios}
 
 cut_vid %>% 
-  filter(state %in% near_states) %>% 
   ggplot(aes(date, prop_rate))+
   geom_point(size = 0.2)+
   facet_wrap(~state) +
-  theme_classic() +
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   scale_y_ratio(
@@ -274,8 +262,7 @@ cut_vid %>%
                           , breaks = scales::breaks_extended(n = 6)
                           , name = "centinels")) + 
   geom_hline(yintercept = 1, size = 0.1) +
-  labs(x = "date", y = "Cases relative to my reference \n(divMult scale)" ) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  labs(x = "date", y = "Cases relative to my reference \n(divMult scale)" )
 
 ```
 
