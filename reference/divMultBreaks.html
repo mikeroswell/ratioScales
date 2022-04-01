@@ -39,7 +39,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Compute breaks for ratio scale</h1>
       
-      <div class="d-none name"><code>divmultbreaks.Rd</code></div>
+      <div class="d-none name"><code>divMultBreaks.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
@@ -48,7 +48,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">divMultBreaks</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">6</span>, nmin <span class="op">=</span> <span class="fl">3</span>, anchor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">divMultBreaks</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">6</span>, nmin <span class="op">=</span> <span class="fl">3</span>, anchor <span class="op">=</span> <span class="cn">TRUE</span>, split <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,7 +58,9 @@
 <dt>nmin</dt>
 <dd><p>Scalar, forced minimum number of breaks</p></dd>
 <dt>anchor</dt>
-<dd><p>Logical, include origin (1 on the ratio scale)</p></dd>
+<dd><p>Logical, always include origin (1 on the ratio scale)</p></dd>
+<dt>split</dt>
+<dd><p>logical, split decades using splitDecades</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -110,7 +112,7 @@
 <span class="r-in">     , breaks <span class="op">=</span> <span class="fu">divMultBreaks</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">     , labels <span class="op">=</span> <span class="fu"><a href="label_divMult.html">label_divMult</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">     <span class="op">)</span></span>
-<span class="r-plt img"><img src="divmultbreaks-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="divMultBreaks-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]   0.09536916 210.60829787</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]   0.09536916 210.60829787</span>
 </code></pre></div>

@@ -22,7 +22,7 @@
     <loc>https://mikeroswell.github.io/ratioScales/index.html</loc>
   </url>
   <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/divmultbreaks.html</loc>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/divMultBreaks.html</loc>
   </url>
   <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/index.html</loc>
@@ -47,5 +47,8 @@
   </url>
   <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/scale_y_ratio.html</loc>
+  </url>
+  <url>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/splitDecades.html</loc>
   </url>
 </urlset>
