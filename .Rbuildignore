@@ -5,3 +5,8 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^rpkgbuild$
+^makestuff$
+^Makefile$
+^.*\.time$
+^.*\.mk$

@@ -4,12 +4,14 @@
 \alias{limBreaks}
 \title{Truncate log-scaled axis breaks to data range}
 \usage{
-limBreaks(v, n = 5)
+limBreaks(v, n = 5, split = FALSE)
 }
 \arguments{
 \item{v}{Numeric vector, data or data range}
 
 \item{n}{Integer, target number of breaks}
+
+\item{split}{logical, split decades using splitDecades}
 }
 \value{
 Vector of numeric values for axis breaks
