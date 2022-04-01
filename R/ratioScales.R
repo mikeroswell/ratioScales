@@ -82,10 +82,24 @@ nel_trans <- function(n = 7){
 }
 
 
+#' Split stingy limBreaks into three parts per complete decade
+#' @param v vector on the unlogged scale to be examined and split
+#' @return vector with splits added
+splitDecades <- function(v){
+	l <- length(v)
+	w <- numeric(0)
+	if (l>1) for (i in 1:(l-1)){
+		w <- c(w, v[[i]])
+		if (v[[i+1]]==10*v[[i]]) w <- c(w, 2*v[[i]], 5*v[[i]])
+	}
+	return(c(w, v[[l]]))
+}
+
 #' Truncate log-scaled axis breaks to data range
 #'
 #' @param v Numeric vector, data or data range
 #' @param n Integer, target number of breaks
+#' @param split logical, split decades using splitDecades
 #'
 #' @return Vector of numeric values for axis breaks
 #' @export
@@ -98,21 +112,21 @@ nel_trans <- function(n = 7){
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
 #' # limBreaks reels this in
 #' limBreaks(v = v, n = n)
-limBreaks <- function(v, n=5){
+limBreaks <- function(v, n=5, split=FALSE){
   b <- grDevices::axisTicks(nint=n, log=TRUE, usr=range(v))
+  if(split) b <- splitDecades(b)
   # suppressWarnings for max(NULL) etc.
   upr <- suppressWarnings(min(b[log(b)>=max(v)]))
   lwr <- suppressWarnings(max(b[log(b)<=min(v)]))
-  ## print(c(lwr=lwr, upr=upr))
   return(b[(b>=lwr) & (b<=upr)])
 }
-
 
 #' Compute breaks for ratio scale
 #'
 #' @param n Scalar, target number of breaks
 #' @param nmin Scalar, forced minimum number of breaks
-#' @param anchor Logical, include origin (1 on the ratio scale)
+#' @param anchor Logical, always include origin (1 on the ratio scale)
+#' @param split logical, split decades using splitDecades
 #'
 #' @return Vector of values to generate axis breaks
 #' @export
@@ -149,7 +163,7 @@ limBreaks <- function(v, n=5){
 #'      )
 
 
-divMultBreaks <- function(n=6, nmin=3, anchor=TRUE){
+divMultBreaks <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
   function(v){
     print(v)
     if (anchor) v <- unique(c(v, 1))
