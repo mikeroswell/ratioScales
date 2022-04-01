@@ -4,7 +4,7 @@
 \alias{scale_y_ratio}
 \title{Ratio-based position scales for continuous data (x & y)}
 \usage{
-scale_y_ratio(tickVal = "divMult", trans = "log", ...)
+scale_y_ratio(tickVal = "divMult", trans = "nel", ...)
 }
 \arguments{
 \item{tickVal}{Character, one of "divMult", "nel", "centiNel", or
@@ -31,5 +31,9 @@ dat <- data.frame(x, y)
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::geom_point()+
      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
-     scale_y_ratio()
+     scale_y_ratio(tickVal = "divMult")
+
+ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
+     ggplot2::geom_point()+
+     scale_y_ratio(tickVal = "centiNel")
 }

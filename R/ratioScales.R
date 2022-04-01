@@ -223,29 +223,33 @@ divMultBreaks <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
 #'      ggplot2::geom_point()+
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
-#'      scale_y_ratio()
+#'      scale_y_ratio(tickVal = "divMult")
+#'
+#'  dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
+#'      ggplot2::geom_point()+
+#'      scale_y_ratio(tickVal = "centiNel")
 
 scale_y_ratio <- function(tickVal = "divMult"
-                          , trans = "log"
+                          , trans = "nel"
                           , ... ){
   if(tickVal %in% c("divmult", "divMult")){
-    ggplot2::scale_y_continuous( trans = trans
+    return(ggplot2::scale_y_continuous( trans = trans
                         , breaks = divMultBreaks()
                         , labels = label_divMult()
                         , ...
-    )
+    ))
   }
   if(tickVal %in% c("nel", "Nel")){
-    ggplot2::scale_y_continuous( trans = nel_trans()
-                                 , labels = label_nel()
-                                 , ...
-    )
+    return(ggplot2::scale_y_continuous( trans = trans
+                              , labels = label_nel()
+                              , ...
+    ))
   }
   if(tickVal %in% c("centinel", "centiNel")){
-    ggplot2::scale_y_continuous( trans = nel_trans()
-                                 , labels = label_centiNel()
-                                 , ...
-    )
+    return(ggplot2::scale_y_continuous( trans = trans
+                              , labels = label_centiNel()
+                              , ...
+    ))
   }
 }
 
