@@ -4,7 +4,7 @@
 \alias{label_divMult}
 \title{Ratio labels}
 \usage{
-label_divMult(logscale = F, base = exp(1))
+label_divMult(logscale = FALSE, base = exp(1))
 }
 \arguments{
 \item{logscale}{Logical, are breaks already on the log scale?}
