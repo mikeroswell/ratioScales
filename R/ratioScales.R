@@ -169,9 +169,9 @@ divMultBreaks <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
     if (anchor) v <- unique(c(v, 1))
     v <- log(v)
     neg <- min(v)
-    if (neg==0) return(limBreaks(v, n))
+    if (neg==0) return(limBreaks(v, n, split = split))
     pos <- max(v)
-    if (pos==0) return(1/limBreaks(-v, n))
+    if (pos==0) return(1/limBreaks(-v, n, split = split))
 
     flip <- -neg
     big <- pmax(pos, flip)
@@ -179,10 +179,10 @@ divMultBreaks <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
     bigprop <- big/(pos + flip)
     bigticks <- ceiling(n*bigprop)
 
-    main <- limBreaks(c(0, big), bigticks)
+    main <- limBreaks(c(0, big), bigticks, split = split)
     cut <- pmin(bigticks, 1+sum(main<small))
     if(cut<nmin)
-      other <- limBreaks(c(0, small), nmin)
+      other <- limBreaks(c(0, small), nmin, split = split)
     else
       other <- main[1:cut]
 
