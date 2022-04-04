@@ -82,10 +82,10 @@ nel_trans <- function(n = 7){
 }
 
 
-#' Split stingy limBreaks into three parts per complete decade
+#' Split stingy limit_breaks into three parts per complete decade
 #' @param v vector on the unlogged scale to be examined and split
 #' @return vector with splits added
-splitDecades <- function(v){
+split_decades <- function(v){
 	l <- length(v)
 	w <- numeric(0)
 	if (l>1) for (i in 1:(l-1)){
@@ -99,7 +99,7 @@ splitDecades <- function(v){
 #'
 #' @param v Numeric vector, data or data range
 #' @param n Integer, target number of breaks
-#' @param split logical, split decades using splitDecades
+#' @param split logical, split decades using split_decades
 #'
 #' @return Vector of numeric values for axis breaks
 #' @export
@@ -110,11 +110,11 @@ splitDecades <- function(v){
 #' n <- 5
 #' # axisTicks returns values way beyond data
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
-#' # limBreaks reels this in
-#' limBreaks(v = v, n = n)
-limBreaks <- function(v, n=5, split=FALSE){
+#' # limit_breaks reels this in
+#' limit_breaks(v = v, n = n)
+limit_breaks <- function(v, n=5, split=FALSE){
   b <- grDevices::axisTicks(nint=n, log=TRUE, usr=range(v))
-  if(split) b <- splitDecades(b)
+  if(split) b <- split_decades(b)
   # suppressWarnings for max(NULL) etc.
   upr <- suppressWarnings(min(b[log(b)>=max(v)]))
   lwr <- suppressWarnings(max(b[log(b)<=min(v)]))
@@ -126,7 +126,7 @@ limBreaks <- function(v, n=5, split=FALSE){
 #' @param n Scalar, target number of breaks
 #' @param nmin Scalar, forced minimum number of breaks
 #' @param anchor Logical, always include origin (1 on the ratio scale)
-#' @param split logical, split decades using splitDecades
+#' @param split logical, split decades using split_decades
 #'
 #' @return Vector of values to generate axis breaks
 #' @export
@@ -138,18 +138,18 @@ limBreaks <- function(v, n=5, split=FALSE){
 #'
 #' # axisTicks takes giant steps, returns values way beyond data
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
-#' # divMultBreaks gives ~n breaks evenly within the data
-#' divMultBreaks(n = n)(v = y)
+#' # breaks_divMult gives ~n breaks evenly within the data
+#' breaks_divMult(n = n)(v = y)
 #'
 #' # if 1 is lower limit, only positive log(breaks)
-#' divMultBreaks()(c(1, 11))
+#' breaks_divMult()(c(1, 11))
 #' # ditto, only negative log(breaks) if 1 is upper limit
-#' divMultBreaks()(c(0.04, 1))
+#' breaks_divMult()(c(0.04, 1))
 #'
 #' # expanding range on one side of 1 doesn't leave the other side behind
-#' divMultBreaks()(c(0.04, 2.2))
-#' divMultBreaks()(c(0.04, 220))
-#' divMultBreaks()(c(0.04, 2200))
+#' breaks_divMult()(c(0.04, 2.2))
+#' breaks_divMult()(c(0.04, 220))
+#' breaks_divMult()(c(0.04, 2200))
 #'
 #' x <- 1:10
 #' dat <- data.frame(x, y)
@@ -158,20 +158,20 @@ limBreaks <- function(v, n=5, split=FALSE){
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
 #'      ggplot2::scale_y_continuous(
 #'      trans = "log"
-#'      , breaks = divMultBreaks()
+#'      , breaks = breaks_divMult()
 #'      , labels = label_divMult()
 #'      )
 
 
-divMultBreaks <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
+breaks_divMult <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
   function(v){
     print(v)
     if (anchor) v <- unique(c(v, 1))
     v <- log(v)
     neg <- min(v)
-    if (neg==0) return(limBreaks(v, n, split = split))
+    if (neg==0) return(limit_breaks(v, n, split = split))
     pos <- max(v)
-    if (pos==0) return(1/limBreaks(-v, n, split = split))
+    if (pos==0) return(1/limit_breaks(-v, n, split = split))
 
     flip <- -neg
     big <- pmax(pos, flip)
@@ -179,10 +179,10 @@ divMultBreaks <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
     bigprop <- big/(pos + flip)
     bigticks <- ceiling(n*bigprop)
 
-    main <- limBreaks(c(0, big), bigticks, split = split)
+    main <- limit_breaks(c(0, big), bigticks, split = split)
     cut <- pmin(bigticks, 1+sum(main<small))
     if(cut<nmin)
-      other <- limBreaks(c(0, small), nmin, split = split)
+      other <- limit_breaks(c(0, small), nmin, split = split)
     else
       other <- main[1:cut]
 
@@ -234,7 +234,7 @@ scale_y_ratio <- function(tickVal = "divMult"
                           , ... ){
   if(tickVal %in% c("divmult", "divMult")){
     return(ggplot2::scale_y_continuous( trans = trans
-                        , breaks = divMultBreaks()
+                        , breaks = breaks_divMult()
                         , labels = label_divMult()
                         , ...
     ))
@@ -260,7 +260,7 @@ scale_y_ratio <- function(tickVal = "divMult"
 #                           , ... ){
 #   if(tickVal %in% c("divmult", "divMult")){
 #     scale_x_continuous( trans = trans
-#                         , breaks = divMultBreaks()
+#                         , breaks = breaks_divMult()
 #                         , labels = label_divMult()
 #                         )
 #   }
