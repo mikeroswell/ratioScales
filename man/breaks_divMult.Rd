@@ -4,16 +4,20 @@
 \alias{breaks_divMult}
 \title{Compute breaks for ratio scale}
 \usage{
-breaks_divMult(n = 6, nmin = 3, anchor = TRUE, split = FALSE)
+breaks_divMult(n = 6, nmin = 3, anchor = NULL, split = FALSE, base = exp(1))
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}
 
 \item{nmin}{Scalar, forced minimum number of breaks}
 
-\item{anchor}{Logical, always include origin (1 on the ratio scale)}
+\item{anchor}{NULL or scalar, value to include as a reference point (usually
+1)}
 
 \item{split}{logical, split decades using split_decades}
+
+\item{base}{Positive number: the base with respect to which logarithms are
+computed. Default is the base of the natural log \code{exp(1)}}
 }
 \value{
 Vector of values to generate axis breaks

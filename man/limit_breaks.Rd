@@ -4,7 +4,7 @@
 \alias{limit_breaks}
 \title{Truncate log-scaled axis breaks to data range}
 \usage{
-limit_breaks(v, n = 5, split = FALSE)
+limit_breaks(v, n = 5, split = FALSE, base = exp(1))
 }
 \arguments{
 \item{v}{Numeric vector, data or data range}

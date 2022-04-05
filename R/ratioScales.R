@@ -46,6 +46,16 @@ label_nel <- function(){
   log
 }
 
+
+#' Rescaling breaks relative to reference point
+#'
+#' @param ref Scalar, reference value for proportional change
+#'
+#' @return Function used as argument to `labels` in `scale_*_*`
+#' @export
+label_propChange <- function(ref = 1){function(x) {x/ref}}
+
+
 #' Natural log transformation... with breaking control
 #'
 #' @param n Integer, desired number of breaks
@@ -61,7 +71,7 @@ label_nel <- function(){
 #'        trans = "nel"
 #'        # default breaks aren't perfect; sometimes adding more helps
 #'        #  trans = nel_trans(n = 9)
-#'        , labels = label_nel()
+#'        , labels = label_propChange
 #'        , sec.axis = ggplot2::sec_axis(
 #'            labels = function(x) {x}
 #'            , trans = ~.
@@ -75,11 +85,62 @@ label_nel <- function(){
 nel_trans <- function(n = 7){
   scales::trans_new(
     "nel"
-    , trans <- "log"
-    , inv <- "exp"
-    , breaks <- scales::log_breaks(base = exp(1), n = n)
+    , trans = "log"
+    , inverse = "exp"
+    , breaks = scales::log_breaks(base = exp(1), n = n)
   )
 }
+
+#' Natural log transformation... showing proportional change explicitly
+#'
+#' @inheritParams breaks_divMult
+#' @inheritParams label_propChange
+#' @export
+#' @examples
+#' dat<-data.frame(x = 1:10, y = exp(-2:7))
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
+#'     ggplot2::geom_point() +
+#'     ggplot2::scale_y_continuous(
+#'       trans = propChange_trans(ref = 25)
+#'       , labels = label_propChange(ref = 25)
+#'       , sec.axis = ggplot2::sec_axis(
+#'           labels = function(x) {x}
+#'           , trans = ~.
+#'           , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+#'           , name = "original data"
+#'         )
+#'       ) +
+#'     ggplot2::labs(y = "propChange scale") +
+#'     ggplot2::geom_hline(yintercept = 25, size = 0.2)
+#'
+#'dat %>% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
+#'  ggplot2::geom_point() +
+#'  ggplot2::scale_y_continuous(
+#'    trans = propChange_trans()
+#'    , labels = label_propChange()
+#'    , sec.axis = ggplot2::sec_axis(
+#'      labels = function(x) {x}
+#'      , trans = ~.
+#'      , name = "original data"
+#'    )
+#'  ) +
+#'  ggplot2::labs(y = "propChange scale") +
+#'  ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'
+#'
+#'
+#'
+propChange_trans <- function(n = 7, split = TRUE, ref = 1, base = 10){
+  scales::trans_new(
+    "propChange"
+    , trans = function(x) { log(x, base = base) }
+    , inverse = function(x) { base^x}
+    , breaks = breaks_divMult(n = n, split = split, base = base, anchor = ref)
+  )
+}
+
+
+
 
 
 #' Split stingy limit_breaks into three parts per complete decade
@@ -112,12 +173,12 @@ split_decades <- function(v){
 #' grDevices::axisTicks(nint = n, log = TRUE, usr = range(v))
 #' # limit_breaks reels this in
 #' limit_breaks(v = v, n = n)
-limit_breaks <- function(v, n=5, split=FALSE){
+limit_breaks <- function(v, n=5, split=FALSE, base = exp(1)){
   b <- grDevices::axisTicks(nint=n, log=TRUE, usr=range(v))
   if(split) b <- split_decades(b)
   # suppressWarnings for max(NULL) etc.
-  upr <- suppressWarnings(min(b[log(b)>=max(v)]))
-  lwr <- suppressWarnings(max(b[log(b)<=min(v)]))
+  upr <- suppressWarnings(min(b[log(b, base = base)>=max(v)]))
+  lwr <- suppressWarnings(max(b[log(b, base = base)<=min(v)]))
   return(b[(b>=lwr) & (b<=upr)])
 }
 
@@ -125,8 +186,11 @@ limit_breaks <- function(v, n=5, split=FALSE){
 #'
 #' @param n Scalar, target number of breaks
 #' @param nmin Scalar, forced minimum number of breaks
-#' @param anchor Logical, always include origin (1 on the ratio scale)
+#' @param anchor NULL or scalar, value to include as a reference point (usually
+#'   1)
 #' @param split logical, split decades using split_decades
+#' @param base Positive number: the base with respect to which logarithms are
+#'   computed. Default is the base of the natural log `exp(1)`
 #'
 #' @return Vector of values to generate axis breaks
 #' @export
@@ -163,15 +227,26 @@ limit_breaks <- function(v, n=5, split=FALSE){
 #'      )
 
 
-breaks_divMult <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
+breaks_divMult <- function(n=6
+                           , nmin=3
+                           , anchor=NULL
+                           , split=FALSE
+                           , base = exp(1)){
+  if( !is.null(anchor) & anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1")}
   function(v){
     print(v)
-    if (anchor) v <- unique(c(v, 1))
-    v <- log(v)
+    v <- unique(c(v, anchor))
+    v <- log(v, base = base)
     neg <- min(v)
-    if (neg==0) return(limit_breaks(v, n, split = split))
+    if (neg==0) return(invisible(limit_breaks(v
+                                              , n
+                                              , split = split
+                                              , base = base)))
     pos <- max(v)
-    if (pos==0) return(1/limit_breaks(-v, n, split = split))
+    if (pos==0) return(1/invisible(limit_breaks(-v
+                                                , n
+                                                , split = split
+                                                , base = base)))
 
     flip <- -neg
     big <- pmax(pos, flip)
@@ -179,18 +254,25 @@ breaks_divMult <- function(n=6, nmin=3, anchor=TRUE, split=FALSE){
     bigprop <- big/(pos + flip)
     bigticks <- ceiling(n*bigprop)
 
-    main <- limit_breaks(c(0, big), bigticks, split = split)
+    main <- invisible(limit_breaks(c(0, big)
+                                   , bigticks
+                                   , split = split
+                                   , base = base))
     cut <- pmin(bigticks, 1+sum(main<small))
     if(cut<nmin)
-      other <- limit_breaks(c(0, small), nmin, split = split)
+      other <- invisible(limit_breaks(c(0, small)
+                                      , nmin
+                                      , split = split
+                                      , base = base))
     else
       other <- main[1:cut]
 
     breaks <- c(main, 1/other)
     if (flip > pos) breaks <- 1/breaks
-    return(sort(unique(breaks)))
+    return(sort(c(unique(breaks), anchor)))
   }
 }
+
 
 
 

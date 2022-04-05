@@ -20,7 +20,7 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
        trans = "nel"
        # default breaks aren't perfect; sometimes adding more helps
        #  trans = nel_trans(n = 9)
-       , labels = label_nel()
+       , labels = label_propChange
        , sec.axis = ggplot2::sec_axis(
            labels = function(x) {x}
            , trans = ~.
