@@ -71,7 +71,7 @@ label_propChange <- function(ref = 1){function(x) {x/ref}}
 #'        trans = "nel"
 #'        # default breaks aren't perfect; sometimes adding more helps
 #'        #  trans = nel_trans(n = 9)
-#'        , labels = label_propChange
+#'        , labels = label_nel()
 #'        , sec.axis = ggplot2::sec_axis(
 #'            labels = function(x) {x}
 #'            , trans = ~.
@@ -161,6 +161,8 @@ split_decades <- function(v){
 #' @param v Numeric vector, data or data range
 #' @param n Integer, target number of breaks
 #' @param split logical, split decades using split_decades
+#' @param base Positive number: the base with respect to which logarithms are
+#'   computed. Default is the base of the natural log `exp(1)`
 #'
 #' @return Vector of numeric values for axis breaks
 #' @export
@@ -232,7 +234,9 @@ breaks_divMult <- function(n=6
                            , anchor=NULL
                            , split=FALSE
                            , base = exp(1)){
-  if( !is.null(anchor) & anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1")}
+  if( !is.null(anchor)){
+    if(anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1")}
+  }
   function(v){
     print(v)
     v <- unique(c(v, anchor))
