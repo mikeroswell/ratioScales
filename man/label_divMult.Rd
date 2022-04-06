@@ -9,7 +9,8 @@ label_divMult(logscale = FALSE, base = exp(1))
 \arguments{
 \item{logscale}{Logical, are breaks already on the log scale?}
 
-\item{base}{Scalar, base of the logarithm used}
+\item{base}{a positive or complex number: the base with respect to which
+    logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
 }
 \value{
 Function for generating labeling expressions based on breaks
