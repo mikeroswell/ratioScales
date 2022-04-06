@@ -113,7 +113,7 @@ nel_trans <- function(n = 7){
 #'     ggplot2::labs(y = "propChange scale") +
 #'     ggplot2::geom_hline(yintercept = 25, size = 0.2)
 #'
-#'dat %>% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
 #'  ggplot2::geom_point() +
 #'  ggplot2::scale_y_continuous(
 #'    trans = propChange_trans()
@@ -153,7 +153,7 @@ split_decades <- function(v){
 		w <- c(w, v[[i]])
 		if (v[[i+1]]==10*v[[i]]) w <- c(w, 2*v[[i]], 5*v[[i]])
 	}
-	return(c(w, v[[l]]))
+	return(invisible(c(w, v[[l]])))
 }
 
 #' Truncate log-scaled axis breaks to data range
@@ -179,7 +179,7 @@ limit_breaks <- function(v, n=5, split=FALSE, base = exp(1)){
   # suppressWarnings for max(NULL) etc.
   upr <- suppressWarnings(min(b[log(b, base = base)>=max(v)]))
   lwr <- suppressWarnings(max(b[log(b, base = base)<=min(v)]))
-  return(b[(b>=lwr) & (b<=upr)])
+  return(invisible(b[(b>=lwr) & (b<=upr)]))
 }
 
 #' Compute breaks for ratio scale
@@ -232,22 +232,22 @@ breaks_divMult <- function(n=6
                            , split=FALSE
                            , base = exp(1)){
   if( !is.null(anchor)){
-    if(anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1")}
+    if(anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1 \n Consider centering data around reference before passing to scale_*_ratio() ")}
   }
   function(v){
     print(v)
     v <- unique(c(v, anchor))
     v <- log(v, base = base)
     neg <- min(v)
-    if (neg==0) return(invisible(limit_breaks(v
+    if (neg==0) return(limit_breaks(v
                                               , n
                                               , split = split
-                                              , base = base)))
+                                              , base = base))
     pos <- max(v)
-    if (pos==0) return(1/invisible(limit_breaks(-v
+    if (pos==0) return(1/limit_breaks(-v
                                                 , n
                                                 , split = split
-                                                , base = base)))
+                                                , base = base))
 
     flip <- -neg
     big <- pmax(pos, flip)
@@ -255,22 +255,22 @@ breaks_divMult <- function(n=6
     bigprop <- big/(pos + flip)
     bigticks <- ceiling(n*bigprop)
 
-    main <- invisible(limit_breaks(c(0, big)
+    main <- limit_breaks(c(0, big)
                                    , bigticks
                                    , split = split
-                                   , base = base))
+                                   , base = base)
     cut <- pmin(bigticks, 1+sum(main<small))
     if(cut<nmin)
-      other <- invisible(limit_breaks(c(0, small)
+      other <- limit_breaks(c(0, small)
                                       , nmin
                                       , split = split
-                                      , base = base))
+                                      , base = base)
     else
       other <- main[1:cut]
 
     breaks <- c(main, 1/other)
     if (flip > pos) breaks <- 1/breaks
-    return(sort(c(unique(breaks), anchor)))
+    return(invisible(sort(c(unique(breaks), anchor))))
   }
 }
 
@@ -292,9 +292,53 @@ breaks_divMult <- function(n=6
 #'
 #' @param tickVal Character, one of "divMult", "nel", "centiNel", or
 #'   "propChange"
-#' @param trans Function or Character name of transformation, most likely "log"
+#' @param trans Function or Character name of transformation
+#' @inheritParams label_propChange
 #' @param ... Additional arguments passed to
 #'    \code{\link[ggplot2]{scale_y_continuous}}
+#'
+#'
+#'
+#' @details Logarithmic transformations make multiplicative changes additive,
+#'   and are often used to highlight relative change. It is traditional to
+#'   rescale an axis logarithmically and mark ticks with original data values
+#'   (e.g. \code{\link[ggplot2]{scale_y_log10}})). `scale_*_ratio` is provides
+#'   an alternative, marking ticks with transformed values. This may be
+#'   especially useful when comparing relative changes of quantities with
+#'   different units.
+#'
+#'   Four ratio scales are provided (and denoted with the `tickVal` argument):
+#'   - `divMult` rescales an axis logarithmically, and prints multiplicative
+#'   changes for axis ticks, explicitly noting the operator ( \eqn{\times} or
+#'   \eqn{\div}). This scale highlights symmetry between division and
+#'   multiplication (\eqn{a \times 2} is equally far from \eqn{a} as is \eqn{a
+#'   \div 2}).
+#'
+#'   - `nel` rescales an axis logarithmically, and prints changes in units of "nels" (for _N_atural _L_ogarithm).
+#'
+#'   - `centiNel` rescales an axis logarithmically, and prints changes in units
+#'   of "centinels," pr one hundredth of a "nel". These may be more appropriate
+#'   for small changes (i.e. of many to a few hundred percents)
+#'
+#'   -`propChange` rescales an axis logarithmically, and prints changes in units
+#'   of proportional change. Unlike when percentages are plotted on an
+#'   arithmetic scale, the `propChange` transformation reveals underlying
+#'   geometric symmetry (\eqn{a \times 2} is equally far from \eqn{a} as is
+#'   \eqn{a \div 2}) graphically, but marks values with the more familiar
+#'   proportional change.
+#'
+#'   For small changes, `centiNels` may be preferable to `nels`, while for
+#'   larger changes, `nels` may be preferable (in the same way that small
+#'   proportional changes are commonly displayed as percentages rather than
+#'   proportions)
+#'
+#'   In many cases, the data passed to `scale_*_ratio` could be centered on the
+#'   reference value in advance. The `propChange` transformation can rescale to
+#'   a provided reference value (with the argument `ref`), but for attractive
+#'   breakpoints and clear code, transformation before an "aesthetic" is passed
+#'   to `scale_*_ratio` is advised.
+#'
+#'
 #'
 #'
 #' @export
@@ -306,18 +350,48 @@ breaks_divMult <- function(n=6
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
 #'      ggplot2::geom_point()+
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
-#'      scale_y_ratio(tickVal = "divMult")
+#'      scale_y_ratio(tickVal = "divMult"
+#'      , sec.axis = ggplot2::sec_axis(
+#'           labels = function(x) {x}
+#'           , trans = ~.
+#'           , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+#'           , name = "original data"
+#'         )) +
+#'         ggplot2::labs(y = "divMult scale (fold change)")
 #'
-#'  dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
 #'      ggplot2::geom_point()+
-#'      scale_y_ratio(tickVal = "centiNel")
+#'      scale_y_ratio(tickVal = "centiNel"
+#'      , ref = 1
+#'      , sec.axis = ggplot2::sec_axis(
+#'           labels = function(x) {x}
+#'           , trans = ~.
+#'           , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+#'           , name = "original data"
+#'         )) +
+#'         ggplot2::labs(y = "centiNels")
+#'
+#'
+#' # prop change can be tied to a reference value `ref`
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
+#'      ggplot2::geom_point()+
+#'      scale_y_ratio(tickVal = "propChange"
+#'      , ref = 25
+#'      , sec.axis = ggplot2::sec_axis(
+#'           labels = function(x) {x}
+#'           , trans = ~.
+#'           , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+#'           , name = "original data"
+#'         )) +
+#'         ggplot2::labs(y = "propChange (proportional change) scale")
 
 scale_y_ratio <- function(tickVal = "divMult"
                           , trans = "nel"
+                          , ref = 1
                           , ... ){
   if(tickVal %in% c("divmult", "divMult")){
     return(ggplot2::scale_y_continuous( trans = trans
-                        , breaks = breaks_divMult()
+                        , breaks = breaks_divMult(anchor = ref)
                         , labels = label_divMult()
                         , ...
     ))
@@ -332,6 +406,12 @@ scale_y_ratio <- function(tickVal = "divMult"
     return(ggplot2::scale_y_continuous( trans = trans
                               , labels = label_centiNel()
                               , ...
+    ))
+  }
+  if(tickVal %in% c("propchange", "propChange")){
+    return(ggplot2::scale_y_continuous( trans = propChange_trans(ref = ref)
+                                       , labels = label_propChange(ref = ref)
+                                        , ...
     ))
   }
 }

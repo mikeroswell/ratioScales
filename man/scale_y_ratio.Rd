@@ -4,13 +4,15 @@
 \alias{scale_y_ratio}
 \title{Ratio-based position scales for continuous data (x & y)}
 \usage{
-scale_y_ratio(tickVal = "divMult", trans = "nel", ...)
+scale_y_ratio(tickVal = "divMult", trans = "nel", ref = 1, ...)
 }
 \arguments{
 \item{tickVal}{Character, one of "divMult", "nel", "centiNel", or
 "propChange"}
 
-\item{trans}{Function or Character name of transformation, most likely "log"}
+\item{trans}{Function or Character name of transformation}
+
+\item{ref}{Scalar, reference value for proportional change}
 
 \item{...}{Additional arguments passed to
 \code{\link[ggplot2]{scale_y_continuous}}}
@@ -24,6 +26,46 @@ return tickmarks on the original scale of the data, \verb{scale_*_ratio} axis ti
 values represent a multiplicative change from a reference point. These scales
 may be especially useful for highlighting proportional changes.
 }
+\details{
+Logarithmic transformations make multiplicative changes additive,
+and are often used to highlight relative change. It is traditional to
+rescale an axis logarithmically and mark ticks with original data values
+(e.g. \code{\link[ggplot2]{scale_y_log10}})). \verb{scale_*_ratio} is provides
+an alternative, marking ticks with transformed values. This may be
+especially useful when comparing relative changes of quantities with
+different units.
+
+Four ratio scales are provided (and denoted with the \code{tickVal} argument):
+\itemize{
+\item \code{divMult} rescales an axis logarithmically, and prints multiplicative
+changes for axis ticks, explicitly noting the operator ( \eqn{\times} or
+\eqn{\div}). This scale highlights symmetry between division and
+multiplication (\eqn{a \times 2} is equally far from \eqn{a} as is \eqn{a
+  \div 2}).
+\item \code{nel} rescales an axis logarithmically, and prints changes in units of "nels" (for _N_atural _L_ogarithm).
+\item \code{centiNel} rescales an axis logarithmically, and prints changes in units
+of "centinels," pr one hundredth of a "nel". These may be more appropriate
+for small changes (i.e. of many to a few hundred percents)
+}
+
+-\code{propChange} rescales an axis logarithmically, and prints changes in units
+of proportional change. Unlike when percentages are plotted on an
+arithmetic scale, the \code{propChange} transformation reveals underlying
+geometric symmetry (\eqn{a \times 2} is equally far from \eqn{a} as is
+\eqn{a \div 2}) graphically, but marks values with the more familiar
+proportional change.
+
+For small changes, \code{centiNels} may be preferable to \code{nels}, while for
+larger changes, \code{nels} may be preferable (in the same way that small
+proportional changes are commonly displayed as percentages rather than
+proportions)
+
+In many cases, the data passed to \verb{scale_*_ratio} could be centered on the
+reference value in advance. The \code{propChange} transformation can rescale to
+a provided reference value (with the argument \code{ref}), but for attractive
+breakpoints and clear code, transformation before an "aesthetic" is passed
+to \verb{scale_*_ratio} is advised.
+}
 \examples{
 y <- exp(seq(-2,5, length.out = 10))
 x <- 1:10
@@ -31,9 +73,38 @@ dat <- data.frame(x, y)
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::geom_point()+
      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
-     scale_y_ratio(tickVal = "divMult")
+     scale_y_ratio(tickVal = "divMult"
+     , sec.axis = ggplot2::sec_axis(
+          labels = function(x) {x}
+          , trans = ~.
+          , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+          , name = "original data"
+        )) +
+        ggplot2::labs(y = "divMult scale (fold change)")
 
- dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
+dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::geom_point()+
-     scale_y_ratio(tickVal = "centiNel")
+     scale_y_ratio(tickVal = "centiNel"
+     , ref = 1
+     , sec.axis = ggplot2::sec_axis(
+          labels = function(x) {x}
+          , trans = ~.
+          , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+          , name = "original data"
+        )) +
+        ggplot2::labs(y = "centiNels")
+
+
+# prop change can be tied to a reference value `ref`
+dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
+     ggplot2::geom_point()+
+     scale_y_ratio(tickVal = "propChange"
+     , ref = 25
+     , sec.axis = ggplot2::sec_axis(
+          labels = function(x) {x}
+          , trans = ~.
+          , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+          , name = "original data"
+        )) +
+        ggplot2::labs(y = "propChange (proportional change) scale")
 }
