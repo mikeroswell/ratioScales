@@ -153,7 +153,7 @@ split_decades <- function(v){
 		w <- c(w, v[[i]])
 		if (v[[i+1]]==10*v[[i]]) w <- c(w, 2*v[[i]], 5*v[[i]])
 	}
-	return(invisible(c(w, v[[l]])))
+	return(c(w, v[[l]]))
 }
 
 #' Truncate log-scaled axis breaks to data range
@@ -179,7 +179,7 @@ limit_breaks <- function(v, n=5, split=FALSE, base = exp(1)){
   # suppressWarnings for max(NULL) etc.
   upr <- suppressWarnings(min(b[log(b, base = base)>=max(v)]))
   lwr <- suppressWarnings(max(b[log(b, base = base)<=min(v)]))
-  return(invisible(b[(b>=lwr) & (b<=upr)]))
+  return(b[(b>=lwr) & (b<=upr)])
 }
 
 #' Compute breaks for ratio scale
@@ -235,7 +235,6 @@ breaks_divMult <- function(n=6
     if(anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1 \n Consider centering data around reference before passing to scale_*_ratio() ")}
   }
   function(v){
-    print(v)
     v <- unique(c(v, anchor))
     v <- log(v, base = base)
     neg <- min(v)
@@ -270,7 +269,7 @@ breaks_divMult <- function(n=6
 
     breaks <- c(main, 1/other)
     if (flip > pos) breaks <- 1/breaks
-    return(invisible(sort(c(unique(breaks), anchor))))
+    return(sort(c(unique(breaks), anchor)))
   }
 }
 
