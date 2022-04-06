@@ -22,7 +22,7 @@
     <loc>https://mikeroswell.github.io/ratioScales/index.html</loc>
   </url>
   <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/divMultBreaks.html</loc>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/breaks_divMult.html</loc>
   </url>
   <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/index.html</loc>
@@ -37,7 +37,10 @@
     <loc>https://mikeroswell.github.io/ratioScales/reference/label_nel.html</loc>
   </url>
   <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/limBreaks.html</loc>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/label_propChange.html</loc>
+  </url>
+  <url>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/limit_breaks.html</loc>
   </url>
   <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/nel_trans.html</loc>
@@ -46,9 +49,12 @@
     <loc>https://mikeroswell.github.io/ratioScales/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/propChange_trans.html</loc>
+  </url>
+  <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/scale_y_ratio.html</loc>
   </url>
   <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/splitDecades.html</loc>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/split_decades.html</loc>
   </url>
 </urlset>
