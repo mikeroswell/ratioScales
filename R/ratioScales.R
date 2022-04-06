@@ -159,6 +159,7 @@ split_decades <- function(v){
 #' Truncate log-scaled axis breaks to data range
 #'
 #' @inheritParams breaks_divMult
+#' @param v Numeric vector, data or data range
 #'
 #'
 #' @return Vector of numeric values for axis breaks

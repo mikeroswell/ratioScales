@@ -7,6 +7,8 @@
 limit_breaks(v, n = 5, split = FALSE, base = exp(1))
 }
 \arguments{
+\item{v}{Numeric vector, data or data range}
+
 \item{n}{Scalar, target number of breaks}
 
 \item{split}{logical, split decades using split_decades}
