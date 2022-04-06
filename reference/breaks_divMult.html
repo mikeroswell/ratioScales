@@ -90,7 +90,6 @@
 <span class="r-in"><span class="fu">breaks_divMult</span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">(</span>v <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   0.1353353   0.2945748   0.6411804   1.3956124   3.0377318   6.6120179</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  14.3919161  31.3258753  68.1848379 148.4131591</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1e-01 2e-01 5e-01 1e+00 1e+01 1e+02 1e+03</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># if 1 is lower limit, only positive log(breaks)</span></span>
 <span class="r-in"><span class="fu">breaks_divMult</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">11</span><span class="op">)</span><span class="op">)</span></span>
@@ -103,13 +102,10 @@
 <span class="r-in"><span class="co"># expanding range on one side of 1 doesn't leave the other side behind</span></span>
 <span class="r-in"><span class="fu">breaks_divMult</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.04</span>, <span class="fl">2.2</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.04 2.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02 0.10 0.20 1.00 2.00 4.00</span>
 <span class="r-in"><span class="fu">breaks_divMult</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.04</span>, <span class="fl">220</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]   0.04 220.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2e-02 1e-01 2e-01 1e+00 1e+01 1e+02 1e+03</span>
 <span class="r-in"><span class="fu">breaks_divMult</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.04</span>, <span class="fl">2200</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]    0.04 2200.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2e-02 1e-01 2e-01 1e+00 1e+01 1e+02 1e+03 1e+04</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
