@@ -2,7 +2,7 @@
 #'
 #'
 #' @param logscale Logical, are breaks already on the log scale?
-#' @param base Scalar, base of the logarithm used
+#' @inheritParams base::log
 #'
 #' @concept Visualization
 #'
@@ -158,11 +158,8 @@ split_decades <- function(v){
 
 #' Truncate log-scaled axis breaks to data range
 #'
-#' @param v Numeric vector, data or data range
-#' @param n Integer, target number of breaks
-#' @param split logical, split decades using split_decades
-#' @param base Positive number: the base with respect to which logarithms are
-#'   computed. Default is the base of the natural log `exp(1)`
+#' @inheritParams breaks_divMult
+#'
 #'
 #' @return Vector of numeric values for axis breaks
 #' @export
@@ -191,8 +188,7 @@ limit_breaks <- function(v, n=5, split=FALSE, base = exp(1)){
 #' @param anchor NULL or scalar, value to include as a reference point (usually
 #'   1)
 #' @param split logical, split decades using split_decades
-#' @param base Positive number: the base with respect to which logarithms are
-#'   computed. Default is the base of the natural log `exp(1)`
+#' @inheritParams base::log
 #'
 #' @return Vector of values to generate axis breaks
 #' @export

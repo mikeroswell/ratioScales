@@ -16,8 +16,8 @@ breaks_divMult(n = 6, nmin = 3, anchor = NULL, split = FALSE, base = exp(1))
 
 \item{split}{logical, split decades using split_decades}
 
-\item{base}{Positive number: the base with respect to which logarithms are
-computed. Default is the base of the natural log \code{exp(1)}}
+\item{base}{a positive or complex number: the base with respect to which
+    logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
 }
 \value{
 Vector of values to generate axis breaks

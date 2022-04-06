@@ -7,14 +7,12 @@
 limit_breaks(v, n = 5, split = FALSE, base = exp(1))
 }
 \arguments{
-\item{v}{Numeric vector, data or data range}
-
-\item{n}{Integer, target number of breaks}
+\item{n}{Scalar, target number of breaks}
 
 \item{split}{logical, split decades using split_decades}
 
-\item{base}{Positive number: the base with respect to which logarithms are
-computed. Default is the base of the natural log \code{exp(1)}}
+\item{base}{a positive or complex number: the base with respect to which
+    logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
 }
 \value{
 Vector of numeric values for axis breaks

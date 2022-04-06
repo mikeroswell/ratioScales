@@ -13,8 +13,8 @@ propChange_trans(n = 7, split = TRUE, ref = 1, base = 10)
 
 \item{ref}{Scalar, reference value for proportional change}
 
-\item{base}{Positive number: the base with respect to which logarithms are
-computed. Default is the base of the natural log \code{exp(1)}}
+\item{base}{a positive or complex number: the base with respect to which
+    logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
 }
 \description{
 Natural log transformation... showing proportional change explicitly
