@@ -35,9 +35,9 @@ reasonable risks.
 I've noticed the NYT shows the case rates on an arithmetic scale, which I think
 makes my work a bit harder. Here is an exploration of some alternative scales
 and units (all the scale and unit ideas here are from [Jonathan
-Dushoff](https://mac-theobio.github.io/dushoff.html), but I wrote this up to
-understand them all), which might help me make more sense of the data and think
-more clearly about the risks I take.
+Dushoff](https://mac-theobio.github.io/dushoff.html), but I wrote this up in
+March 2022 to understand them all), which might help me make more sense of the
+data and think more clearly about the risks I take.
 
 First, grab the data, which are freely available on github: 
 
