@@ -4,13 +4,16 @@
 \alias{split_decades}
 \title{Split stingy limit_breaks into three parts per complete decade}
 \usage{
-split_decades(v)
+split_decades(v, splits = c(1, 2, 3))
 }
 \arguments{
-\item{v}{vector on the unlogged scale to be examined and split}
+\item{v}{Vector on the unlogged scale to be examined and split}
+
+\item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
+"decade?"}
 }
 \value{
-vector with splits added
+Vector with splits added
 }
 \description{
 Split stingy limit_breaks into three parts per complete decade

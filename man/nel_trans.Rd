@@ -27,7 +27,7 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
            labels = function(x) {x}
            , trans = ~.
            , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
-           , name = "original data"
+           , name = "original scale"
          )
        ) +
      ggplot2::labs(y = "nel (natural log) scale") +

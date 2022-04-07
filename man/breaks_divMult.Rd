@@ -4,7 +4,7 @@
 \alias{breaks_divMult}
 \title{Compute breaks for ratio scale}
 \usage{
-breaks_divMult(n = 6, nmin = 3, anchor = NULL, split = FALSE, base = exp(1))
+breaks_divMult(n = 6, nmin = 3, anchor = TRUE, splits = 1, base = exp(1))
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}
@@ -14,7 +14,8 @@ breaks_divMult(n = 6, nmin = 3, anchor = NULL, split = FALSE, base = exp(1))
 \item{anchor}{NULL or scalar, value to include as a reference point (usually
 1)}
 
-\item{split}{logical, split decades using split_decades}
+\item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
+"decade?"}
 
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}

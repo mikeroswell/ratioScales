@@ -4,14 +4,15 @@
 \alias{limit_breaks}
 \title{Truncate log-scaled axis breaks to data range}
 \usage{
-limit_breaks(v, n = 5, split = FALSE, base = exp(1))
+limit_breaks(v, n = 5, splits = 1, base = exp(1))
 }
 \arguments{
 \item{v}{Numeric vector, data or data range}
 
 \item{n}{Scalar, target number of breaks}
 
-\item{split}{logical, split decades using split_decades}
+\item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
+"decade?"}
 
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
