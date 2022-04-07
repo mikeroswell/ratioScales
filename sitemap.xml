@@ -37,7 +37,10 @@
     <loc>https://mikeroswell.github.io/ratioScales/reference/label_nel.html</loc>
   </url>
   <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/label_propChange.html</loc>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/label_percDiff.html</loc>
+  </url>
+  <url>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/label_propDiff.html</loc>
   </url>
   <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/limit_breaks.html</loc>
@@ -49,7 +52,7 @@
     <loc>https://mikeroswell.github.io/ratioScales/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/propChange_trans.html</loc>
+    <loc>https://mikeroswell.github.io/ratioScales/reference/propDiff_trans.html</loc>
   </url>
   <url>
     <loc>https://mikeroswell.github.io/ratioScales/reference/scale_y_ratio.html</loc>

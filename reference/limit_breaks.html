@@ -54,7 +54,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">limit_breaks</span><span class="op">(</span><span class="va">v</span>, n <span class="op">=</span> <span class="fl">5</span>, split <span class="op">=</span> <span class="cn">FALSE</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">limit_breaks</span><span class="op">(</span><span class="va">v</span>, n <span class="op">=</span> <span class="fl">5</span>, splits <span class="op">=</span> <span class="fl">1</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,8 +63,9 @@
 <dd><p>Numeric vector, data or data range</p></dd>
 <dt>n</dt>
 <dd><p>Scalar, target number of breaks</p></dd>
-<dt>split</dt>
-<dd><p>logical, split decades using split_decades</p></dd>
+<dt>splits</dt>
+<dd><p>Integer, one of <code>c(1,2,3)</code>. How many tick marks per
+"decade?"</p></dd>
 <dt>base</dt>
 <dd><p>a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \(e\)=<code>exp(1)</code>.</p></dd>
@@ -84,7 +85,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05</span>
 <span class="r-in"><span class="co"># limit_breaks reels this in</span></span>
 <span class="r-in"><span class="fu">limit_breaks</span><span class="op">(</span>v <span class="op">=</span> <span class="va">v</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1e-01 1e+00 1e+01 1e+02 1e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1e-02 1e+05</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
