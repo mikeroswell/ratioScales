@@ -102,24 +102,25 @@ changes for axis ticks, explicitly noting the operator ( \(\times\) or
 \(\div\)). This scale highlights symmetry between division and
 multiplication (\(a \times 2\) is equally far from \(a\) as is \(a
   \div 2\)).</p></li>
-<li><p><code>nel</code> rescales an axis logarithmically, and prints changes in units of "nels" (for _N_atural _L_ogarithm).</p></li>
+<li><p><code>nel</code> rescales an axis logarithmically, and prints changes in units of
+"nels" (for _N_atural _L_ogarithm).</p></li>
 <li><p><code>centiNel</code> rescales an axis logarithmically, and prints changes in units
-of "centinels," pr one hundredth of a "nel". These may be more appropriate
-for small changes (i.e. of many to a few hundred percents)</p></li>
+of "centinels," i.e. one hundredth of a "nel". These may be more
+appropriate for small changes (i.e. of a few to a few hundred percents)</p></li>
 </ul><p>-<code>propChange</code> rescales an axis logarithmically, and prints changes in units
 of proportional change. Unlike when percentages are plotted on an
 arithmetic scale, the <code>propChange</code> transformation reveals underlying
-geometric symmetry (\(a \times 2\) is equally far from \(a\) as is
-\(a \div 2\)) graphically, but marks values with the more familiar
+geometric symmetry: (\(a \times 2\) is equally far from \(a\) as is
+\(a \div 2\)) graphically, but tick values indicate the more familiar
 proportional change.</p>
 <p>For small changes, <code>centiNels</code> may be preferable to <code>nels</code>, while for
 larger changes, <code>nels</code> may be preferable (in the same way that small
 proportional changes are commonly displayed as percentages rather than
 proportions)</p>
-<p>In many cases, the data passed to <code>scale_*_ratio</code> could be centered on the
+<p>In many cases, the data passed to <code>scale_*_ratio</code> should be centered on the
 reference value in advance. The <code>propChange</code> transformation can rescale to
 a provided reference value (with the argument <code>ref</code>), but for attractive
-breakpoints and clear code, transformation before an "aesthetic" is passed
+breakpoints and clear code, rescaling before an "aesthetic" is passed
 to <code>scale_*_ratio</code> is advised.</p>
     </div>
 
