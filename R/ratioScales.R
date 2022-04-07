@@ -47,13 +47,49 @@ label_nel <- function(){
 }
 
 
-#' Rescaling breaks relative to reference point
+#' Scale breakpoints based on proportional difference from reference
 #'
-#' @param ref Scalar, reference value for proportional change
+#' @inheritParams label_divMult
 #'
 #' @return Function used as argument to `labels` in `scale_*_*`
 #' @export
-label_propChange <- function(ref = 1){function(x) {x/ref}}
+label_propDiff <- function(logscale = FALSE, base = exp(1)){
+  function(x){
+    if(logscale){x <- x}
+    else{x <- log(x, base = base )}
+    chars <- ifelse(sign(x) == -1,
+                    paste("NULL","%-%", (base^abs(x)-1)/1)
+                    , ifelse(sign(x) == 1,
+                             paste("NULL", "%+%", (base^abs(x)-1)/1)
+                             , paste0("bold(", base^x, ")")
+                    )
+    )
+
+    return(str2expression(chars))
+  }
+}
+
+#' Scale breakpoints based on percentage difference from reference
+#'
+#' @inheritParams label_divMult
+#'
+#' @return Function used as argument to `labels` in `scale_*_*`
+#' @export
+label_percDiff <- function(logscale = FALSE, base = exp(1)){
+  function(x){
+    if(logscale){x <- 100 * x}
+    else{x <- 100 * log(x, base = base )}
+    chars <- ifelse(sign(x) == -1,
+                    paste("NULL","%-%", (base^abs(x)-100)/100)
+                    , ifelse(sign(x) == 1,
+                             paste("NULL", "%+%", (base^abs(x)-100)/100)
+                             , paste0("bold(", base^x - 100, ")")
+                    )
+    )
+
+    return(str2expression(chars))
+  }
+}
 
 
 
@@ -106,8 +142,7 @@ nel_trans <- function(n = 7, use_centiNel = FALSE){
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
 #'     ggplot2::geom_point() +
 #'     ggplot2::scale_y_continuous(
-#'       trans = propChange_trans(ref = 25)
-#'       , labels = label_propChange(ref = 25)
+#'       trans = propChange_trans()
 #'       , sec.axis = ggplot2::sec_axis(
 #'           labels = function(x) {x}
 #'           , trans = ~.
@@ -135,13 +170,13 @@ nel_trans <- function(n = 7, use_centiNel = FALSE){
 #'
 #'
 #'
-propChange_trans <- function(n = 7, split = TRUE, ref = 1, base = 10){
+propDiff_trans <- function(n = 7, split = TRUE, anchor = TRUE, base = 10){
   scales::trans_new(
-    "propChange"
+    "propDiff"
     , trans = function(x) { log(x, base = base) }
     , inverse = function(x) { base^x}
-    , breaks = breaks_divMult(n = n, split = split, base = base, anchor = ref)
-    , format = label_propChange(ref = ref)
+    , breaks = breaks_divMult(n = n, split = split, base = base, anchor = anchor)
+    , format = label_propDiff()
   )
 }
 
@@ -152,12 +187,16 @@ propChange_trans <- function(n = 7, split = TRUE, ref = 1, base = 10){
 #' Split stingy limit_breaks into three parts per complete decade
 #' @param v vector on the unlogged scale to be examined and split
 #' @return vector with splits added
-split_decades <- function(v){
+split_decades <- function(v, splits = c(1, 2, 3)){
 	l <- length(v)
 	w <- numeric(0)
 	if (l>1) for (i in 1:(l-1)){
 		w <- c(w, v[[i]])
-		if (v[[i+1]]==10*v[[i]]) w <- c(w, 2*v[[i]], 5*v[[i]])
+		if (splits == 1) { return(c(w, v[[l]])) }
+		if (v[[i + 1]] == 10 * v[[i]]) {
+		  if (splits == 3) {w <- c(w, 2*v[[i]], 5*v[[i]])}
+		  if (splits == 2) {w <- c(w, 3*v[[i]])}
+		}
 	}
 	return(c(w, v[[l]]))
 }
@@ -232,16 +271,14 @@ limit_breaks <- function(v, n=5, split=FALSE, base = exp(1)){
 #'      )
 
 
-breaks_divMult <- function(n=6
-                           , nmin=3
-                           , anchor=NULL
-                           , split=FALSE
+breaks_divMult <- function(n = 6
+                           , nmin = 3
+                           , anchor = TRUE
+                           , split = FALSE
                            , base = exp(1)){
-  if( !is.null(anchor)){
-    if(anchor != 1 ){message("1 is the conventional anchor for the divMult scale. \nYou have chosen an anchor other than 1 \n Consider centering data around reference before passing to scale_*_ratio() ")}
-  }
+
   function(v){
-    v <- unique(c(v, anchor))
+    if(anchor){unique(c(v, 1))}
     v <- log(v, base = base)
     neg <- min(v)
     if (neg==0) return(limit_breaks(v
@@ -275,7 +312,7 @@ breaks_divMult <- function(n=6
 
     breaks <- c(main, 1/other)
     if (flip > pos) breaks <- 1/breaks
-    return(sort(c(unique(breaks), anchor)))
+    return(sort(unique(breaks))
   }
 }
 
@@ -333,16 +370,12 @@ breaks_divMult <- function(n=6
 #'   \eqn{a \div 2}) graphically, but tick values indicate the more familiar
 #'   proportional change.
 #'
-#'   For small changes, `centiNels` may be preferable to `nels`, while for
-#'   larger changes, `nels` may be preferable (in the same way that small
-#'   proportional changes are commonly displayed as percentages rather than
-#'   proportions)
+#'   For small changes, "centinels" and percentage difference may be preferable,
+#'   while for larger changes, "nels" and proportional difference may be
+#'   preferable.
 #'
-#'   In many cases, the data passed to `scale_*_ratio` should be centered on the
-#'   reference value in advance. The `propChange` transformation can rescale to
-#'   a provided reference value (with the argument `ref`), but for attractive
-#'   breakpoints and clear code, rescaling before an "aesthetic" is passed
-#'   to `scale_*_ratio` is advised.
+#'   Typically, the data passed to `scale_*_ratio` should be centered on a
+#'   reference value in advance.
 #'
 #'
 #'
