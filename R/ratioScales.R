@@ -56,9 +56,11 @@ label_nel <- function(){
 label_propChange <- function(ref = 1){function(x) {x/ref}}
 
 
-#' Natural log transformation... with breaking control
+
+#' Natural log transformation... providing breaks on the "nel" scale
 #'
 #' @param n Integer, desired number of breaks
+#' @param use_centiNel Logical, should units be "centiNels" (defaul is "nel")
 #' @seealso \code{\link[scales]{log_breaks}}
 #'
 #' @export
@@ -82,14 +84,17 @@ label_propChange <- function(ref = 1){function(x) {x/ref}}
 #'      ggplot2::labs(y = "nel (natural log) scale") +
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
-nel_trans <- function(n = 7){
+nel_trans <- function(n = 7, use_centiNel = FALSE){
   scales::trans_new(
     "nel"
     , trans = "log"
     , inverse = "exp"
     , breaks = scales::log_breaks(base = exp(1), n = n)
+    , format = ifelse(use_centiNel, label_centiNel(), label_nel())
   )
 }
+
+
 
 #' Natural log transformation... showing proportional change explicitly
 #'
@@ -136,6 +141,7 @@ propChange_trans <- function(n = 7, split = TRUE, ref = 1, base = 10){
     , trans = function(x) { log(x, base = base) }
     , inverse = function(x) { base^x}
     , breaks = breaks_divMult(n = n, split = split, base = base, anchor = ref)
+    , format = label_propChange(ref = ref)
   )
 }
 
@@ -313,17 +319,18 @@ breaks_divMult <- function(n=6
 #'   multiplication (\eqn{a \times 2} is equally far from \eqn{a} as is \eqn{a
 #'   \div 2}).
 #'
-#'   - `nel` rescales an axis logarithmically, and prints changes in units of "nels" (for _N_atural _L_ogarithm).
+#'   - `nel` rescales an axis logarithmically, and prints changes in units of
+#'   "nels" (for _N_atural _L_ogarithm).
 #'
 #'   - `centiNel` rescales an axis logarithmically, and prints changes in units
-#'   of "centinels," pr one hundredth of a "nel". These may be more appropriate
-#'   for small changes (i.e. of many to a few hundred percents)
+#'   of "centinels," i.e. one hundredth of a "nel". These may be more
+#'   appropriate for small changes (i.e. of a few to a few hundred percents)
 #'
 #'   -`propChange` rescales an axis logarithmically, and prints changes in units
 #'   of proportional change. Unlike when percentages are plotted on an
 #'   arithmetic scale, the `propChange` transformation reveals underlying
-#'   geometric symmetry (\eqn{a \times 2} is equally far from \eqn{a} as is
-#'   \eqn{a \div 2}) graphically, but marks values with the more familiar
+#'   geometric symmetry: (\eqn{a \times 2} is equally far from \eqn{a} as is
+#'   \eqn{a \div 2}) graphically, but tick values indicate the more familiar
 #'   proportional change.
 #'
 #'   For small changes, `centiNels` may be preferable to `nels`, while for
@@ -331,10 +338,10 @@ breaks_divMult <- function(n=6
 #'   proportional changes are commonly displayed as percentages rather than
 #'   proportions)
 #'
-#'   In many cases, the data passed to `scale_*_ratio` could be centered on the
+#'   In many cases, the data passed to `scale_*_ratio` should be centered on the
 #'   reference value in advance. The `propChange` transformation can rescale to
 #'   a provided reference value (with the argument `ref`), but for attractive
-#'   breakpoints and clear code, transformation before an "aesthetic" is passed
+#'   breakpoints and clear code, rescaling before an "aesthetic" is passed
 #'   to `scale_*_ratio` is advised.
 #'
 #'
@@ -397,7 +404,6 @@ scale_y_ratio <- function(tickVal = "divMult"
   }
   if(tickVal %in% c("nel", "Nel")){
     return(ggplot2::scale_y_continuous( trans = trans
-                              , labels = label_nel()
                               , ...
     ))
   }
@@ -409,8 +415,7 @@ scale_y_ratio <- function(tickVal = "divMult"
   }
   if(tickVal %in% c("propchange", "propChange")){
     return(ggplot2::scale_y_continuous( trans = propChange_trans(ref = ref)
-                                       , labels = label_propChange(ref = ref)
-                                        , ...
+                                      , ...
     ))
   }
 }

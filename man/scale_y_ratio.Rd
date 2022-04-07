@@ -42,17 +42,18 @@ changes for axis ticks, explicitly noting the operator ( \eqn{\times} or
 \eqn{\div}). This scale highlights symmetry between division and
 multiplication (\eqn{a \times 2} is equally far from \eqn{a} as is \eqn{a
   \div 2}).
-\item \code{nel} rescales an axis logarithmically, and prints changes in units of "nels" (for _N_atural _L_ogarithm).
+\item \code{nel} rescales an axis logarithmically, and prints changes in units of
+"nels" (for _N_atural _L_ogarithm).
 \item \code{centiNel} rescales an axis logarithmically, and prints changes in units
-of "centinels," pr one hundredth of a "nel". These may be more appropriate
-for small changes (i.e. of many to a few hundred percents)
+of "centinels," i.e. one hundredth of a "nel". These may be more
+appropriate for small changes (i.e. of a few to a few hundred percents)
 }
 
 -\code{propChange} rescales an axis logarithmically, and prints changes in units
 of proportional change. Unlike when percentages are plotted on an
 arithmetic scale, the \code{propChange} transformation reveals underlying
-geometric symmetry (\eqn{a \times 2} is equally far from \eqn{a} as is
-\eqn{a \div 2}) graphically, but marks values with the more familiar
+geometric symmetry: (\eqn{a \times 2} is equally far from \eqn{a} as is
+\eqn{a \div 2}) graphically, but tick values indicate the more familiar
 proportional change.
 
 For small changes, \code{centiNels} may be preferable to \code{nels}, while for
@@ -60,10 +61,10 @@ larger changes, \code{nels} may be preferable (in the same way that small
 proportional changes are commonly displayed as percentages rather than
 proportions)
 
-In many cases, the data passed to \verb{scale_*_ratio} could be centered on the
+In many cases, the data passed to \verb{scale_*_ratio} should be centered on the
 reference value in advance. The \code{propChange} transformation can rescale to
 a provided reference value (with the argument \code{ref}), but for attractive
-breakpoints and clear code, transformation before an "aesthetic" is passed
+breakpoints and clear code, rescaling before an "aesthetic" is passed
 to \verb{scale_*_ratio} is advised.
 }
 \examples{

@@ -2,15 +2,17 @@
 % Please edit documentation in R/ratioScales.R
 \name{nel_trans}
 \alias{nel_trans}
-\title{Natural log transformation... with breaking control}
+\title{Natural log transformation... providing breaks on the "nel" scale}
 \usage{
-nel_trans(n = 7)
+nel_trans(n = 7, use_centiNel = FALSE)
 }
 \arguments{
 \item{n}{Integer, desired number of breaks}
+
+\item{use_centiNel}{Logical, should units be "centiNels" (defaul is "nel")}
 }
 \description{
-Natural log transformation... with breaking control
+Natural log transformation... providing breaks on the "nel" scale
 }
 \examples{
 dat<-data.frame(x = 1:10, y = exp(-2:7))
