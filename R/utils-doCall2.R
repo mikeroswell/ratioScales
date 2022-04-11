@@ -8,7 +8,7 @@
 #'
 #' @details source code and example from stack overflow conversation with G.
 #'   Grothendieck here: https://stackoverflow.com/a/71801214/8400969
-#' @export
+#' @noRd
 #'
 #' @examples
 #'
