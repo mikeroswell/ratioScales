@@ -258,10 +258,13 @@ cut_vid %>%
   geom_vline(xintercept = as.Date("2021-10-17"), color = "red") +
   scale_x_date() +
   scale_y_ratio(
-    tickVal = "divMult"
+   tickVal = "divMult"
+    , slashStar = FALSE
     , sec.axis = sec_axis( trans = ~log(.)*100
                           , breaks = scales::breaks_extended(n = 6)
-                          , name = "centinels")) + 
+                          , name = "centinels")
+ 
+    ) + 
   geom_hline(yintercept = 1, size = 0.1) +
   labs(x = "date", y = "Cases relative to my reference \n(divMult scale)" )
 

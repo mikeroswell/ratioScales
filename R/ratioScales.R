@@ -2,6 +2,10 @@
 #'
 #'
 #' @param logscale Logical, are breaks already on the log scale?
+#' @param slashStar Logical, should division and mulitplication symbols be "*"
+#'   and "/" (default). Prettier symbols \eqn{\times, \div} are available when
+#'   `slashStar == FALSE`, but font libraries and text size may make
+#'   distinguishing \eqn{\div} from \eqn{+} difficult.
 #' @inheritParams base::log
 #'
 #' @concept Visualization
@@ -12,10 +16,23 @@
 #' @examples
 #' label_divMult()(c(1:4,2))
 #'
-label_divMult <- function(logscale = FALSE, base = exp(1)){
+label_divMult <- function(logscale = FALSE
+                          , base = exp(1)
+                          , slashStar = TRUE ){
   function(x){
   if(logscale){x <- x}
   else{x <- log(x, base = base )}
+  if(slashStar){
+    chars <- ifelse(sign(x) == -1
+                    , paste("/", base^abs(x))
+                    , ifelse(sign(x) == 1
+                             , paste(' *', base^abs(x))
+                             , base^x
+                    )
+    )
+  return(chars)
+
+  } else{
   chars <- ifelse(sign(x) == -1,
            paste("NULL","%/%", base^abs(x))
            , ifelse(sign(x) == 1,
@@ -23,8 +40,10 @@ label_divMult <- function(logscale = FALSE, base = exp(1)){
                     , paste0("bold(", base^x, ")")
              )
        )
+  return(str2expression(chars))
+  }
 
-    return(str2expression(chars))
+
     }
 }
 
@@ -402,6 +421,7 @@ breaks_divMult <- function(n = 6
 #'      ggplot2::geom_point() +
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
 #'      scale_y_ratio(tickVal = "divMult"
+#'      , slashStar = TRUE
 #'      , sec.axis = ax2) +
 #'         ggplot2::labs(y = "divMult scale (fold change)")
 #'
@@ -432,33 +452,41 @@ scale_y_ratio <- function(tickVal = "divMult"
                           , splits = 2
                           , ... ){
   if(tickVal %in% c("divmult", "divMult")){
-    return(ggplot2::scale_y_continuous( trans = trans
-                        , breaks = breaks_divMult(splits = splits)
-                        , labels = label_divMult()
-                        , ...
-    ))
+    return(doCall2(ggplot2::scale_y_continuous
+                    , args = list(trans = trans
+                                  , breaks = doCall2(breaks_divMult
+                                                      , list(splits = splits, ...))
+                                  , labels =  doCall2(label_divMult
+                                                      , list(...))
+                                  , ...)
+                    )
+    )
   }
   if(tickVal %in% c("nel", "Nel")){
-    return(ggplot2::scale_y_continuous( trans = trans
-                              , ...
+    return(doCall2(ggplot2::scale_y_continuous
+                    , args = list(trans = trans
+                                    , ...)
     ))
   }
   if(tickVal %in% c("centinel", "centiNel")){
-    return(ggplot2::scale_y_continuous( trans = trans
-                              , labels = label_centiNel()
-                              , ...
+    return(doCall2(ggplot2::scale_y_continuous
+                    , args = list(trans = trans
+                                  , labels = label_centiNel()
+                                  , ...)
     ))
   }
   if(tickVal %in% c("propDiff", "propDiff")){
-    return(ggplot2::scale_y_continuous( trans = propDiff_trans()
-                                      , ...
-    ))
-  }
-  if(tickVal %in% c("propDiff", "percDiff")){
-    return(ggplot2::scale_y_continuous( trans = propDiff_trans()
-                                        , labels = label_percDiff()
-                                        , ...
-    ))
+      return(doCall2(ggplot2::scale_y_continuous
+                      , args = list(trans = propDiff_trans()
+                                    , ...)
+      ))
+    }
+    if(tickVal %in% c("propDiff", "percDiff")){
+      return(doCall2(ggplot2::scale_y_continuous
+                      , args = list(trans = propDiff_trans()
+                                    , labels = label_percDiff()
+                                    , ...)
+      ))
   }
 }
 

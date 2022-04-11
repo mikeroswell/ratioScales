@@ -4,13 +4,18 @@
 \alias{label_divMult}
 \title{Ratio labels}
 \usage{
-label_divMult(logscale = FALSE, base = exp(1))
+label_divMult(logscale = FALSE, base = exp(1), slashStar = TRUE)
 }
 \arguments{
 \item{logscale}{Logical, are breaks already on the log scale?}
 
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
+
+\item{slashStar}{Logical, should division and mulitplication symbols be "*"
+and "/" (default). Prettier symbols \eqn{\times, \div} are available when
+\code{slashStar == FALSE}, but font libraries and text size may make
+distinguishing \eqn{\div} from \eqn{+} difficult.}
 }
 \value{
 Function for generating labeling expressions based on breaks

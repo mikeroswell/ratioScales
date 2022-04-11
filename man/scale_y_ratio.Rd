@@ -86,6 +86,7 @@ bigger \%>\%  ggplot2::ggplot(ggplot2::aes(x,y)) +
      ggplot2::geom_point() +
      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
      scale_y_ratio(tickVal = "divMult"
+     , slashStar = TRUE
      , sec.axis = ax2) +
         ggplot2::labs(y = "divMult scale (fold change)")
 
