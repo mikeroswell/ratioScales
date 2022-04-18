@@ -11,3 +11,5 @@
 ^.*\.time$
 ^.*\.mk$
 ^.*\.log$
+^data-raw$
+^README\.Rmd$
