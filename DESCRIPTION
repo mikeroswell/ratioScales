@@ -1,5 +1,5 @@
 Package: ratioScales
-Title: Label Log-scaled Axes For Ratios and Centinels
+Title: Rational scales for visualizing change
 Version: 0.0.0.9000
 Authors@R: 
      c( person(given = "Michael",
@@ -18,7 +18,21 @@ Authors@R:
         , email = "bolker@mcmaster.ca"
         , comment = c(ORCID = "0000-0002-2127-0443"))
            )
-Description: What the package does (one paragraph).
+Description: Logarithmic rescaling makes multiplicative relationships additive, 
+  and enables clear visual communication of proprtional change. However, the two 
+  ways that logarithmic rescaling has traditionally been displayed on graphs can 
+  lead to confusion. These two ways are 1) rescaling the data logarithmically, 
+  and marking axes with the log-transformed values, and 2) rescaling the data 
+  logarithmically, but marking the axes with the back-transformed values 
+  matching the original scale of the data. **ratioScales** provides **ggplot2**-
+  friendly alternatives that highlight multiplicate change explicitly. Three 
+  families of tickmark are provided: `divMult` explicitly marks axes with the 
+  multiplicative change relative to a reference point (e.g. 
+  \eqn{\times 2, \div 2}); `nel`  and `centiNel` mark axes with the 
+  multiplicative change in units of natural logarithms ("nels"); `propDiff` and 
+  `percDiff` mark axes with the proportional difference from the reference 
+  point. General functions `scale_y_ratio()` and `scale_x_ratio()` can be added 
+  to a ggplot object to use the ratio-scaled axes.
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
