@@ -4,7 +4,7 @@
 \alias{breaks_divMult}
 \title{Compute breaks for ratio scale}
 \usage{
-breaks_divMult(n = 6, nmin = 3, anchor = TRUE, splits = 1, base = exp(1))
+breaks_divMult(n = 6, nmin = 5, anchor = TRUE, splits = 1, base = exp(1))
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}

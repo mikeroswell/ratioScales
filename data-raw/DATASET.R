@@ -23,7 +23,11 @@ exch<-get_alfred_series(series_id ="DEXCAUS"
   select(-realtime_period) %>%
   group_by(date) %>%
   summarize(CADtoUSD = mean(DEXCAUS, na.rm = TRUE)
-            , USDtoCAD = 1/CADtoUSD)
+            , USDtoCAD = 1/CADtoUSD) %>%
+  pivot_longer(cols = c("CADtoUSD", "USDtoCAD"), names_to= "direction", values_to = 'exRate') %>%
+  group_by(direction) %>%
+  mutate(exRate_scale = exRate/first(exRate)) %>%
+  arrange(direction)
 
 
 usethis::use_data(nel_vid, overwrite = TRUE)

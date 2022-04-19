@@ -5,11 +5,12 @@
 \alias{exch}
 \title{USD-CAD exchange rate in first two COVID pandemic years}
 \format{
-Data frame with 522 observations of 3 variables
+Data frame with 1044 observations of 4 variables
 \itemize{
 \item \strong{date} Date, "YYYY-MM-DD"
-\item \strong{CADtoUSD} Numeric, CAD per USD
-\item \strong{USDtoCAD} Numeric, USD per CAD
+\item \strong{direction} Character, direction of exchange rate
+\item \emph{exRate}* Numeric, exchange rate
+\item \strong{exRate_scale} Numeric, proportional difference in exchnage rate from 2020-04-01
 }
 }
 \source{

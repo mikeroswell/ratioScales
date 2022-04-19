@@ -35,10 +35,11 @@
 #' A dataset with weekday average exchange rate between Canadian and US Dollars
 #' between 1 April 2020 and 31 March 2022.
 #'
-#' @format Data frame with 522 observations of 3 variables
+#' @format Data frame with 1044 observations of 4 variables
 #' - **date** Date, "YYYY-MM-DD"
-#' - **CADtoUSD** Numeric, CAD per USD
-#' - **USDtoCAD** Numeric, USD per CAD
+#' - **direction** Character, direction of exchange rate
+#' - *exRate** Numeric, exchange rate
+#' - **exRate_scale** Numeric, proportional difference in exchnage rate from 2020-04-01
 #'
 #' @source Data from the Federal Reserve Economic Data (FRED), accessed with the
 #' R package **alfred**.

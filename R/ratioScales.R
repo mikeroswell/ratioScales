@@ -289,12 +289,12 @@ limit_breaks <- function(v
 
 
 breaks_divMult <- function(n = 6
-                           , nmin = 3
+                           , nmin = 5
                            , anchor = TRUE
                            , splits = 1
                            , base = exp(1)){
   function(v){
-    if(anchor){unique(c(v, 1))}
+    if(anchor){v <- unique(c(v, 1))}
     v <- log(v, base = base)
     neg <- min(v)
     if (neg==0) return(limit_breaks(v
@@ -314,17 +314,17 @@ breaks_divMult <- function(n = 6
     bigticks <- ceiling(n*bigprop)
 
     main <- limit_breaks(c(0, big)
-                                   , bigticks
-                                   , splits = splits
-                                   , base = base)
+                         , n = bigticks
+                         , splits = splits
+                         , base = base)
     cut <- pmin(bigticks, 1+sum(main<small))
-    if(cut<nmin)
+    if(cut <= nmin){
       other <- limit_breaks(c(0, small)
                                       , nmin
                                       , splits = splits
                                       , base = base)
-    else
-      other <- main[1:cut]
+    }
+    else {other <- main[1:cut]}
 
     breaks <- c(main, 1/other)
     if (flip > pos) breaks <- 1/breaks

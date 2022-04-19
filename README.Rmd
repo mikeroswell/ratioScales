@@ -12,6 +12,14 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+```{r setup, message = FALSE}
+library(ratioScales)
+library(tidyverse)
+theme_set(theme_classic() +
+          theme(axis.text.x = element_text(angle = 45,
+                                           vjust = 1, hjust = 1)))
+
+```
 
 # ratioScales
 
@@ -34,11 +42,65 @@ devtools::install_github("mikeroswell/ratioScales")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Consider exchange rates between US and Canadian dollars:
 
-```{r example}
-library(ratioScales)
-## basic example code
+```{r raw exchange}
+
+exch %>% 
+  ggplot(aes(date, exRate, color = direction)) + 
+  geom_point() +
+  scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+  labs(y = "exchange rate") 
+```
+
+It might make more sense to ask relative to some baseline (1 April 2020), is the 
+Canadian dollar gaining or losing ground against the US dollar, and by how much?
+
+```{r scaled exchange}
+
+ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
+   geom_hline(yintercept = 1, color = "black")+
+   geom_point() +
+   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+   scale_y_continuous(breaks = seq(80, 130, 5)/100) +
+   labs(y = "proportional change in exchange rate") 
+```
+
+But this is strange! Somehow the Canadian dollar *weakend* by a maximum of 15% 
+before rebounding, but the US dollar *strenghtened* by much more than 15%. This
+isn't the best way to think about this. **ratioScales** provides "rational" 
+alternatives. For example, using a "divMult" scale:
+
+```{r divMult example}
+exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
+   geom_hline(yintercept = 1, color = "black")+
+  # times and divided by 1.15; longdash
+   geom_hline(yintercept = 1/1.15, color = hcl.colors(4, "Plasma")[1], linetype = 5) +
+   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+  # times and divided by 0.85; dotted
+   geom_hline(yintercept = 1/0.85, color = hcl.colors(4, "Plasma")[2], linetype = 3) +
+   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_point() +
+   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+   scale_y_ratio(tickVal = "divMult", n = 12, nmin = 12, slashStar = FALSE) +
+   labs(y = "multiplicative change in exchange rate") 
+```
+Stuck on percent differences? That's ok too, if you use an appropriate scale:
+```{r percDiff example}
+exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
+   geom_hline(yintercept = 1, color = "black")+
+  # times and divided by 1.15; longdash
+   geom_hline(yintercept = 1/1.15, color = hcl.colors(4, "Plasma")[1], linetype = 5) +
+   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+  # times and divided by 0.85; dotted
+   geom_hline(yintercept = 1/0.85, color = hcl.colors(4, "Plasma")[2], linetype = 3) +
+   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_point() +
+   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+   scale_y_ratio(tickVal = "percDiff") +
+   labs(y = "percentage difference in exchange rate") 
 ```
 
 

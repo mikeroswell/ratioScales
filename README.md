@@ -1,6 +1,119 @@
-# ratioScales
-Development of ratio scales package for plotting
 
- <!-- badges: start -->
-  [![R-CMD-check](https://github.com/mikeroswell/ratioScales/workflows/R-CMD-check/badge.svg)](https://github.com/mikeroswell/ratioScales/actions)
-  <!-- badges: end -->
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+``` r
+library(ratioScales)
+library(tidyverse)
+theme_set(theme_classic() +
+          theme(axis.text.x = element_text(angle = 45,
+                                           vjust = 1, hjust = 1)))
+```
+
+# ratioScales
+
+<!-- badges: start -->
+
+use_cran_badge() <!-- badges: end -->
+
+Logarithmic axis scales can clearly communicate multiplicative changes;
+they can also confuse. **ratioScales** annotates logarithmic axis scales
+with tickmarks that denote proportional and multiplicative change simply
+and explicitly.
+
+## Installation
+
+You can install the development version of ratioScales from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("mikeroswell/ratioScales")
+```
+
+## Example
+
+Consider exchange rates between US and Canadian dollars:
+
+``` r
+
+exch %>% 
+  ggplot(aes(date, exRate, color = direction)) + 
+  geom_point() +
+  scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+  labs(y = "exchange rate") 
+#> Warning: Removed 46 rows containing missing values (geom_point).
+```
+
+<img src="man/figures/README-raw exchange-1.png" width="100%" />
+
+It might make more sense to ask relative to some baseline (1 April
+2020), is the Canadian dollar gaining or losing ground against the US
+dollar, and by how much?
+
+``` r
+
+ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
+   geom_hline(yintercept = 1, color = "black")+
+   geom_point() +
+   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+   scale_y_continuous(breaks = seq(80, 130, 5)/100) +
+   labs(y = "proportional change in exchange rate") 
+#> Warning: Removed 46 rows containing missing values (geom_point).
+```
+
+<img src="man/figures/README-scaled exchange-1.png" width="100%" />
+
+But this is strange! Somehow the Canadian dollar *weakend* by a maximum
+of 15% before rebounding, but the US dollar *strenghtened* by much more
+than 15%. This isn’t the best way to think about this. **ratioScales**
+provides “rational” alternatives. For example, using a “divMult” scale:
+
+``` r
+exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
+   geom_hline(yintercept = 1, color = "black")+
+  # times and divided by 1.15; longdash
+   geom_hline(yintercept = 1/1.15, color = hcl.colors(4, "Plasma")[1], linetype = 5) +
+   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+  # times and divided by 0.85; dotted
+   geom_hline(yintercept = 1/0.85, color = hcl.colors(4, "Plasma")[2], linetype = 3) +
+   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_point() +
+   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+   scale_y_ratio(tickVal = "divMult", n = 12, nmin = 12, slashStar = FALSE) +
+   labs(y = "multiplicative change in exchange rate") 
+#> Warning: Removed 46 rows containing missing values (geom_point).
+```
+
+<img src="man/figures/README-divMult example-1.png" width="100%" />
+Stuck on percent differences? That’s ok too, if you use an appropriate
+scale:
+
+``` r
+exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
+   geom_hline(yintercept = 1, color = "black")+
+  # times and divided by 1.15; longdash
+   geom_hline(yintercept = 1/1.15, color = hcl.colors(4, "Plasma")[1], linetype = 5) +
+   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+  # times and divided by 0.85; dotted
+   geom_hline(yintercept = 1/0.85, color = hcl.colors(4, "Plasma")[2], linetype = 3) +
+   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_point() +
+   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+   scale_y_ratio(tickVal = "percDiff") +
+   labs(y = "percentage difference in exchange rate") 
+#> Warning: Removed 46 rows containing missing values (geom_point).
+```
+
+<img src="man/figures/README-percDiff example-1.png" width="100%" />
+
+<!-- some comments here to keep track of 
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+
+You can also embed plots, for example:
+
+<img src="man/figures/README-pressure-1.png" width="100%" />
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+-->
