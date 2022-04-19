@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   Ratio_scales_and_centinels: Ratio_scales_and_centinels.html
-last_built: 2022-04-19T21:05Z
+last_built: 2022-04-19T21:13Z
 urls:
   reference: https://mikeroswell.github.io/ratioScales/reference
   article: https://mikeroswell.github.io/ratioScales/articles

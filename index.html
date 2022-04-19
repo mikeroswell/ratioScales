@@ -95,6 +95,7 @@
 </h1></div>
 <!-- badges: start -->
 
+<p><a href="https://CRAN.R-project.org/package=ratioScales" class="external-link"><img src="https://www.r-pkg.org/badges/version/ratioScales" alt="CRAN status"></a> <!-- badges: end --></p>
 <p>Logarithmic axis scales can clearly communicate multiplicative changes; they can also confuse. <strong>ratioScales</strong> annotates logarithmic axis scales with tickmarks that denote proportional and multiplicative change simply and explicitly.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -115,7 +116,7 @@
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"exchange rate"</span><span class="op">)</span> </code></pre></div>
-<p><img src="reference/figures/README-raw%20exchange-1.png" width="50%"></p>
+<p><img src="reference/figures/README-raw_exchange-1.png" width="50%"></p>
 <p>It might make more sense to ask relative to some baseline (1 April 2020), is the Canadian dollar gaining or losing ground against the US dollar, and by how much?</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -127,7 +128,7 @@
    <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1.15</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, linetype <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">130</span>, <span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"proportional change in exchange rate"</span><span class="op">)</span> </code></pre></div>
-<p><img src="reference/figures/README-scaled%20exchange-1.png" width="50%"></p>
+<p><img src="reference/figures/README-scaled_exchange-1.png" width="50%"></p>
 <p>But this is strange! Somehow the Canadian dollar <em>weakend</em> by <em>a maximum of 15%</em> before rebounding, but the US dollar <em>strengthened</em> by <em>much more than 15%</em>. Maybe not the best way to think about this? <strong>ratioScales</strong> provides “rational” alternatives. For example, using a “divMult” scale:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exch</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate_scale</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -142,7 +143,7 @@
    <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu"><a href="reference/scale_y_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"divMult"</span>, n <span class="op">=</span> <span class="fl">12</span>, nmin <span class="op">=</span> <span class="fl">12</span>, slashStar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"multiplicative change in exchange rate"</span><span class="op">)</span> </code></pre></div>
-<p><img src="reference/figures/README-divMult%20example-1.png" width="50%"></p>
+<p><img src="reference/figures/README-divMult_example-1.png" width="50%"></p>
 <p>Stuck on percent differences? That’s ok too, if you use an appropriate scale:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exch</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate_scale</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -157,7 +158,7 @@
    <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu"><a href="reference/scale_y_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"percDiff"</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"percentage difference in exchange rate"</span><span class="op">)</span> </code></pre></div>
-<p><img src="reference/figures/README-percDiff%20example-1.png" width="50%"></p>
+<p><img src="reference/figures/README-percDiff_example-1.png" width="50%"></p>
 <!-- some comments here to keep track of 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
 
@@ -198,7 +199,6 @@ In that case, don't forget to commit and push the resulting figure files, so the
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://CRAN.R-project.org/package=ratioScales" class="external-link"><img src="https://www.r-pkg.org/badges/version/ratioScales" alt="CRAN status"></a></li>
 </ul>
 </div>
 
