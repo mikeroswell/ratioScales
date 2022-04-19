@@ -73,10 +73,12 @@ Canadian dollar gaining or losing ground against the US dollar, and by how much?
    labs(y = "proportional change in exchange rate") 
 ```
 
-But this is strange! Somehow the Canadian dollar *weakend* by _a maximum of 15%_ 
-before rebounding, but the US dollar *strengthened* by _much more than 15%_. 
-Maybe not the best way to think about this? **ratioScales** provides "rational" 
-alternatives. For example, using a "divMult" scale:
+But this is strange! Somehow the Canadian dollar *weakend* by 
+**a maximum of 15%** before rebounding, but the US dollar *strengthened* by 
+**much more than 15%**. Maybe not the best way to think about this? 
+
+**ratioScales** provides "rational" alternatives. For example, using a "divMult" 
+scale:
 
 ```{r divMult_example, warning = FALSE}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
