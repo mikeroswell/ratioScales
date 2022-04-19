@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml)
+
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ratioScales)](https://CRAN.R-project.org/package=ratioScales)
 <!-- badges: end -->
@@ -38,7 +39,7 @@ exch %>%
   labs(y = "exchange rate") 
 ```
 
-<img src="man/figures/README-raw exchange-1.png" width="50%" />
+<img src="man/figures/README-raw_exchange-1.png" width="50%" />
 
 It might make more sense to ask relative to some baseline (1 April
 2020), is the Canadian dollar gaining or losing ground against the US
@@ -56,7 +57,7 @@ dollar, and by how much?
    labs(y = "proportional change in exchange rate") 
 ```
 
-<img src="man/figures/README-scaled exchange-1.png" width="50%" />
+<img src="man/figures/README-scaled_exchange-1.png" width="50%" />
 
 But this is strange! Somehow the Canadian dollar *weakend* by *a maximum
 of 15%* before rebounding, but the US dollar *strengthened* by *much
@@ -79,7 +80,7 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "multiplicative change in exchange rate") 
 ```
 
-<img src="man/figures/README-divMult example-1.png" width="50%" />
+<img src="man/figures/README-divMult_example-1.png" width="50%" />
 
 Stuck on percent differences? That’s ok too, if you use an appropriate
 scale:
@@ -99,7 +100,7 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "percentage difference in exchange rate") 
 ```
 
-<img src="man/figures/README-percDiff example-1.png" width="50%" />
+<img src="man/figures/README-percDiff_example-1.png" width="50%" />
 
 <!-- some comments here to keep track of 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.

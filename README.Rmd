@@ -26,6 +26,7 @@ theme_set(theme_classic() +
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml)
+
 [![CRAN status](https://www.r-pkg.org/badges/version/ratioScales)](https://CRAN.R-project.org/package=ratioScales)
 <!-- badges: end -->
 
@@ -46,7 +47,7 @@ devtools::install_github("mikeroswell/ratioScales")
 
 Consider exchange rates between US and Canadian dollars:
 
-```{r raw exchange, warning = FALSE}
+```{r raw_exchange, warning = FALSE}
 
 exch %>% 
   ggplot(aes(date, exRate, color = direction)) + 
@@ -58,7 +59,7 @@ exch %>%
 It might make more sense to ask relative to some baseline (1 April 2020), is the 
 Canadian dollar gaining or losing ground against the US dollar, and by how much?
 
-```{r scaled exchange, warning = FALSE}
+```{r scaled_exchange, warning = FALSE}
 
  exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
@@ -75,7 +76,7 @@ before rebounding, but the US dollar *strengthened* by _much more than 15%_.
 Maybe not the best way to think about this? **ratioScales** provides "rational" 
 alternatives. For example, using a "divMult" scale:
 
-```{r divMult example, warning = FALSE}
+```{r divMult_example, warning = FALSE}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
@@ -92,7 +93,7 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
 
 Stuck on percent differences? That's ok too, if you use an appropriate scale:
 
-```{r percDiff example, warning = FALSE}
+```{r percDiff_example, warning = FALSE}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
