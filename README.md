@@ -58,9 +58,10 @@ dollar, and by how much?
 
 <img src="man/figures/README-scaled_exchange-1.png" width="50%" />
 
-But this is strange! Somehow the Canadian dollar *weakend* by *a maximum
-of 15%* before rebounding, but the US dollar *strengthened* by *much
-more than 15%*. Maybe not the best way to think about this?
+But this is strange! Somehow the Canadian dollar *weakend* by **a
+maximum of 15%** before rebounding, but the US dollar *strengthened* by
+**much more than 15%**. Maybe not the best way to think about this?
+
 **ratioScales** provides “rational” alternatives. For example, using a
 “divMult” scale:
 
