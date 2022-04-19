@@ -9,10 +9,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "50%"
 )
 ```
-```{r setup, message = FALSE}
+```{r setup, message = FALSE, include = FALSE}
 library(ratioScales)
 library(tidyverse)
 theme_set(theme_classic() +
@@ -24,7 +24,7 @@ theme_set(theme_classic() +
 # ratioScales
 
 <!-- badges: start -->
-use_cran_badge()
+
 <!-- badges: end -->
 
 Logarithmic axis scales can clearly communicate multiplicative changes; they can 
@@ -44,7 +44,7 @@ devtools::install_github("mikeroswell/ratioScales")
 
 Consider exchange rates between US and Canadian dollars:
 
-```{r raw exchange}
+```{r raw exchange, warning = FALSE}
 
 exch %>% 
   ggplot(aes(date, exRate, color = direction)) + 
@@ -56,7 +56,7 @@ exch %>%
 It might make more sense to ask relative to some baseline (1 April 2020), is the 
 Canadian dollar gaining or losing ground against the US dollar, and by how much?
 
-```{r scaled exchange}
+```{r scaled exchange, warning = FALSE}
 
  exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
@@ -68,12 +68,12 @@ Canadian dollar gaining or losing ground against the US dollar, and by how much?
    labs(y = "proportional change in exchange rate") 
 ```
 
-But this is strange! Somehow the Canadian dollar *weakend* by a maximum of 15% 
-before rebounding, but the US dollar *strenghtened* by much more than 15%. This
-isn't the best way to think about this. **ratioScales** provides "rational" 
+But this is strange! Somehow the Canadian dollar *weakend* by _a maximum of 15%_ 
+before rebounding, but the US dollar *strengthened* by _much more than 15%_. 
+Maybe not the best way to think about this? **ratioScales** provides "rational" 
 alternatives. For example, using a "divMult" scale:
 
-```{r divMult example}
+```{r divMult example, warning = FALSE}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
@@ -87,8 +87,10 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    scale_y_ratio(tickVal = "divMult", n = 12, nmin = 12, slashStar = FALSE) +
    labs(y = "multiplicative change in exchange rate") 
 ```
+
 Stuck on percent differences? That's ok too, if you use an appropriate scale:
-```{r percDiff example}
+
+```{r percDiff example, warning = FALSE}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
