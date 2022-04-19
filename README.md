@@ -4,6 +4,10 @@
 # ratioScales
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ratioScales)](https://CRAN.R-project.org/package=ratioScales)
 <!-- badges: end -->
 
 Logarithmic axis scales can clearly communicate multiplicative changes;
