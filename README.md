@@ -15,6 +15,10 @@ they can also confuse. **ratioScales** annotates logarithmic axis scales
 with tickmarks that denote proportional and multiplicative change simply
 and explicitly.
 
+The main function in this package, `scale_*_ratio()`, is ggplot-friendly
+and works similarly to existing`scale_*_*` functions from **ggplot2**
+and **scales**.
+
 ## Installation
 
 You can install the development version of ratioScales from
@@ -49,8 +53,11 @@ dollar gaining or losing ground against the US dollar, and by how much?
    geom_hline(yintercept = 1, color = "black")+
    geom_point() +
    scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
-   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+   geom_hline(yintercept = 0.85
+              , color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_hline(yintercept = 1.15
+              , color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+  # FUNCTION FROM ggplot2
    scale_y_continuous(breaks = seq(80, 130, 5)/100) +
    labs(y = "proportional change in exchange rate") 
 ```
@@ -75,14 +82,14 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
    geom_point() +
    scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+  # FUNCTION FROM ratioScales
    scale_y_ratio(tickVal = "divMult", n = 12, nmin = 12, slashStar = FALSE) +
    labs(y = "multiplicative change in exchange rate") 
 ```
 
 <img src="man/figures/README-divMult_example-1.png" width="50%" />
 
-Stuck on percent differences? That’s ok too, if you use an appropriate
-scale:
+Prefer percentage differences? Also ok, if you use an appropriate scale:
 
 ``` r
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
@@ -95,6 +102,7 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
    geom_point() +
    scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+    # FUNCTION FROM ratioScales
    scale_y_ratio(tickVal = "percDiff") +
    labs(y = "percentage difference in exchange rate") 
 ```
