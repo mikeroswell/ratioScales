@@ -40,9 +40,8 @@ exch %>%
 
 <img src="man/figures/README-raw_exchange-1.png" width="50%" />
 
-It might make more sense to ask relative to some baseline (1 April
-2020), is the Canadian dollar gaining or losing ground against the US
-dollar, and by how much?
+Let’s see, relative to some baseline (1 April 2020), is the Canadian
+dollar gaining or losing ground against the US dollar, and by how much?
 
 ``` r
 
