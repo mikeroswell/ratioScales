@@ -4,7 +4,7 @@
 \alias{label_percDiff}
 \title{Scale breakpoints based on percentage difference from reference}
 \usage{
-label_percDiff(logscale = FALSE, base = exp(1))
+label_percDiff(logscale = FALSE, base = 10)
 }
 \arguments{
 \item{logscale}{Logical, are breaks already on the log scale?}

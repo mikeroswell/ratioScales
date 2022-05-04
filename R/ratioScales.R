@@ -74,11 +74,11 @@ label_nel <- function(){
 #'
 #' @return Function used as argument to `labels` in `scale_*_*`
 #' @export
-label_percDiff <- function(logscale = FALSE, base = exp(1)){
+label_percDiff <- function(logscale = FALSE, base = 10){
   function(x){
     if(logscale){x <- x}
     else{x <- log(x, base = base )}
-    myval <- abs(abs(exp(x)) -1)
+    myval <- abs(abs(base^x) -1)
     prefix <- c("- ", "", "+ " )[sign(x)+2]
     scales::label_percent(prefix = prefix)(myval)
   }
@@ -88,16 +88,19 @@ label_percDiff <- function(logscale = FALSE, base = exp(1)){
 #' Scale breakpoints based on percentage difference from reference
 #'
 #' @inheritParams label_divMult
+#' @param accuracy Numeric scalar, determines rounding precision
 #'
 #' @return Function used as argument to `labels` in `scale_*_*`
+#' @seealso \code{\link[scales]{label_number}}
+#'
 #' @export
-label_propDiff <- function(logscale = FALSE, base = exp(1)){
+label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
   function(x){
     if(logscale){x <- x}
     else{x <- log(x, base = base )}
-    myval <- abs(abs(exp(x)) -1)
+    myval <- abs(abs(base^x) -1)
     prefix <- c("- ", "", "+ " )[sign(x)+2]
-    scales::label_number(prefix = prefix)(myval)
+    scales::label_number(prefix = prefix, accuracy = accuracy)(myval)
   }
 }
 
@@ -106,7 +109,7 @@ label_propDiff <- function(logscale = FALSE, base = exp(1)){
 #' Natural log transformation... providing breaks on the "nel" scale
 #'
 #' @param n Integer, desired number of breaks
-#' @param use_centiNel Logical, should units be "centiNels" (defaul is "nel")
+#' @param use_centiNel Logical, should units be "centiNels" (default is "nel")
 #' @seealso \code{\link[scales]{log_breaks}}
 #'
 #' @export
@@ -146,6 +149,7 @@ nel_trans <- function(n = 7, use_centiNel = FALSE){
 #'
 #' @inheritParams breaks_divMult
 #' @inheritParams label_propDiff
+#' @param ... additional arguments passed to `label_propDiff`
 #' @export
 #' @examples
 #' dat<-data.frame(x = 1:10, y = exp(-2:7))
@@ -161,16 +165,16 @@ nel_trans <- function(n = 7, use_centiNel = FALSE){
 #'         )
 #'       ) +
 #'     ggplot2::labs(y = "propDiff scale") +
-#'     ggplot2::geom_hline(yintercept = 25, size = 0.2)
+#'     ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
 #'  ggplot2::geom_point() +
 #'  ggplot2::scale_y_continuous(
 #'    trans = propDiff_trans()
-#'    , labels = label_propDiff()
 #'    , sec.axis = ggplot2::sec_axis(
 #'      labels = function(x) {x}
 #'      , trans = ~.
+#'      , breaks = c(0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2)
 #'      , name = "original scale"
 #'    )
 #'  ) +
@@ -180,13 +184,13 @@ nel_trans <- function(n = 7, use_centiNel = FALSE){
 #'
 #'
 #'
-propDiff_trans <- function(n = 7, splits = 3, anchor = TRUE, base = 10){
+propDiff_trans <- function(n = 7, base = exp(1), ...){
   scales::trans_new(
     "propDiff"
     , trans = function(x) { log(x, base = base) }
     , inverse = function(x) { base^x}
-    , breaks = breaks_divMult(n = n, splits = splits, base = base, anchor = anchor)
-    , format = label_propDiff()
+    , breaks = scales::breaks_log(n = n, base = base)
+    , format = label_propDiff(base = base, ...)
   )
 }
 

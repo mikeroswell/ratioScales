@@ -4,17 +4,22 @@
 \alias{label_propDiff}
 \title{Scale breakpoints based on percentage difference from reference}
 \usage{
-label_propDiff(logscale = FALSE, base = exp(1))
+label_propDiff(logscale = FALSE, base = 10, accuracy = 0.01)
 }
 \arguments{
 \item{logscale}{Logical, are breaks already on the log scale?}
 
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
+
+\item{accuracy}{Numeric scalar, determines rounding precision}
 }
 \value{
 Function used as argument to \code{labels} in \verb{scale_*_*}
 }
 \description{
 Scale breakpoints based on percentage difference from reference
+}
+\seealso{
+\code{\link[scales]{label_number}}
 }

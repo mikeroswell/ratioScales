@@ -4,19 +4,15 @@
 \alias{propDiff_trans}
 \title{Natural log transformation... showing proportional change explicitly}
 \usage{
-propDiff_trans(n = 7, splits = 3, anchor = TRUE, base = 10)
+propDiff_trans(n = 7, base = exp(1), ...)
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}
 
-\item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
-"decade?"}
-
-\item{anchor}{NULL or scalar, value to include as a reference point (usually
-1)}
-
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
+
+\item{...}{additional arguments passed to \code{label_propDiff}}
 }
 \description{
 Natural log transformation... showing proportional change explicitly
@@ -35,16 +31,16 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
         )
       ) +
     ggplot2::labs(y = "propDiff scale") +
-    ggplot2::geom_hline(yintercept = 25, size = 0.2)
+    ggplot2::geom_hline(yintercept = 1, size = 0.2)
 
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
  ggplot2::geom_point() +
  ggplot2::scale_y_continuous(
    trans = propDiff_trans()
-   , labels = label_propDiff()
    , sec.axis = ggplot2::sec_axis(
      labels = function(x) {x}
      , trans = ~.
+     , breaks = c(0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2)
      , name = "original scale"
    )
  ) +

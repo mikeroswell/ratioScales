@@ -9,7 +9,7 @@ nel_trans(n = 7, use_centiNel = FALSE)
 \arguments{
 \item{n}{Integer, desired number of breaks}
 
-\item{use_centiNel}{Logical, should units be "centiNels" (defaul is "nel")}
+\item{use_centiNel}{Logical, should units be "centiNels" (default is "nel")}
 }
 \description{
 Natural log transformation... providing breaks on the "nel" scale
