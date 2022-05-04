@@ -33,3 +33,18 @@ jobs:
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
           Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
+
+url: https://mikeroswell.github.io/ratioScales/
+template:
+  bootstrap: 5
+  includes:
+    in_header: |
+       <!-- Global site tag (gtag.js) - Google Analytics -->
+       <script async src="https://www.googletagmanager.com/gtag/js?id={G-XLCJHJKT0M}"#' ></script>
+       <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', '{G-XLCJHJKT0M}');
+       </script>
