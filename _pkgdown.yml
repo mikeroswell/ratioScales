@@ -13,9 +13,6 @@ reference:
 - contents:
   - contains("breaks")
   - split_decades
-- title: labelling functions
-- contents:
-  - starts_with("label_")
 - title: Data sets
 - contents:
   - has_keyword("datasets")
