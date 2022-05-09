@@ -82,7 +82,7 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>,
                                            vjust <span class="op">=</span> <span class="fl">1</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The Canadian dollar gained strenght pretty steadily for the next year, and by 1 July it would cost 0.736 USD, by 1 October, 0.753 USD, by 4 January 2021, 0.782 USD, and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?</p>
+<p>On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The Canadian dollar gained strength pretty steadily for the next year, and by 1 July it would cost 0.736 USD, by 1 October, 0.753 USD, by 4 January 2021, 0.782 USD, and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?</p>
 <p>Often, such changes are described in terms of percent difference, even though this is sort of insane. Below is a brief peak at the insanity of percentage differences: any change in the exchange rate will be reflected as different percentage changes, depending on which direction you’re hoping to exchange currency:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exch</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
@@ -113,6 +113,9 @@
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
 data. The below is from the blog post -->
+<div class="section level2">
+<h2 id="copied-text-wont-make-sense-from-here">copied text, won’t make sense from here<a class="anchor" aria-label="anchor" href="#copied-text-wont-make-sense-from-here"></a>
+</h2>
 <p>“Centinels” look like they could be nice units for staring at this, but what the heck is 1 centinel? Amazingly, a centinel isn’t that funky a unit. Plus one centinel is pretty close to a 1% increase!</p>
 <p>let’s take a look:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -189,6 +192,7 @@ data. The below is from the blog post -->
 <span class="co"># and more precisely opposite </span>
 <span class="fu">centinel</span><span class="op">(</span><span class="fu">compounded</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1.01</span>, <span class="fl">50</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] -49.75165 -49.75165 -49.75165</span></code></pre></div>
+</div>
   </main>
 </div>
 
