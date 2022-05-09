@@ -25,7 +25,7 @@ theme_set(theme_classic() +
 ```
 
 On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The
-Canadian dollar gained strenght pretty steadily for the next year, and by 1 July
+Canadian dollar gained strength pretty steadily for the next year, and by 1 July
 it would cost 0.736 USD, by  1 October, 0.753 USD, by 4 January 2021, 0.782 USD,
 and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?
 
@@ -80,6 +80,8 @@ use better-behaved units!
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
 data. The below is from the blog post -->
+
+# copied text, won't make sense from here
 "Centinels" look like they could be nice units for staring at this, but what the
 heck is 1 centinel? Amazingly, a centinel isn't that funky a unit. Plus one
 centinel is pretty close to a 1% increase!
