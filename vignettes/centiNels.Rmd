@@ -25,7 +25,7 @@ theme_set(theme_classic() +
 ```
 
 
-# Foolish percent differences
+## Foolish percent differences
 
 On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The
 Canadian dollar gained strength pretty steadily for the next year, and by 1 July
@@ -54,52 +54,54 @@ exch %>%
               )
 ```
 
+<!-- cut text for now:
 On 1 April 2021, US dollars had gotten much cheaper for Canadians than they had
 been a year previously... one US dollar cost less than 90% as much as a it had a
 year earlier (or a US dollar had lost just over 10% of its value in CAD). Amazingly,
 over the same period, Canadian dollars got a bit over 11% more expensive for
 Americans... the 10% gain corresponded to an 11% loss. 
+-->
 
-To put this more concretely, if Jonathan traded 100 CAD with Michael for 70.31
-USD on 1 April 2020, doubtless he'd feel the fool come 1 April, 2021, when
-Michael would only give him $70.31/0.782411 = 89.86$ CAD back. He lost just
-over 10% of his original 100 CAD!
+If Jonathan traded 100 CAD with Michael for 70.31 USD on 1 April 2020, doubtless
+he'd feel the fool come 1 April, 2021, when Michael would only give him
+$70.31/0.782411 = 89.86$ CAD back. He lost just over 10% of his original 100
+CAD!
 
 But would Michael, had he declined the trade in 2020, only to accept in 2021,
 feel even more foolish? He would have gotten 100 CAD for only 70.31 USD in 2020,
-but now the trade cost him 78.24 USD. In this world, Michael paid over 11% more
-in 2021 than he would have a year before... also a bad deal. But wait? Surely
-Michael declining the trade must be *exactly as bad* for him as Jonathan's trade
-was *good* for Jonathan? *And it would have been!* Michael would have given
-Jonathan 7.93 USD more in 2021 than in 2020 for the same 100 CAD... since he
-would have ultimately given Jonathan 78.24 USD, this is a loss (in 2021 dollars)
-of $7.93/78.24 = 0.101$, i.e. the same 10.1% loss Jonathan would have
-experienced.
+but now the trade cost him 78.24 USD. In this world, Michael paid over 11%
+(almost $8 USD) more in 2021 than he would have a year before... also a bad
+deal. 
+
+But wait? Surely Michael declining the trade must be *exactly as bad* for
+him as Jonathan's trade was *good* for Jonathan? *And it would have been!*
+Michael would have given Jonathan 7.93 USD more in 2021 than in 2020 for the
+same 100 CAD... since he would have ultimately given Jonathan 78.24 USD, this is
+a loss (in 2021 dollars) of $7.93/78.24 = 0.101$, i.e. the same 10.1% loss
+Jonathan would have experienced.
 
 Woof. This is confusing! We *can* make the math work out... but we could also
 use a better-behaved scale... like the natural log scale.
 
 
-# Nels instead 
+## Logarithmic scaling: Nels instead 
 
 Logarithmic transformation is an excellent solution\* to this problem. It makes
-all ratio-based changes linear.  For now, 
-let's go with it's "excellent." ,
+all ratio-based changes linear.  For now, let's go with it's "excellent." 
 
 
-*Familiarity and comfort with logarithms can be major drawbacks; we refer
-users to the "divMult" vignette for further discussion and some good
-workarounds*
+*Familiarity and comfort with logarithms can be major drawbacks; we refer users
+to the "divMult" vignette for further discussion and some good workarounds*
 
 The first step to making the math work here is rescaling the data by taking the
-natural logarithm. This isn't revolutionary. One idea explored in
+natural logarithm. This is hardly a new idea. One idea explored in
 **ratioScales** is that we can simply use natural logarithm *units* as our
 measure of change. Once log-transformed, changes in exchange rate in one
 direction will be mirrored by changes in exchange rate in the other direction
 *of the exact same magnitude*. **ratioScales** is all about plotting that
-retains this, and in this vignette, we illustrate simply using a "base e" fold
-change (one nel) as the plotting unit. This can be a sensible alternative to the
-also sensible, common practice of, after a logarithmic transformation,
+retains this symmetry, and in this vignette, we illustrate simply using a "base
+e" fold change (one "nel") as the plotting unit. This can be a sensible
+alternative to the common practice of, after a logarithmic transformation,
 back-transforming data onto the original scale for plotting. **ggplot2** users
 will likely be familiar with the functions `scale_*_log10()`, which do this.
 
@@ -164,10 +166,10 @@ change than an increase of 10%, but it's still hard to see what is consistent
 between the two directions of exchange (which above, we said was one reason to
 prefer the log-transformations!).
 
-An alternative is to become more comfortable with log-transformed data. Lots of
-bases can make sense for logarithms (e.g., 2, 10, or e), here we
-explore natural logarithms (base e = `exp(1)`). To do this, let's indulge some
-nomenclature fun, then see what it can do for us.
+An alternative is to become more comfortable with viewing data on a
+logarithmic scale. Lots of bases can make sense for logarithms (e.g., 2, 10, or
+e); here we explore natural logarithms (base e = `exp(1)`). To do this, let's
+indulge some nomenclature fun, then see what it can do for us.
 
 First, let's get the most basic unit here... what do we call 1 natural log unit? One **N**atural **L**og unit is "one nel" (one NL; one "nel"). How big is one nel? Actually, kind of big: a fold change of over 2.5, so an increase of one nel is over 2.5x. 
 
