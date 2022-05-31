@@ -24,6 +24,8 @@ theme_set(theme_classic() +
                                            vjust = 1, hjust = 1)))
 ```
 
+# Foolish percent differences
+
 On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The
 Canadian dollar gained strength pretty steadily for the next year, and by 1 July
 it would cost 0.736 USD, by  1 October, 0.753 USD, by 4 January 2021, 0.782 USD,
@@ -74,8 +76,18 @@ ultimately given Jonathan 78.24 USD, this is a loss (in 2021 dollars) of
 experienced.
 
 Woof. This is confusing! We *can* make the math work out... but we could also
-use better-behaved units!
+use a better-behaved scale... like the natural log scale.
 
+# Nels instead 
+
+Logarithmic transformation is an excellent solution\* to this problem. It makes
+all ratio-based changes linear.  For now, 
+let's go with it's "excellent." ,
+
+
+\* *Familiarity and comfort with logarithms can be major drawbacks; we refer
+users to the "divMult" vignette for further discussion and some good
+workarounds*
 
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
