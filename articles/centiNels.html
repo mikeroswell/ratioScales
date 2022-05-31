@@ -76,7 +76,10 @@
 
     
     
-<p>On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollars (USD). The Canadian dollar gained strength pretty steadily for the next year, and by 1 July it would cost 0.736 USD, by 1 October, 0.753 USD, by 4 January 2021, 0.782 USD, and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?</p>
+<div class="section level2">
+<h2 id="foolish-percent-differences">Foolish percent differences<a class="anchor" aria-label="anchor" href="#foolish-percent-differences"></a>
+</h2>
+<p>On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The Canadian dollar gained strength pretty steadily for the next year, and by 1 July it would cost 0.736 USD, by 1 October, 0.753 USD, by 4 January 2021, 0.782 USD, and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?</p>
 <p>Often, such changes are described in terms of percent difference, even though this is sort of insane. Below is a brief peek at the insanity of percentage differences: any change in the exchange rate will be reflected as different percentage changes, depending on which direction you’re hoping to exchange currency.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exch</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
@@ -103,7 +106,13 @@
 <p>On 1 April 2021, US dollars had gotten much cheaper for Canadians than they had been a year previously… one US dollar cost less than 90% as much as a it had a year earlier (or a US dollar had lost just over 10% of its value in CAD). Amazingly, over the same period, Canadian dollars got a bit over 11% more expensive for Americans… the 10% gain corresponded to an 11% loss.</p>
 <p>To put this more concretely, if Jonathan traded 100 CAD with Michael for 70.31 USD on 1 April 2020, doubtless he’d feel the fool come 1 April, 2021, when Michael would only give him <span class="math inline">\(70.31/0.782411 = 89.86\)</span> CAD back. He lost just over 10% of his original 100 CAD!</p>
 <p>But would Michael, had he declined the trade in 2020, only to accept in 2021, feel even more foolish? He would have gotten 100 CAD for only 70.31 USD in 2020, but now the trade cost him 78.24 USD. In this world, Michael paid over 11% more in 2021 than he would have a year before… also a bad deal. But wait? Surely Michael declining the trade must be <em>exactly as bad</em> for him as Jonathan’s trade was <em>good</em> for Jonathan? <em>And it would have been!</em> Michael would have given Jonathan 7.93 USD more in 2021 than in 2020 for the same 100 CAD… since he would have ultimately given Jonathan 78.24 USD, this is a loss (in 2021 dollars) of <span class="math inline">\(7.93/78.24 = 0.101\)</span>, i.e. the same 10.1% loss Jonathan would have experienced.</p>
-<p>Woof. This is confusing! We <em>can</em> make the math work out… but we could also use better-behaved units!</p>
+<p>Woof. This is confusing! We <em>can</em> make the math work out… but we could also use a better-behaved scale… like the natural log scale.</p>
+</div>
+<div class="section level2">
+<h2 id="nels-instead">Nels instead<a class="anchor" aria-label="anchor" href="#nels-instead"></a>
+</h2>
+<p>Logarithmic transformation is an excellent solution* to this problem. It makes all ratio-based changes linear. For now, let’s go with it’s “excellent.” ,</p>
+<p><em>Familiarity and comfort with logarithms can be major drawbacks; we refer users to the “divMult” vignette for further discussion and some good workarounds</em></p>
 <p>The first step to making the math work here is rescaling the data by taking the natural logarithm. This isn’t revolutionary. One idea explored in <strong>ratioScales</strong> is that we can simply use natural logarithm <em>units</em> as our measure of change. Once log-transformed, changes in exchange rate in one direction will be mirrored by changes in exchange rate in the other direction <em>of the exact same magnitude</em>. <strong>ratioScales</strong> is all about plotting that retains this, and in this vignette, we illustrate simply using a “base e” fold change (one nel) as the plotting unit. This can be a sensible alternative to the also sensible, common practice of, after a logarithmic transformation, back-transforming data onto the original scale for plotting. <strong>ggplot2</strong> users will likely be familiar with the functions <code>scale_*_log10()</code>, which do this.</p>
 <p>Perhaps now, the idiomatic way to plot the currency data in <strong>ggplot2</strong> is to use the raw exchange rates (we’ll say, scaled to the starting value so we can watch relative change), transform the y-axis by taking the base-10 logarithm, but mark the axes by exponentiating back to the original exchange rate scale.</p>
 <p>Here is an example of the exchange rates on the original and base-10 logarithmic scales:</p>
@@ -160,6 +169,7 @@
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
 data. The below is from the blog post -->
+</div>
 <div class="section level2">
 <h2 id="copied-text-wont-make-sense-from-here">copied text, won’t make sense from here<a class="anchor" aria-label="anchor" href="#copied-text-wont-make-sense-from-here"></a>
 </h2>
@@ -240,7 +250,8 @@ data. The below is from the blog post -->
 <span class="fu">centinel</span><span class="op">(</span><span class="fu">compounded</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1.01</span>, <span class="fl">50</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] -49.75165 -49.75165 -49.75165</span></code></pre></div>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
