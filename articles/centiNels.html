@@ -175,7 +175,30 @@ package? Does this belong before or after introducing the new stuff? -->
 <p>The difference between these two graphs is pretty subtle. If you look closely, you’ll see the distance between 0.85 and 0.9 is substantially greater than the distance between 1.10 and 1.15 on the logarithmic y-axis graph (second), whereas, of course, they are the same distance apart on the arithmetic y-axis (first graph). This gives us a feel for the fact that a decrease of, say, 5% is a bigger change than an increase of 5%, but it’s still hard to see what is consistent between the two directions of exchange (which above, we said was one reason to prefer the log-transformations!).</p>
 <p>An alternative is to view data on a logarithmic scale. Lots of bases can make sense for logarithms (e.g., 2, 10, or e); here we explore natural logarithms (base e = <code>exp(1)</code>). To do this, let’s indulge some nomenclature fun, then see what it can do for us.</p>
 <p>First, let’s get the most basic unit here… what do we call 1 natural log unit? One <strong>N</strong>atural <strong>L</strong>og unit is “one nel” (one NL; one “nel”). How big is one nel? Actually, kind of big: a fold change of over 2.5, so an increase of one nel is over 2.5x.</p>
-<p>There’s a nice solution to this: use 1/100th of a Nel as the unit, one “centiNel.” Just as we might use a percent rather than proportional difference, or a centimeter rather than a meter, it will often be convenient to use centinels to track modest changes… actually, just as the “Bel” is hardly used to measure differences in amplitude (decibels are used instead), we suspect that “centinels” may be more useful than “nels” in most cases. Furthermore, in this vignette we explore some intriguing numerical properties of the centinel.</p>
+<p>There’s a nice solution to this: use 1/100th of a Nel as the unit, one “centiNel.” Just as we might use a percent rather than proportional difference, or a centimeter rather than a meter, it will often be convenient to use centinels to track modest changes… actually, just as the “Bel” is hardly used to measure differences in amplitude (decibels are used instead), we suspect that “centinels” may be more useful than “nels” in most cases. Furthermore, in this vignette we explore some intriguing numerical properties of the centinel.<br>
+But first, let’s plot with centinels!</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exch</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate_scale</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">0.2</span> <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">exch</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-04-01"</span>
+                                 , <span class="st">"2020-07-01"</span>
+                                 , <span class="st">"2020-10-01"</span>
+                                 , <span class="st">"2021-01-04"</span>
+                                 , <span class="st">"2021-04-01"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    , size <span class="op">=</span> <span class="fl">5</span>
+    , shape <span class="op">=</span> <span class="fl">23</span>
+    , fill <span class="op">=</span> <span class="st">"red"</span>
+    , color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"exchange rate"</span>, main <span class="op">=</span> <span class="st">"logarithmic scale"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_y_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"centiNel"</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Ignoring unknown parameters: width</span>
+<span class="co">#&gt; Warning: Removed 46 rows containing missing values (geom_point).</span></code></pre></div>
+<p><img src="centiNels_files/figure-html/centinel%20plot-1.png" width="672"></p>
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
 data. The below is from the blog post -->
@@ -185,7 +208,7 @@ data. The below is from the blog post -->
 </h2>
 <p>“Centinels” look like they could be nice units for staring at this, but what the heck is 1 centinel? Amazingly, a centinel isn’t that funky a unit. Plus one centinel is pretty close to a 1% increase!</p>
 <p>let’s take a look:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">5</span>, <span class="va">pi</span><span class="op">)</span>
 <span class="co"># 1% increase</span>
