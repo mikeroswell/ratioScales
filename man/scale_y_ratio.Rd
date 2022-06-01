@@ -4,13 +4,11 @@
 \alias{scale_y_ratio}
 \title{Ratio-based position scales for continuous data (x & y)}
 \usage{
-scale_y_ratio(tickVal = "divMult", trans = "nel", splits = 2, ...)
+scale_y_ratio(tickVal = "divMult", splits = 2, ...)
 }
 \arguments{
 \item{tickVal}{Character, one of "divMult", "nel", "centiNel", or
 "propDiff"}
-
-\item{trans}{Function or Character name of transformation}
 
 \item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
 "decade?"}

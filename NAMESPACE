@@ -2,6 +2,7 @@
 
 export("%>%")
 export(breaks_divMult)
+export(divMult_trans)
 export(label_centiNel)
 export(label_divMult)
 export(label_nel)

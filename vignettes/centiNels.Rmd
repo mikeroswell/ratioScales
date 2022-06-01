@@ -184,7 +184,30 @@ difference, or a centimeter rather than a meter, it will often be convenient to
 use centinels to track modest changes... actually, just as the "Bel" is hardly
 used to measure differences in amplitude (decibels are used instead), we suspect
 that "centinels" may be more useful than "nels" in most cases. Furthermore, in
-this vignette we explore some intriguing numerical properties of the centinel.
+this vignette we explore some intriguing numerical properties of the centinel.  
+But first, let's plot with centinels!
+
+``` {r centinel plot}
+exch %>% 
+  ggplot(aes(date, exRate_scale, color = direction)) + 
+  geom_hline(yintercept = 1, width = 0.2 ) +
+  geom_point() +
+  geom_point(
+    data = exch %>% 
+      filter(date %in% as.Date(c("2020-04-01"
+                                 , "2020-07-01"
+                                 , "2020-10-01"
+                                 , "2021-01-04"
+                                 , "2021-04-01")))
+    , size = 5
+    , shape = 23
+    , fill = "red"
+    , color = "black") +
+  scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
+  labs(y = "exchange rate", main = "logarithmic scale") +
+  scale_y_ratio(tickVal = "centiNel")
+
+```
 
 
 <!-- Next introduce log scaling, nels, centinels, and then show the cool

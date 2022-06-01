@@ -94,6 +94,7 @@ label_percDiff <- function(logscale = FALSE, base = 10){
 #' @seealso \code{\link[scales]{label_number}}
 #'
 #' @export
+
 label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
   function(x){
     if(logscale){x <- x}
@@ -104,13 +105,10 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
   }
 }
 
-
-
 #' Natural log transformation... providing breaks on the "nel" scale
 #'
-#' @param n Integer, desired number of breaks
+#' @inheritParams divMult_trans
 #' @param use_centiNel Logical, should units be "centiNels" (default is "nel")
-#' @seealso \code{\link[scales]{log_breaks}}
 #'
 #' @export
 #'
@@ -120,9 +118,44 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
 #'   ggplot2::geom_point() +
 #'     ggplot2::scale_y_continuous(
 #'        trans = "nel"
+#'       , sec.axis = ggplot2::sec_axis(
+#'            labels = function(x) {x}
+#'            , trans = ~.
+#'            , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
+#'            , name = "original scale"
+#'          )
+#'        ) +
+#'      ggplot2::labs(y = "nel (natural log) scale") +
+#'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'
+
+nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
+  scales::trans_new(
+    name = "nel"
+    , trans = function(x){log(x, base = base)}
+    , inverse = function(x) {base ^ x}
+    , breaks = function(x){exp(scales::breaks_extended(n = n)(log(x)))}
+    , format = if(use_centiNel){label_centiNel()} else{label_nel()}
+  )
+}
+
+
+#' Natural log transformation... providing breaks on the "divMult" scale
+#'
+#' @inheritParams breaks_divMult
+#' @param ... Additional arguments passed to breaking function, labeller
+#'
+#' @export
+#'
+#' @examples
+#' dat<-data.frame(x = 1:10, y = exp(-2:7))
+#' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
+#'   ggplot2::geom_point() +
+#'     ggplot2::scale_y_continuous(
+#'        trans = "divMult"
 #'        # default breaks aren't perfect; sometimes adding more helps
 #'        #  trans = nel_trans(n = 9)
-#'        , labels = label_nel()
+#'        , labels = label_divMult()
 #'        , sec.axis = ggplot2::sec_axis(
 #'            labels = function(x) {x}
 #'            , trans = ~.
@@ -133,13 +166,13 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
 #'      ggplot2::labs(y = "nel (natural log) scale") +
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
-nel_trans <- function(n = 7, use_centiNel = FALSE){
+divMult_trans <- function(n = 7, base = exp(1), ...){
   scales::trans_new(
-    "nel"
-    , trans = function(x) log(x)*100
-    , inverse = function(x) exp(x/100)
-    , breaks = scales::breaks_log(n = n)
-    , format = ifelse(use_centiNel, label_centiNel(), label_nel())
+    name = "divMult"
+    , trans = function(x) log(x, base = base)
+    , inverse = function(x) base^x
+    , breaks = breaks_divMult()
+    , format = label_divMult()
   )
 }
 
@@ -150,6 +183,7 @@ nel_trans <- function(n = 7, use_centiNel = FALSE){
 #' @inheritParams breaks_divMult
 #' @inheritParams label_propDiff
 #' @param ... additional arguments passed to `label_propDiff`
+#' @seealso \code{\link[scales]{log_breaks}}
 #' @export
 #' @examples
 #' dat<-data.frame(x = 1:10, y = exp(-2:7))
@@ -354,7 +388,6 @@ breaks_divMult <- function(n = 6
 #'
 #' @param tickVal Character, one of "divMult", "nel", "centiNel", or
 #'   "propDiff"
-#' @param trans Function or Character name of transformation
 #' @inheritParams split_decades
 #' @param ... Additional arguments passed to
 #'    \code{\link[ggplot2]{scale_y_continuous}}
@@ -452,14 +485,14 @@ breaks_divMult <- function(n = 6
 #'         ggplot2::labs(y = "propDiff (perentage difference) scale")
 
 scale_y_ratio <- function(tickVal = "divMult"
-                          , trans = "nel"
+                          # , trans = "divMult"
                           , splits = 2
                           , ... ){
   if(tickVal %in% c("divmult", "divMult")){
     return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = trans
+                    , args = list(trans = "divMult"
                                   , breaks = doCall2(breaks_divMult
-                                                      , list(splits = splits, ...))
+                                                     , list(splits = splits, ...))
                                   , labels =  doCall2(label_divMult
                                                       , list(...))
                                   , ...)
@@ -468,13 +501,13 @@ scale_y_ratio <- function(tickVal = "divMult"
   }
   if(tickVal %in% c("nel", "Nel")){
     return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = trans
+                    , args = list(trans = "nel"
                                     , ...)
     ))
   }
   if(tickVal %in% c("centinel", "centiNel")){
     return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = trans
+                    , args = list(trans = "nel"
                                   , labels = label_centiNel()
                                   , ...)
     ))

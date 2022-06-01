@@ -51,3 +51,6 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
 
 
 }
+\seealso{
+\code{\link[scales]{log_breaks}}
+}
