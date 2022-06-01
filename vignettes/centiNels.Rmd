@@ -45,11 +45,11 @@ exch %>%
                      , "2020-10-01"
                      , "2021-01-04"
                      , "2021-04-01"))) %>% 
-  mutate(pct_difference = round(100*(exRate_scale-1), 2)) %>% 
-  select(date, direction, exRate, pct_difference) %>% 
+  mutate(pct_diff = round(100*(exRate_scale-1), 2)) %>% 
+  select(date, direction, exRate, pct_diff) %>% 
   pivot_wider(id_cols = c("date")
               , names_from = "direction"
-              , values_from = c("exRate", "pct_difference")
+              , values_from = c("exRate", "pct_diff")
               , names_vary = "slowest"
               )
 ```
@@ -87,13 +87,12 @@ use a better-behaved scale... like the natural log scale.
 ## Logarithmic scaling: Nels instead 
 
 Logarithmic transformation is an excellent solution\* to this problem. It makes
-all ratio-based changes linear.  For now, let's go with it's "excellent." 
+all ratio-based changes linear.  
 
-
-*Familiarity and comfort with logarithms can be major drawbacks; we refer users
+\* *Familiarity and comfort with logarithms can be major drawbacks; we refer users
 to the "divMult" vignette for further discussion and some good workarounds*
 
-The first step to making the math work here is rescaling the data by taking the
+A first step to making the math work is rescaling the data by taking the
 natural logarithm. This is hardly a new idea. One idea explored in
 **ratioScales** is that we can simply use natural logarithm *units* as our
 measure of change. Once log-transformed, changes in exchange rate in one
@@ -103,7 +102,10 @@ retains this symmetry, and in this vignette, we illustrate simply using a "base
 e" fold change (one "nel") as the plotting unit. This can be a sensible
 alternative to the common practice of, after a logarithmic transformation,
 back-transforming data onto the original scale for plotting. **ggplot2** users
-will likely be familiar with the functions `scale_*_log10()`, which do this.
+will likely be familiar with the functions `scale_*_log10()`, which do that.
+
+<!-- is this divergent, going into what we think people might do without our
+package? Does this belong before or after introducing the new stuff? -->
 
 Perhaps now, the idiomatic way to plot the currency data in **ggplot2** is to
 use the raw exchange rates (we'll say, scaled to the starting value so we can
@@ -159,19 +161,30 @@ exch %>%
 
 The difference between these two graphs is pretty subtle. If you look closely,
 you'll see the distance between 0.85 and 0.9 is substantially greater than the
-distance between 1.15 and 1.2 on the logarithmic y-axis graph (second), whereas,
-of course, they are the same distance apart on the arithmetic y-axis (first
-graph). This gives us a feel for the fact that a decrease of 10% is a bigger
-change than an increase of 10%, but it's still hard to see what is consistent
-between the two directions of exchange (which above, we said was one reason to
-prefer the log-transformations!).
+distance between 1.10 and 1.15 on the logarithmic y-axis graph (second),
+whereas, of course, they are the same distance apart on the arithmetic y-axis
+(first graph). This gives us a feel for the fact that a decrease of, say, 5% is
+a bigger change than an increase of 5%, but it's still hard to see what is
+consistent between the two directions of exchange (which above, we said was one
+reason to prefer the log-transformations!).
 
-An alternative is to become more comfortable with viewing data on a
-logarithmic scale. Lots of bases can make sense for logarithms (e.g., 2, 10, or
-e); here we explore natural logarithms (base e = `exp(1)`). To do this, let's
-indulge some nomenclature fun, then see what it can do for us.
+An alternative is to view data on a logarithmic scale. Lots of bases can make
+sense for logarithms (e.g., 2, 10, or e); here we explore natural logarithms
+(base e = `exp(1)`). To do this, let's indulge some nomenclature fun, then see
+what it can do for us.
 
-First, let's get the most basic unit here... what do we call 1 natural log unit? One **N**atural **L**og unit is "one nel" (one NL; one "nel"). How big is one nel? Actually, kind of big: a fold change of over 2.5, so an increase of one nel is over 2.5x. 
+First, let's get the most basic unit here... what do we call 1 natural log unit?
+One **N**atural **L**og unit is "one nel" (one NL; one "nel"). How big is one
+nel? Actually, kind of big: a fold change of over 2.5, so an increase of one nel
+is over 2.5x. 
+
+There's a nice solution to this: use 1/100th of a Nel as the unit,
+one "centiNel." Just as we might use a percent rather than proportional
+difference, or a centimeter rather than a meter, it will often be convenient to
+use centinels to track modest changes... actually, just as the "Bel" is hardly
+used to measure differences in amplitude (decibels are used instead), we suspect
+that "centinels" may be more useful than "nels" in most cases. Furthermore, in
+this vignette we explore some intriguing numerical properties of the centinel.
 
 
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
