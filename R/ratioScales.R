@@ -386,8 +386,8 @@ breaks_divMult <- function(n = 6
 #' values represent a multiplicative change from a reference point. These scales
 #' may be especially useful for highlighting proportional changes.
 #'
-#' @param tickVal Character, one of "divMult", "nel", "centiNel", or
-#'   "propDiff"
+#' @param tickVal Character, one of "divMult", "propDiff", "percDiff", "nel", or
+#'   "centiNel"
 #' @inheritParams split_decades
 #' @param ... Additional arguments passed to
 #'    \code{\link[ggplot2]{scale_y_continuous}}

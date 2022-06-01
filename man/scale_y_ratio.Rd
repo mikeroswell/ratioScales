@@ -7,8 +7,8 @@
 scale_y_ratio(tickVal = "divMult", splits = 2, ...)
 }
 \arguments{
-\item{tickVal}{Character, one of "divMult", "nel", "centiNel", or
-"propDiff"}
+\item{tickVal}{Character, one of "divMult", "propDiff", "percDiff", "nel", or
+"centiNel"}
 
 \item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
 "decade?"}
