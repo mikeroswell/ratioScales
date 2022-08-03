@@ -1,0 +1,64 @@
+---
+title: "divMult and perDiff"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{divMult and percDiff}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+  , fig.width = 7
+  , fig.height = 7
+)
+```
+
+```{r setup, message=FALSE, include = F}
+library(ratioScales)
+library(tidyverse)
+theme_set(theme_classic() +
+          theme(axis.text.x = element_text(angle = 45,
+                                           vjust = 1, hjust = 1)))
+```
+
+<!-- this is a new vignette to illustrate use case for the divMult scale -->>
+## Hook to illustrate a problem that needs to be solved (perhaps not exchange-rate focused)
+
+
+## Introducing the divMult scale
+
+<!-- generally want to show how existing scales challenge intuitions or engender misunderstanding-->
+
+```{r idiomatic ggplot graphs,  out.width = '45%', out.height = '45%', fig.show = "hold"}
+
+# first, without logarithmic rescaling
+
+# second, with log10 transformation of y-axis
+
+
+```
+<!-- text explaining how divMult makes way more sense in many contexts -->
+``` {r divMult plot}
+
+
+```
+
+
+<!-- Then, want to provide percDiff as a good compromise as well -->
+
+# Percent differences can work too, if an appropriate scale is used
+
+The problem with percent differences as typically presented is that they suggest
+symmetry in confusing ways, and make the large relative changes near 0 and 100 
+seem small. But, if an appropriate (i.e., logarithmic) scaling is used, familiar
+percent differences make great axis ticks. 
+
+
+
+```{r graphs showing percDiff scale vs. percent difference without rescaling}
+
+
+```
