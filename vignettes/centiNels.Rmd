@@ -134,7 +134,7 @@ exch %>%
     , color = "black"
     , fill = "red") +
   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-  labs(y = "exchange rate", main = "orignal scale")  +
+  labs(y = "change in exchange rate", main = "orignal scale")  +
   scale_y_continuous(n.breaks = 7)
 
 # second, with log10 transformation of y-axis
@@ -155,7 +155,7 @@ exch %>%
     , fill = "red"
     , color = "black") +
   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-  labs(y = "exchange rate", main = "logarithmic scale") +
+  labs(y = "change in exchange rate", main = "logarithmic scale") +
   scale_y_log10(n.breaks = 7)
 ```
 
@@ -204,7 +204,7 @@ exch %>%
     , fill = "red"
     , color = "black") +
   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-  labs(y = "exchange rate", main = "logarithmic scale") +
+  labs(y = "difference in exchange rate \n(centinels)", main = "logarithmic scale") +
   scale_y_ratio(tickVal = "centiNel")
 
 ```
