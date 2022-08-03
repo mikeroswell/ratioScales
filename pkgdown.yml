@@ -1,10 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 2.0.3
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   Ratio_scales_and_centinels: Ratio_scales_and_centinels.html
   centiNels: centiNels.html
-last_built: 2022-06-01T20:52Z
+last_built: 2022-08-03T13:29Z
 urls:
   reference: https://mikeroswell.github.io/ratioScales/reference
   article: https://mikeroswell.github.io/ratioScales/articles
