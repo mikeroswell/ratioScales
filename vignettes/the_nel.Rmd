@@ -1,0 +1,44 @@
+---
+title: "nels_and_centinels"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{the_nel}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+  , fig.width = 7
+  , fig.height = 7
+)
+```
+
+```{r setup, message=FALSE, include = F}
+library(ratioScales)
+library(tidyverse)
+theme_set(theme_classic() +
+          theme(axis.text.x = element_text(angle = 45,
+                                           vjust = 1, hjust = 1)))
+```
+
+<!-- this is a new vignette to playfully introduce the "nel" and "centinel" -->
+## Hook to illustrate a problem that needs to be solved (not exchange-rate focused)
+
+
+## ln transformations
+
+<!-- Importance of ln in measuring and visualizing change-->
+
+<!-- Problem of communicating stuff on the ln scale -->
+
+## The unit on an ln scale is the "nel"
+
+## Like a percent, a "centinel" can be more informative
+
+## One nel is a weird unit, one centinel is like a better percent
+
+## The nel and centinel scales compared to other divmult options
