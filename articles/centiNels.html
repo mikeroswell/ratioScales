@@ -49,8 +49,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Ratio_scales_and_centinels.html">Ratio scales and centinels</a>
     <a class="dropdown-item" href="../articles/centiNels.html">centiNels</a>
-    <a class="dropdown-item" href="../articles/divMult.html">divMult and perDiff</a>
-    <a class="dropdown-item" href="../articles/the_nel.html">nels_and_centinels</a>
+    <a class="dropdown-item" href="../articles/divMult.html">divMult and percDiff</a>
   </div>
 </li>
       </ul>
@@ -78,9 +77,14 @@
 
     
     
-<div class="section level3">
-<h3 id="foolish-percent-differences">Foolish percent differences<a class="anchor" aria-label="anchor" href="#foolish-percent-differences"></a>
-</h3>
+<!-- this is a new vignette to playfully introduce the "nel" and "centinel" -->
+<div class="section level2">
+<h2 id="hook-to-illustrate-a-problem-that-needs-to-be-solved-not-exchange-rate-focused">Hook to illustrate a problem that needs to be solved (not exchange-rate focused)<a class="anchor" aria-label="anchor" href="#hook-to-illustrate-a-problem-that-needs-to-be-solved-not-exchange-rate-focused"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="foolish-percent-differences">Foolish percent differences<a class="anchor" aria-label="anchor" href="#foolish-percent-differences"></a>
+</h2>
 <p>On 1 April, 2020, a Canadian dollar (CAD) cost 0.703 US dollar (USD). The Canadian dollar gained strength pretty steadily for the next year, and by 1 July it would cost 0.736 USD, by 1 October, 0.753 USD, by 4 January 2021, 0.782 USD, and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?</p>
 <p>Often, such changes are described in terms of percent difference, even though this is sort of insane. Below is a brief peek at the insanity of percentage differences: any change in the exchange rate will be reflected as different percentage changes, depending on which direction you’re hoping to exchange currency.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -116,10 +120,11 @@ Americans... the 10% gain corresponded to an 11% loss.
 <p>But would Michael, had he declined the trade in 2020, only to accept in 2021, feel even more foolish? He would have gotten 100 CAD for only 70.31 USD in 2020, but now the trade cost him 78.24 USD. In this world, Michael paid over 11% (almost $8 USD) more in 2021 than he would have a year before… also a bad deal.</p>
 <p>But wait? Surely Michael declining the trade must be <em>exactly as bad</em> for him as Jonathan’s trade was <em>good</em> for Jonathan? <em>And it would have been!</em> Michael would have given Jonathan 7.93 USD more in 2021 than in 2020 for the same 100 CAD… since he would have ultimately given Jonathan 78.24 USD, this is a loss (in 2021 dollars) of <span class="math inline">\(7.93/78.24 = 0.101\)</span>, i.e. the same 10.1% loss Jonathan would have experienced.</p>
 <p>Woof. This is confusing! We <em>can</em> make the math work out… but we could also use a better-behaved scale… like the natural log scale.</p>
+<!-- Importance of ln in measuring and visualizing change-->
 </div>
-<div class="section level3">
-<h3 id="logarithmic-scaling-nels-instead">Logarithmic scaling: Nels instead<a class="anchor" aria-label="anchor" href="#logarithmic-scaling-nels-instead"></a>
-</h3>
+<div class="section level2">
+<h2 id="logarithmic-scaling-nels-instead">Logarithmic scaling: Nels instead<a class="anchor" aria-label="anchor" href="#logarithmic-scaling-nels-instead"></a>
+</h2>
 <p>Logarithmic transformation is an excellent solution* to this problem. It makes all ratio-based changes linear.</p>
 <p>* <em>Familiarity and comfort with logarithms can be major drawbacks; we refer users to the “divMult” vignette for further discussion and some good workarounds</em></p>
 <p>A first step to making the math work is rescaling the data by taking the natural logarithm. This is hardly a new idea. One idea explored in <strong>ratioScales</strong> is that we can simply use natural logarithm <em>units</em> as our measure of change. Once log-transformed, changes in exchange rate in one direction will be mirrored by changes in exchange rate in the other direction <em>of the exact same magnitude</em>. <strong>ratioScales</strong> is all about plotting that retains this symmetry, and in this vignette, we illustrate simply using a “base e” fold change (one “nel”) as the plotting unit. This can be a sensible alternative to the common practice of, after a logarithmic transformation, back-transforming data onto the original scale for plotting. <strong>ggplot2</strong> users will likely be familiar with the functions <code>scale_*_log10()</code>, which do that.</p>
@@ -203,11 +208,25 @@ But first, let’s plot with centinels!</p>
 <p><img src="centiNels_files/figure-html/centinel%20plot-1.png" width="672"></p>
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
-data. The below is from the blog post -->
+data. -->
+<!-- Problem of communicating stuff on the ln scale -->
 </div>
 <div class="section level2">
-<h2 id="copied-text-wont-make-sense-from-here">copied text, won’t make sense from here<a class="anchor" aria-label="anchor" href="#copied-text-wont-make-sense-from-here"></a>
+<h2 id="the-unit-on-an-ln-scale-is-the-nel">The unit on an ln scale is the “nel”<a class="anchor" aria-label="anchor" href="#the-unit-on-an-ln-scale-is-the-nel"></a>
 </h2>
+</div>
+<div class="section level2">
+<h2 id="like-a-percent-a-centinel-can-be-more-informative">Like a percent, a “centinel” can be more informative<a class="anchor" aria-label="anchor" href="#like-a-percent-a-centinel-can-be-more-informative"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="one-nel-is-a-weird-unit-one-centinel-is-like-a-better-percent">One nel is a weird unit, one centinel is like a better percent<a class="anchor" aria-label="anchor" href="#one-nel-is-a-weird-unit-one-centinel-is-like-a-better-percent"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="the-nel-and-centinel-scales-compared-to-other-divmult-options">The nel and centinel scales compared to other divmult options<a class="anchor" aria-label="anchor" href="#the-nel-and-centinel-scales-compared-to-other-divmult-options"></a>
+</h2>
+<!--The below is from the blog post, needs editing -->
 <p>“Centinels” look like they could be nice units for staring at this, but what the heck is 1 centinel? Amazingly, a centinel isn’t that funky a unit. Plus one centinel is pretty close to a 1% increase!</p>
 <p>let’s take a look:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
