@@ -1,5 +1,5 @@
 ---
-title: "divMult and perDiff"
+title: "divMult and percDiff"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{divMult and percDiff}

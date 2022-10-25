@@ -24,6 +24,10 @@ theme_set(theme_classic() +
                                            vjust = 1, hjust = 1)))
 ```
 
+<!-- this is a new vignette to playfully introduce the "nel" and "centinel" -->
+## Hook to illustrate a problem that needs to be solved (not exchange-rate focused)
+
+
 
 ## Foolish percent differences
 
@@ -83,7 +87,7 @@ Jonathan would have experienced.
 Woof. This is confusing! We *can* make the math work out... but we could also
 use a better-behaved scale... like the natural log scale.
 
-
+<!-- Importance of ln in measuring and visualizing change-->
 ## Logarithmic scaling: Nels instead 
 
 Logarithmic transformation is an excellent solution\* to this problem. It makes
@@ -212,9 +216,21 @@ exch %>%
 
 <!-- Next introduce log scaling, nels, centinels, and then show the cool
 compounding 1 % and linear change in centinels, ideally with the exhange rate
-data. The below is from the blog post -->
+data. -->
 
-# copied text, won't make sense from here
+
+<!-- Problem of communicating stuff on the ln scale -->
+
+## The unit on an ln scale is the "nel"
+
+## Like a percent, a "centinel" can be more informative
+
+## One nel is a weird unit, one centinel is like a better percent
+
+## The nel and centinel scales compared to other divmult options
+
+<!--The below is from the blog post, needs editing -->
+
 "Centinels" look like they could be nice units for staring at this, but what the
 heck is 1 centinel? Amazingly, a centinel isn't that funky a unit. Plus one
 centinel is pretty close to a 1% increase!
