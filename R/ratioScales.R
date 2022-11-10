@@ -512,13 +512,13 @@ scale_y_ratio <- function(tickVal = "divMult"
                                   , ...)
     ))
   }
-  if(tickVal %in% c("propDiff", "propDiff")){
+  if(tickVal %in% c("propdiff", "propDiff")){
       return(doCall2(ggplot2::scale_y_continuous
                       , args = list(trans = propDiff_trans()
                                     , ...)
       ))
     }
-    if(tickVal %in% c("propDiff", "percDiff")){
+    if(tickVal %in% c("percdiff", "percDiff")){
       return(doCall2(ggplot2::scale_y_continuous
                       , args = list(trans = propDiff_trans()
                                     , labels = label_percDiff()
