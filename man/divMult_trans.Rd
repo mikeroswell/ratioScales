@@ -4,13 +4,21 @@
 \alias{divMult_trans}
 \title{Natural log transformation... providing breaks on the "divMult" scale}
 \usage{
-divMult_trans(n = 7, base = exp(1), ...)
+divMult_trans(n = 7, base = exp(1), splits = 2, slashStar = FALSE, ...)
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}
 
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
+
+\item{splits}{Integer, one of \code{c(1,2,3)}. How many tick marks per
+"decade?"}
+
+\item{slashStar}{Logical, should division and mulitplication symbols be "*"
+and "/" (default). Prettier symbols \eqn{\times, \div} are available when
+\code{slashStar == FALSE}, but font libraries and text size may make
+distinguishing \eqn{\div} from \eqn{+} difficult.}
 
 \item{...}{Additional arguments passed to breaking function, labeller}
 }

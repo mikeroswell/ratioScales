@@ -143,6 +143,7 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #' Natural log transformation... providing breaks on the "divMult" scale
 #'
 #' @inheritParams breaks_divMult
+#' @inheritParams label_divMult
 #' @param ... Additional arguments passed to breaking function, labeller
 #'
 #' @export
@@ -166,13 +167,15 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #'      ggplot2::labs(y = "nel (natural log) scale") +
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
-divMult_trans <- function(n = 7, base = exp(1), ...){
+divMult_trans <- function(n = 7, base = exp(1), splits = 2, slashStar = FALSE, ...){
   scales::trans_new(
     name = "divMult"
     , trans = function(x) log(x, base = base)
     , inverse = function(x) base^x
-    , breaks = breaks_divMult()
-    , format = label_divMult()
+    , breaks = doCall2(breaks_divMult
+                       , list(splits = splits , ...))
+    , format = doCall2(label_divMult
+                                   , list(slashStar = slashStar, ...))
   )
 }
 
@@ -376,6 +379,44 @@ breaks_divMult <- function(n = 6
 
 
 
+
+#' Parse flags for ratio scales
+#'
+#' @param tickVal Character, one of "divMult", "propDiff", "percDiff", "nel", or
+#'   "centiNel"
+#' @param ... Additional arguments passed to
+#'    \code{\link[ggplot2]{scale_y_continuous}} or other scale elements (e.g.,
+#'    breaks, labels, etc. )
+#'
+#' @return List of arguments to pass to scale_(x|y)_continuous()
+#'
+#'
+#'
+trans_picker <- function(tickVal, ... ){
+  if(tickVal %in% c("divmult", "divMult")){
+    return(list(trans = "divMult", ...))
+  }
+  if(tickVal %in% c("nel", "Nel")){
+    return(list(trans = "nel", ...)
+    )
+  }
+  if(tickVal %in% c("centinel", "centiNel")){
+    return(list(trans = "nel", labels = label_centiNel(), ...)
+    )
+  }
+  if(tickVal %in% c("propDiff", "propdiff")){
+    return(list(trans = propDiff_trans()
+                                 , ...)
+    )
+  }
+  if(tickVal %in% c("propDiff", "percDiff")){
+    return(list( trans = propDiff_trans()
+                                 , labels = label_percDiff()
+                                 , ...)
+    )
+  }
+}
+
 #' Ratio-based position scales for continuous data (x & y)
 #'
 #' `scale_x_ratio` and `scale_y_ratio` are alternatives to  traditional
@@ -386,11 +427,7 @@ breaks_divMult <- function(n = 6
 #' values represent a multiplicative change from a reference point. These scales
 #' may be especially useful for highlighting proportional changes.
 #'
-#' @param tickVal Character, one of "divMult", "propDiff", "percDiff", "nel", or
-#'   "centiNel"
-#' @inheritParams split_decades
-#' @param ... Additional arguments passed to
-#'    \code{\link[ggplot2]{scale_y_continuous}}
+#' @inheritParams trans_picker
 #'
 #'
 #'
@@ -440,7 +477,6 @@ breaks_divMult <- function(n = 6
 #'
 #'
 #'
-#' @export
 #'
 #' @examples
 
@@ -456,16 +492,17 @@ breaks_divMult <- function(n = 6
 #'
 #' bigger %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
-#'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
+#'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
 #'      scale_y_ratio(tickVal = "divMult"
 #'      , slashStar = TRUE
-#'      , sec.axis = ax2) +
+#'      , sec.axis = ax2
+#'      ) +
 #'         ggplot2::labs(y = "divMult scale (fold change)")
 #'
 #' smaller %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
 #'      scale_y_ratio(tickVal = "centiNel"
-#'      , sec.axis = ax2
+#'     , sec.axis = ax2
 #'      ) +
 #'         ggplot2::labs(y = "centiNels")
 #'
@@ -473,7 +510,7 @@ breaks_divMult <- function(n = 6
 #' bigger %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
 #'      scale_y_ratio(tickVal = "propDiff"
-#'      , sec.axis = ax2
+#'    , sec.axis = ax2
 #'         ) +
 #'         ggplot2::labs(y = "propDiff (proportional difference) scale")
 #'
@@ -483,62 +520,22 @@ breaks_divMult <- function(n = 6
 #'      scale_y_ratio(tickVal = "percDiff"
 #'      , sec.axis = ax2) +
 #'         ggplot2::labs(y = "propDiff (perentage difference) scale")
+#'
 
-scale_y_ratio <- function(tickVal = "divMult"
-                          # , trans = "divMult"
-                          , splits = 2
-                          , ... ){
-  if(tickVal %in% c("divmult", "divMult")){
-    return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = "divMult"
-                                  , breaks = doCall2(breaks_divMult
-                                                     , list(splits = splits, ...))
-                                  , labels =  doCall2(label_divMult
-                                                      , list(...))
-                                  , ...)
-                    )
-    )
-  }
-  if(tickVal %in% c("nel", "Nel")){
-    return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = "nel"
-                                    , ...)
-    ))
-  }
-  if(tickVal %in% c("centinel", "centiNel")){
-    return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = "nel"
-                                  , labels = label_centiNel()
-                                  , ...)
-    ))
-  }
-  if(tickVal %in% c("propdiff", "propDiff")){
-      return(doCall2(ggplot2::scale_y_continuous
-                      , args = list(trans = propDiff_trans()
-                                    , ...)
-      ))
-    }
-    if(tickVal %in% c("percdiff", "percDiff")){
-      return(doCall2(ggplot2::scale_y_continuous
-                      , args = list(trans = propDiff_trans()
-                                    , labels = label_percDiff()
-                                    , ...)
-      ))
-  }
+#' @rdname scale_ratio
+#' @export
+scale_y_ratio <- function(tickVal = "divMult", ...){
+  doCall2(ggplot2::scale_y_continuous
+          , args = trans_picker(tickVal, ...))
 }
 
+#' @rdname scale_ratio
+#' @export
+scale_x_ratio <- function(tickVal = "divMult", ...){
+  doCall2(ggplot2::scale_x_continuous
+          , args = trans_picker(tickVal, ...))
+}
 
-
-# scale_x_ratio <- function(tickVal = "divMult"
-#                           , trans = "log"
-#                           , ... ){
-#   if(tickVal %in% c("divmult", "divMult")){
-#     scale_x_continuous( trans = trans
-#                         , breaks = breaks_divMult()
-#                         , labels = label_divMult()
-#                         )
-#   }
-# }
 
 
 
