@@ -407,7 +407,8 @@ trans_picker <- function(tickVal, ... ){
     )
   }
   if(tickVal %in% c("propDiff", "propdiff")){
-    return(list(trans = doCall2(propDiff_trans, args = list(...))
+    message("'base = 2' chosen by defaut. Setting base of log affects breaking function behavior, and 'exp(1)' generally gives strange-looking numbers for the propDiff scale")
+    return(list(trans = doCall2(propDiff_trans, args = list(base = 2, ...))
                                  , ...)
     )
   }
@@ -517,7 +518,7 @@ trans_picker <- function(tickVal, ... ){
 #' bigger %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
 #'      scale_y_ratio(tickVal = "propDiff"
-#'    , sec.axis = ax2
+#'                    , sec.axis = ax2
 #'         ) +
 #'         ggplot2::labs(y = "propDiff (proportional difference) scale")
 #'
