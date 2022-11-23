@@ -24,13 +24,13 @@ label_divMult <- function(logscale = FALSE
   else{x <- log(x, base = base )}
   if(slashStar){
     chars <- ifelse(sign(x) == -1
-                    , paste("/", base^abs(x))
+                    , paste("paste('/',", base^abs(x), ")")
                     , ifelse(sign(x) == 1
-                             , paste(' *', base^abs(x))
-                             , base^x
+                             , paste("paste(' *',", base^abs(x), ")")
+                             , paste(base^x)
                     )
     )
-  return(chars)
+  return(str2expression(chars))
 
   } else{
   chars <- ifelse(sign(x) == -1,
@@ -126,7 +126,7 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
 #'          )
 #'        ) +
 #'      ggplot2::labs(y = "nel (natural log) scale") +
-#'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 #'
 
 nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
@@ -165,7 +165,7 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #'          )
 #'        ) +
 #'      ggplot2::labs(y = "nel (natural log) scale") +
-#'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 #'
 divMult_trans <- function(n = 7, base = exp(1), splits = 2
                           , slashStar = TRUE,  ...){
@@ -203,7 +203,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #'         )
 #'       ) +
 #'     ggplot2::labs(y = "propDiff scale") +
-#'     ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'     ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 #'
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
 #'  ggplot2::geom_point() +
@@ -217,7 +217,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #'    )
 #'  ) +
 #'  ggplot2::labs(y = "propDiff scale") +
-#'  ggplot2::geom_hline(yintercept = 1, size = 0.2)
+#'  ggplot2::geom_hline(yintercept = 1, linewdith = 0.2)
 #'
 #'
 #'
@@ -322,7 +322,7 @@ limit_breaks <- function(v
 #' dat <- data.frame(x, y)
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y))+
 #'      ggplot2::geom_point()+
-#'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
+#'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
 #'      ggplot2::scale_y_continuous(
 #'      trans = "log"
 #'      , breaks = breaks_divMult()

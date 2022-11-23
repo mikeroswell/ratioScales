@@ -33,6 +33,6 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
          )
        ) +
      ggplot2::labs(y = "nel (natural log) scale") +
-     ggplot2::geom_hline(yintercept = 1, size = 0.2)
+     ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 
 }

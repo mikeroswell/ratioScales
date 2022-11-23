@@ -50,7 +50,7 @@ x <- 1:10
 dat <- data.frame(x, y)
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::geom_point()+
-     ggplot2::geom_hline(yintercept = 1, size = 0.2) +
+     ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
      ggplot2::scale_y_continuous(
      trans = "log"
      , breaks = breaks_divMult()
