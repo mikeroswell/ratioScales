@@ -101,7 +101,7 @@ smaller \%>\%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 bigger \%>\%  ggplot2::ggplot(ggplot2::aes(x,y)) +
      ggplot2::geom_point() +
      scale_y_ratio(tickVal = "propDiff"
-   , sec.axis = ax2
+                   , sec.axis = ax2
         ) +
         ggplot2::labs(y = "propDiff (proportional difference) scale")
 

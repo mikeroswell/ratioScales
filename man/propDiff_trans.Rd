@@ -22,7 +22,7 @@ dat<-data.frame(x = 1:10, y = exp(-2:7))
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
     ggplot2::geom_point() +
     ggplot2::scale_y_continuous(
-      trans = propDiff_trans()
+      trans = propDiff_trans(base = 2)
       , sec.axis = ggplot2::sec_axis(
           labels = function(x) {x}
           , trans = ~.
@@ -45,7 +45,7 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
    )
  ) +
  ggplot2::labs(y = "propDiff scale") +
- ggplot2::geom_hline(yintercept = 1, linewdith = 0.2)
+ ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 
 
 

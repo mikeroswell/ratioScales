@@ -194,7 +194,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
 #'     ggplot2::geom_point() +
 #'     ggplot2::scale_y_continuous(
-#'       trans = propDiff_trans()
+#'       trans = propDiff_trans(base = 2)
 #'       , sec.axis = ggplot2::sec_axis(
 #'           labels = function(x) {x}
 #'           , trans = ~.
@@ -217,7 +217,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #'    )
 #'  ) +
 #'  ggplot2::labs(y = "propDiff scale") +
-#'  ggplot2::geom_hline(yintercept = 1, linewdith = 0.2)
+#'  ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 #'
 #'
 #'
@@ -407,7 +407,7 @@ trans_picker <- function(tickVal, ... ){
     )
   }
   if(tickVal %in% c("propDiff", "propdiff")){
-    message("'base = 2' chosen by defaut. Setting base of log affects breaking function behavior, and 'exp(1)' generally gives strange-looking numbers for the propDiff scale")
+    warning("'base = 2' chosen by defaut. Setting base of log affects breaking function behavior, and 'exp(1)' may give strange-looking numbers for the propDiff scale")
     return(list(trans = doCall2(propDiff_trans, args = list(base = 2, ...))
                                  , ...)
     )
