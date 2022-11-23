@@ -166,13 +166,15 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #'      ggplot2::labs(y = "nel (natural log) scale") +
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
-divMult_trans <- function(n = 7, base = exp(1), ...){
+divMult_trans <- function(n = 7, base = exp(1), splits = 1, slashStar = FALSE, ...){
   scales::trans_new(
     name = "divMult"
     , trans = function(x) log(x, base = base)
     , inverse = function(x) base^x
-    , breaks = breaks_divMult()
-    , format = label_divMult()
+    , breaks = doCall2(breaks_divMult
+                       , list(...))
+    , format = doCall2(label_divMult
+                                   , list(...))
   )
 }
 
@@ -456,16 +458,29 @@ breaks_divMult <- function(n = 6
 #'
 #' bigger %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
-#'      ggplot2::geom_hline(yintercept = 1, size = 0.2) +
+#'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
 #'      scale_y_ratio(tickVal = "divMult"
 #'      , slashStar = TRUE
-#'      , sec.axis = ax2) +
+#'  #    , sec.axis = ax2
+#'      ) +
+#'         ggplot2::labs(y = "divMult scale (fold change)")
+#'
+#' # Test more than example
+#' bigger %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
+#'      ggplot2::geom_point() +
+#'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
+#'      scale_y_continuous(
+#'      trans = "divMult"
+#'      , label = label_divMult()
+#'      , breaks = breaks_divMult()
+#'      , sec.axis = ax2
+#'      ) +
 #'         ggplot2::labs(y = "divMult scale (fold change)")
 #'
 #' smaller %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
 #'      scale_y_ratio(tickVal = "centiNel"
-#'      , sec.axis = ax2
+#'    #  , sec.axis = ax2
 #'      ) +
 #'         ggplot2::labs(y = "centiNels")
 #'
@@ -473,7 +488,7 @@ breaks_divMult <- function(n = 6
 #' bigger %>%  ggplot2::ggplot(ggplot2::aes(x,y)) +
 #'      ggplot2::geom_point() +
 #'      scale_y_ratio(tickVal = "propDiff"
-#'      , sec.axis = ax2
+#'  #    , sec.axis = ax2
 #'         ) +
 #'         ggplot2::labs(y = "propDiff (proportional difference) scale")
 #'
@@ -483,44 +498,47 @@ breaks_divMult <- function(n = 6
 #'      scale_y_ratio(tickVal = "percDiff"
 #'      , sec.axis = ax2) +
 #'         ggplot2::labs(y = "propDiff (perentage difference) scale")
-
-scale_y_ratio <- function(tickVal = "divMult"
-                          # , trans = "divMult"
-                          , splits = 2
-                          , ... ){
+#'
+#'
+ratio_scale <- function(tickVal = "divMult"
+                        , aesthetics = aesthetics
+                        , splits = 2
+                        , super = ScaleContinuous
+                        , ... ){
   if(tickVal %in% c("divmult", "divMult")){
-    return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = "divMult"
-                                  , breaks = doCall2(breaks_divMult
-                                                     , list(splits = splits, ...))
-                                  , labels =  doCall2(label_divMult
-                                                      , list(...))
+    return(doCall2(ggplot2:::continuous_scale
+                    , args = list(aesthetics = aesthetics
+                                  , trans = "divMult"
                                   , ...)
                     )
     )
   }
   if(tickVal %in% c("nel", "Nel")){
-    return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = "nel"
-                                    , ...)
+    return(doCall2(ggplot2:::continuous_scale
+                    , args = list(aesthetics = aesthetics
+                                  , trans = "nel"
+                                  , ...)
     ))
   }
   if(tickVal %in% c("centinel", "centiNel")){
-    return(doCall2(ggplot2::scale_y_continuous
-                    , args = list(trans = "nel"
+    return(doCall2(ggplot2:::continuous_scale
+                    , args = list(aesthetics = aesthetics
+                                  , trans = "nel"
                                   , labels = label_centiNel()
                                   , ...)
     ))
   }
-  if(tickVal %in% c("propDiff", "propDiff")){
-      return(doCall2(ggplot2::scale_y_continuous
-                      , args = list(trans = propDiff_trans()
+  if(tickVal %in% c("propDiff", "propdiff")){
+      return(doCall2(ggplot2:::continuous_scale
+                      , args = list(aesthetics = aesthetics
+                                    , trans = propDiff_trans()
                                     , ...)
       ))
     }
     if(tickVal %in% c("propDiff", "percDiff")){
-      return(doCall2(ggplot2::scale_y_continuous
-                      , args = list(trans = propDiff_trans()
+      return(doCall2(ggplot2:::continuous_scale
+                      , args = list(aesthetics = aesthetics
+                                    , trans = propDiff_trans()
                                     , labels = label_percDiff()
                                     , ...)
       ))
@@ -528,6 +546,51 @@ scale_y_ratio <- function(tickVal = "divMult"
 }
 
 
+
+#' Y-axis wrapper for scale_ratio
+#'
+#' @inheritParams scale_ratio
+#'
+#' @export
+#'
+#' @examples
+#' # examples needed here
+#'
+scale_y_ratio <- function(tickVal = "divMult"
+                          , splits = 2
+                          , slashStar = FALSE
+                          , breaks = waiver()
+                          , minor_breaks = waiver()
+                          # , n.breaks = waiver()
+                          , labels = waiver()
+                          , limits = NULL
+                          , expand = waiver()
+                          , oob = censor
+                          , na.value = NA_real_
+                          # , trans = "divMult"
+                          , guide = waiver()
+                          , position = "left"
+                          , sec.axis = waiver()){
+  sc <- ratio_scale(tickVal = tickVal
+                    , splits = splits
+                    , slashStar = slashStar
+                    , aesthetics = ggplot2:::ggplot_global$y_aes
+                    , scale_name = "ratio"
+                    , palette = identity
+                    , breaks = breaks
+                    , minor_breaks = minor_breaks
+                    # , n.breaks = n.breaks
+                    , labels = labels
+                    , limits = limits
+                    , expand = expand
+                    # , trans = trans
+                    , rescale =
+                    , guide = guide
+                    , position = position
+                    , super = ScaleContinuousPosition
+                    )
+  ggplot2:::set_sec_axis(sec.axis, sc)
+}
 
 # scale_x_ratio <- function(tickVal = "divMult"
 #                           , trans = "log"
