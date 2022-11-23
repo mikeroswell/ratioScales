@@ -167,7 +167,8 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #'      ggplot2::labs(y = "nel (natural log) scale") +
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
-divMult_trans <- function(n = 7, base = exp(1), splits = 2, slashStar = FALSE, ...){
+divMult_trans <- function(n = 7, base = exp(1), splits = 2
+                          ,  ...){
   scales::trans_new(
     name = "divMult"
     , trans = function(x) log(x, base = base)
@@ -175,7 +176,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2, slashStar = FALSE, .
     , breaks = doCall2(breaks_divMult
                        , list(splits = splits , ...))
     , format = doCall2(label_divMult
-                                   , list(slashStar = slashStar, ...))
+                                   , list(...))
   )
 }
 
@@ -526,14 +527,14 @@ trans_picker <- function(tickVal, ... ){
 #' @export
 scale_y_ratio <- function(tickVal = "divMult", ...){
   doCall2(ggplot2::scale_y_continuous
-          , args = trans_picker(tickVal, ...))
+          , trans_picker(tickVal, ...))
 }
 
 #' @rdname scale_ratio
 #' @export
 scale_x_ratio <- function(tickVal = "divMult", ...){
   doCall2(ggplot2::scale_x_continuous
-          , args = trans_picker(tickVal, ...))
+          , trans_picker(tickVal, ...))
 }
 
 
