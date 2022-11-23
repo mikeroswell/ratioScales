@@ -168,7 +168,7 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #'      ggplot2::geom_hline(yintercept = 1, size = 0.2)
 #'
 divMult_trans <- function(n = 7, base = exp(1), splits = 2
-                          ,  ...){
+                          , slashStar = TRUE,  ...){
   scales::trans_new(
     name = "divMult"
     , trans = function(x) log(x, base = base)
@@ -176,7 +176,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
     , breaks = doCall2(breaks_divMult
                        , list(splits = splits , ...))
     , format = doCall2(label_divMult
-                                   , list(...))
+                                   , list( slashStar = slashStar, ...))
   )
 }
 
@@ -395,24 +395,30 @@ breaks_divMult <- function(n = 6
 #'
 trans_picker <- function(tickVal, ... ){
   if(tickVal %in% c("divmult", "divMult")){
-    return(list(trans = "divMult", ...))
+    # if("slashStar" %in% names(list(...))){
+    #   slashStar <- slashStar
+    # }
+    # else slashStar <- TRUE
+    return(list(trans = doCall2(divMult_trans, args = list(...)), ...))
   }
   if(tickVal %in% c("nel", "Nel")){
-    return(list(trans = "nel", ...)
+    return(list(trans = doCall2(nel_trans, args = list(...)), ...)
     )
   }
   if(tickVal %in% c("centinel", "centiNel")){
-    return(list(trans = "nel", labels = label_centiNel(), ...)
+    return(list(trans = doCall2(nel_trans, args = list(...))
+                , labels = label_centiNel(), ...)
     )
   }
   if(tickVal %in% c("propDiff", "propdiff")){
-    return(list(trans = propDiff_trans()
+    return(list(trans = doCall2(propDiff_trans, args = list(...))
                                  , ...)
     )
   }
   if(tickVal %in% c("propDiff", "percDiff")){
-    return(list( trans = propDiff_trans()
-                                 , labels = label_percDiff()
+    return(list(trans = doCall2(propDiff_trans, args = list(...))
+                                 , labels = doCall2(label_percDiff
+                                                    , args = list(...))
                                  , ...)
     )
   }
