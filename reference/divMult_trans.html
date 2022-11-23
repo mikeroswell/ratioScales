@@ -56,7 +56,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">divMult_trans</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">7</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">divMult_trans</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">7</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, splits <span class="op">=</span> <span class="fl">2</span>, slashStar <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,6 +68,18 @@
 <dt>base</dt>
 <dd><p>a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \(e\)=<code>exp(1)</code>.</p></dd>
+
+
+<dt>splits</dt>
+<dd><p>Integer, one of <code>c(1,2,3)</code>. How many tick marks per
+"decade?"</p></dd>
+
+
+<dt>slashStar</dt>
+<dd><p>Logical, should division and mulitplication symbols be "*"
+and "/" (default). Prettier symbols \(\times, \div\) are available when
+<code>slashStar == FALSE</code>, but font libraries and text size may make
+distinguishing \(\div\) from \(+\) difficult.</p></dd>
 
 
 <dt>...</dt>
