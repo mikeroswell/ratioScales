@@ -382,16 +382,11 @@ breaks_divMult <- function(n = 6
 
 
 #' Parse flags for ratio scales
-#'
-#' @param tickVal Character, one of "divMult", "propDiff", "percDiff", "nel", or
-#'   "centiNel"
-#' @param ... Additional arguments passed to
-#'    \code{\link[ggplot2]{scale_y_continuous}} or other scale elements (e.g.,
-#'    breaks, labels, etc. )
+#' @inheritParams scale_y_ratio
 #'
 #' @return List of arguments to pass to scale_(x|y)_continuous()
 #'
-#' @keyword internal
+#' @noRd
 #'
 #'
 trans_picker <- function(tickVal, ... ){
@@ -435,7 +430,11 @@ trans_picker <- function(tickVal, ... ){
 #' values represent a multiplicative change from a reference point. These scales
 #' may be especially useful for highlighting proportional changes.
 #'
-#' @inheritParams trans_picker
+#' @param tickVal Character, one of "divMult", "propDiff", "percDiff", "nel", or
+#'   "centiNel"
+#' @param ... Additional arguments passed to
+#'    \code{\link[ggplot2]{scale_y_continuous}} or other scale elements (e.g.,
+#'    breaks, labels, etc. )
 #'
 #'
 #'
