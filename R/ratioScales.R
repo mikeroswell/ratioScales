@@ -391,6 +391,7 @@ breaks_divMult <- function(n = 6
 #'
 #' @return List of arguments to pass to scale_(x|y)_continuous()
 #'
+#' @keyword internal
 #'
 #'
 trans_picker <- function(tickVal, ... ){
