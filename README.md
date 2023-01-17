@@ -42,14 +42,12 @@ exch %>%
   labs(y = "exchange rate") 
 ```
 
-<div class="figure">
+<img src="man/figures/README-raw_exchange-1.png" width="50%" />
 
-<img src="man/figures/README-raw_exchange-1.png" alt="Exchange rates between US and Canada during the COVID-19 Pandemic" width="50%" />
-<p class="caption">
-Exchange rates between US and Canada during the COVID-19 Pandemic
-</p>
-
-</div>
+``` r
+fig_cap("fig1", "Exchange rates between US and Canada during the COVID-19 Pandemic")
+#> [1] "Figure 1: Exchange rates between US and Canada during the COVID-19 Pandemic"
+```
 
 Let’s see, relative to some baseline (1 April 2020), is the Canadian
 dollar gaining or losing ground against the US dollar, and by how much?
