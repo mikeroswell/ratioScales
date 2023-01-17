@@ -42,7 +42,14 @@ exch %>%
   labs(y = "exchange rate") 
 ```
 
-<img src="man/figures/README-raw_exchange-1.png" width="50%" />
+<div class="figure">
+
+<img src="man/figures/README-raw_exchange-1.png" alt="Exchange rates between US and Canada during the COVID-19 Pandemic" width="50%" />
+<p class="caption">
+Exchange rates between US and Canada during the COVID-19 Pandemic
+</p>
+
+</div>
 
 Let’s see, relative to some baseline (1 April 2020), is the Canadian
 dollar gaining or losing ground against the US dollar, and by how much?
@@ -68,18 +75,31 @@ But this is strange! Somehow the Canadian dollar *weakend* by **a
 maximum of 15%** before rebounding, but the US dollar *strengthened* by
 **much more than 15%**. Maybe not the best way to think about this?
 
-**ratioScales** provides “rational” alternatives. For example, using a
-“divMult” scale:
+**ratioScales** provides “rational” alternatives.
+
+### divMult scale
+
+The “divMult” scale in **ratioScales** shows absolute ratios, prefaced
+by an operator sign (e.g., × or ÷), allowing easy and accurate
+comparison of multiplicative changes.
 
 ``` r
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
-   geom_hline(yintercept = 1/1.15, color = hcl.colors(4, "Plasma")[1], linetype = 5) +
-   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+   geom_hline(yintercept = 1/1.15
+              , color = hcl.colors(4, "Plasma")[1]
+              , linetype = 5) +
+   geom_hline(yintercept = 1.15
+              , color = hcl.colors(4, "Plasma")[2]
+              , linetype = 5) +
   # times and divided by 0.85; dotted
-   geom_hline(yintercept = 1/0.85, color = hcl.colors(4, "Plasma")[2], linetype = 3) +
-   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_hline(yintercept = 1/0.85
+              , color = hcl.colors(4, "Plasma")[2]
+              , linetype = 3) +
+   geom_hline(yintercept = 0.85
+              , color = hcl.colors(4, "Plasma")[1]
+              , linetype = 3) +
    geom_point() +
    scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
   # FUNCTION FROM ratioScales
@@ -89,17 +109,28 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
 
 <img src="man/figures/README-divMult_example-1.png" width="50%" />
 
-Prefer percentage differences? Also ok, if you use an appropriate scale:
+### percDiff
+
+Prefer percentage differences? You can do this in a principled fashion
+using `scale_y_ratio(tickVal = "percDiff")`.
 
 ``` r
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
-   geom_hline(yintercept = 1/1.15, color = hcl.colors(4, "Plasma")[1], linetype = 5) +
-   geom_hline(yintercept = 1.15, color = hcl.colors(4, "Plasma")[2], linetype = 5) +
+   geom_hline(yintercept = 1/1.15
+              , color = hcl.colors(4, "Plasma")[1]
+              , linetype = 5) +
+   geom_hline(yintercept = 1.15
+              , color = hcl.colors(4, "Plasma")[2]
+              , linetype = 5) +
   # times and divided by 0.85; dotted
-   geom_hline(yintercept = 1/0.85, color = hcl.colors(4, "Plasma")[2], linetype = 3) +
-   geom_hline(yintercept = 0.85, color = hcl.colors(4, "Plasma")[1], linetype = 3) +
+   geom_hline(yintercept = 1/0.85
+              , color = hcl.colors(4, "Plasma")[2]
+              , linetype = 3) +
+   geom_hline(yintercept = 0.85
+              , color = hcl.colors(4, "Plasma")[1]
+              , linetype = 3) +
    geom_point() +
    scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
     # FUNCTION FROM ratioScales
@@ -109,12 +140,23 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
 
 <img src="man/figures/README-percDiff_example-1.png" width="50%" />
 
-<!-- some comments here to keep track of 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+\[caption: explain the four lines (maybe we’ve very briefly explained
+two of the lines in an earlier caption\]
 
-You can also embed plots, for example:
+This preserves the true ratio-based differences on the visual plot, but
+the values on the guide do not correspond simply to ratio differences
+(and are not symmetric, see plot).
 
-<img src="man/figures/README-pressure-1.png" width="50%" />
+### centiNels
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+<metatext> We can also make a plot that will often be very similar to
+the percDiff plot, but which uses numbers that are better for
+quantitative analysis. </metatext>
+
+<!-- some COMMENTS here to keep track of 
+We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+
+When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+Add alt-text (and consider adding short captions as well) to all figures
 -->
