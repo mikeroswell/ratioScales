@@ -42,7 +42,14 @@ exch %>%
   labs(y = "exchange rate") 
 ```
 
-<img src="man/figures/README-raw_exchange-1.png" width="50%" />
+<div class="figure">
+
+<img src="man/figures/README-raw_exchange-1.png" alt="this was the alt-text" width="50%" />
+<p class="caption">
+this was the caption
+</p>
+
+</div>
 
     #> [1] "Figure 1: Exchange rates between US and Canada during the COVID-19 Pandemic"
 

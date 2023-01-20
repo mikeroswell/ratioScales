@@ -57,7 +57,7 @@ devtools::install_github("mikeroswell/ratioScales")
 
 Consider exchange rates between US and Canadian dollars:
 
-```{r raw_exchange, warning = FALSE}
+```{r raw_exchange, warning = FALSE, fig.cap = "this was the caption", fig.alt = "this was the alt-text"}
 
 exch %>% 
   ggplot(aes(date, exRate, color = direction)) + 
