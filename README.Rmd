@@ -88,7 +88,7 @@ gaining or losing ground against the US dollar, and by how much?
    labs(y = "proportional change in exchange rate") 
 ```
 
-But this is strange! Somehow the Canadian dollar *weakend* by 
+But this is strange! Somehow the Canadian dollar *weakened* by 
 **a maximum of 15%** before rebounding, but the US dollar *strengthened* by 
 **much more than 15%**. Maybe not the best way to think about this? 
 
