@@ -23,3 +23,7 @@ template:
   bootstrap: 5
   params:
     ganalytics: G-XLCJHJKT0M
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
