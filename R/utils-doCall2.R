@@ -10,6 +10,7 @@
 #'   Grothendieck here: https://stackoverflow.com/a/71801214/8400969
 #' @noRd
 #'
+#' @importFrom methods formalArgs
 #' @examples
 #'
 #' dat <- c(NA, 1:5)
