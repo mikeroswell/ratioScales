@@ -49,8 +49,8 @@ You can install the development version of ratioScales from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("mikeroswell/ratioScales")
+# install.packages("remotes")
+remotes::install_github("mikeroswell/ratioScales")
 ```
 
 ## Example
