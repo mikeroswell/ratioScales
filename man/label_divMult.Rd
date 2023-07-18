@@ -12,7 +12,7 @@ label_divMult(logscale = FALSE, base = exp(1), slashStar = TRUE)
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
 
-\item{slashStar}{Logical, should division and mulitplication symbols be "*"
+\item{slashStar}{Logical, should division and multiplication symbols be "*"
 and "/" (default). Prettier symbols \eqn{\times, \div} are available when
 \code{slashStar == FALSE}, but font libraries and text size may make
 distinguishing \eqn{\div} from \eqn{+} difficult.}

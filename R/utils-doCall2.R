@@ -3,6 +3,7 @@
 #' @param what Character, name of function
 #' @param args List of unquoted arguments
 #' @param accepted Character, quoted names of arguments to be passed to `what`
+#' @importFrom methods formalArgs
 #'
 #' @return Output of what
 #'
