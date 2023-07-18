@@ -1,5 +1,5 @@
 Package: ratioScales
-Title: Rational scales for visualizing change
+Title: Rational Scales for Visualizing Change
 Version: 0.0.1.000
 Authors@R: 
      c( person(given = "Michael",
@@ -33,7 +33,7 @@ Description: Logarithmic rescaling makes multiplicative relationships additive,
   `percDiff` mark axes with the proportional difference from the reference 
   point. General functions `scale_y_ratio()` and `scale_x_ratio()` can be added 
   to a ggplot object to use the ratio-scaled axes.
-License: GPL (>= 3) + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
