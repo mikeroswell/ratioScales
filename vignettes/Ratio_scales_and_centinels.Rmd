@@ -46,7 +46,7 @@ First, grab the data, which are freely available on github:
 ```{r get_nyt_data}
 
 # vid <- read.csv("https://github.com/nytimes/covid-19-data/raw/master/rolling-averages/us-states.csv")
-
+data(vid)
 head(vid)
 
 ```
