@@ -44,13 +44,7 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-XLCJHJKT0M"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XLCJHJKT0M');
-</script>
+<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -119,11 +113,11 @@
 <span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"exchange rate"</span><span class="op">)</span> </span></code></pre></div>
 <div class="figure">
-<img src="reference/figures/README-raw_exchange-1.png" alt="this was the alt-text" width="50%"><p class="caption">
-this was the caption
+<img src="reference/figures/README-raw_exchange-1.png" alt="Exchange rates between US and Canada during the COVID-19 Pandemic" width="50%"><p class="caption">
+Exchange rates between US and Canada during the COVID-19 Pandemic
 </p>
 </div>
-<pre><code><span><span class="co">#&gt; [1] "Figure  1: Exchange rates between US and Canada during the COVID-19 Pandemic"</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Figure  1: Exchange rates between US and Canada during the COVID-19 Pandemic"</span></span></code></pre></div>
 <p>Let’s see, relative to some baseline (1 April 2020), is the Canadian dollar gaining or losing ground against the US dollar, and by how much?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -138,12 +132,8 @@ this was the caption
 <span>  <span class="co"># FUNCTION FROM ggplot2</span></span>
 <span>   <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">130</span>, <span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
 <span>   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"proportional change in exchange rate"</span><span class="op">)</span> </span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-scaled_exchange-1.png" alt="plot of chunk scaled_exchange" width="50%"><p class="caption">
-plot of chunk scaled_exchange
-</p>
-</div>
-<p>But this is strange! Somehow the Canadian dollar <em>weakend</em> by <strong>a maximum of 15%</strong> before rebounding, but the US dollar <em>strengthened</em> by <strong>much more than 15%</strong>. Maybe not the best way to think about this?</p>
+<p><img src="reference/figures/README-scaled_exchange-1.png" width="50%"></p>
+<p>But this is strange! Somehow the Canadian dollar <em>weakened</em> by <strong>a maximum of 15%</strong> before rebounding, but the US dollar <em>strengthened</em> by <strong>much more than 15%</strong>. Maybe not the best way to think about this?</p>
 <p><strong>ratioScales</strong> provides “rational” alternatives.</p>
 <div class="section level3">
 <h3 id="divmult-scale">divMult scale<a class="anchor" aria-label="anchor" href="#divmult-scale"></a>
@@ -171,11 +161,7 @@ plot of chunk scaled_exchange
 <span>  <span class="co"># FUNCTION FROM ratioScales</span></span>
 <span>   <span class="fu"><a href="reference/scale_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"divMult"</span>, n <span class="op">=</span> <span class="fl">12</span>, nmin <span class="op">=</span> <span class="fl">12</span>, slashStar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"multiplicative change in exchange rate"</span><span class="op">)</span> </span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-divMult_example-1.png" alt="plot of chunk divMult_example" width="50%"><p class="caption">
-plot of chunk divMult_example
-</p>
-</div>
+<p><img src="reference/figures/README-divMult_example-1.png" width="50%"></p>
 </div>
 <div class="section level3">
 <h3 id="percdiff">percDiff<a class="anchor" aria-label="anchor" href="#percdiff"></a>
@@ -203,11 +189,7 @@ plot of chunk divMult_example
 <span>    <span class="co"># FUNCTION FROM ratioScales</span></span>
 <span>   <span class="fu"><a href="reference/scale_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"percDiff"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"percentage difference in exchange rate"</span><span class="op">)</span> </span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-percDiff_example-1.png" alt="plot of chunk percDiff_example" width="50%"><p class="caption">
-plot of chunk percDiff_example
-</p>
-</div>
+<p><img src="reference/figures/README-percDiff_example-1.png" width="50%"></p>
 <p>[caption: explain the four lines (maybe we’ve very briefly explained two of the lines in an earlier caption]</p>
 <p>This preserves the true ratio-based differences on the visual plot, but the values on the guide do not correspond simply to ratio differences (and are not symmetric, see plot).</p>
 </div>
@@ -217,10 +199,8 @@ plot of chunk percDiff_example
 <p><metatext> We can also make a plot that will often be very similar to the percDiff plot, but which uses numbers that are better for quantitative analysis. </metatext></p>
 <!-- some COMMENTS here to keep track of 
 We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
-
-Add alt-text (and consider adding short captions as well) to all figures
+&#10;When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+&#10;Add alt-text (and consider adding short captions as well) to all figures
 -->
 </div>
 </div>
@@ -228,8 +208,7 @@ Add alt-text (and consider adding short captions as well) to all figures
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small>GPL (&gt;= 3)</small></li>
+<li>AGPL (&gt;= 3)</li>
 </ul>
 </div>
 
