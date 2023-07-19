@@ -26,7 +26,7 @@
 "vid"
 
 
-#' NY Times COVID case data for mid-Atlantic USA in first two pandemic years
+#' NY Times COVID case data for mid-Atlantic USA in first two pandemic years, with additional columns
 #'
 #' A dataset containing COVID cases and deaths for 6 US states and territories
 #' from 1 April 2020 to 31 March 2022.

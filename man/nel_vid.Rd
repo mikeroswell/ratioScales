@@ -3,7 +3,7 @@
 \docType{data}
 \name{nel_vid}
 \alias{nel_vid}
-\title{NY Times COVID case data for mid-Atlantic USA in first two pandemic years}
+\title{NY Times COVID case data for mid-Atlantic USA in first two pandemic years, with additional columns}
 \format{
 Data frame with 4368 observations of 11 variables:
 \itemize{
