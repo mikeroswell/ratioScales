@@ -7,6 +7,32 @@
 #'
 #' @format Data frame with 4368 observations of 11 variables:
 #'  - **date** Date, YYYY-MM-DD
+#'  - **geoid* Character, code for US state or territory
+#'  - **state** Character, name of US state or territory
+#'  - **cases** Integer, reported daily COVID cases
+#'  - **cases_avg** Numeric, rolling daily average number of cases within
+#'  "state" in previous 2 weeks
+#'  - **cases_avg_per_100k** Numeric, rolling daily average case rate per 100k
+#'  residents in previous 2 weeks
+#'  - **deaths** Integer, reported daily COVID-related deaths
+#'  - **deaths_avg** Numeric, rolling daily average number of deaths within
+#'  "state" in previous 2-weeks
+#'  - **deaths_avg_per_100k** Numeric, rolling daily average death rate per 100k
+#'  residents in previous 2 weeks
+#'
+#'  @source  Data from The New York Times, based on reports from state and local
+#'  health agencies. \url{https://github.com/nytimes/covid-19-data}
+
+"vid"
+
+
+#' NY Times COVID case data for mid-Atlantic USA in first two pandemic years
+#'
+#' A dataset containing COVID cases and deaths for 6 US states and territories
+#' from 1 April 2020 to 31 March 2022.
+#'
+#' @format Data frame with 4368 observations of 11 variables:
+#'  - **date** Date, YYYY-MM-DD
 #'  - **state** Character, name of US state or territory
 #'  - **cases** Integer, reported daily COVID cases
 #'  - **cases_avg** Numeric, rolling daily average number of cases within

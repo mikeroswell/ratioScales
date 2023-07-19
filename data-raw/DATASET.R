@@ -32,3 +32,4 @@ exch<-get_alfred_series(series_id ="DEXCAUS"
 usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
 usethis::use_data(exch, overwrite = TRUE)
+
