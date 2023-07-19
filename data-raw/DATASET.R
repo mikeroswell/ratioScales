@@ -29,6 +29,6 @@ exch<-get_alfred_series(series_id ="DEXCAUS"
   mutate(exRate_scale = exRate/first(exRate)) %>%
   arrange(direction)
 
-
+usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
 usethis::use_data(exch, overwrite = TRUE)
