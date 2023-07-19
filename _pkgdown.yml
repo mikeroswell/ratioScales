@@ -1,29 +1,4 @@
 url: https://mikeroswell.github.io/ratioScales/
-reference:
-- title: Ratio scales
-- contents:
-  - starts_with("scale_")
-- title: Labelling
-- contents:
-  - starts_with("label_")
-- title: Transformations
-- contents:
-  - ends_with("_trans")
-- title: Axis breaking
-- contents:
-  - contains("breaks")
-  - split_decades
-- title: Data sets
-- contents:
-  - has_keyword("datasets")
-- title : internal
-  contents:
-  - has_keyword("internal")
 template:
   bootstrap: 5
-  params:
-    ganalytics: G-XLCJHJKT0M
-navbar:
-  structure:
-    left:  [intro, reference, articles, news]
-    right: [search, github]
+
