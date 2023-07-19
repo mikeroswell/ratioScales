@@ -1,39 +1,45 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
+
+
 
 # ratioScales
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/ratioScales)](https://CRAN.R-project.org/package=ratioScales)
+[![CRAN status](https://www.r-pkg.org/badges/version/ratioScales)](https://CRAN.R-project.org/package=ratioScales)
 <!-- badges: end -->
 
-Logarithmic axis scales can clearly communicate multiplicative changes;
-they can also confuse. **ratioScales** annotates logarithmic axis scales
-with tickmarks that denote proportional and multiplicative change simply
-and explicitly.
+Logarithmic axis scales can clearly communicate multiplicative changes; they can 
+also confuse. **ratioScales** annotates logarithmic axis scales with tickmarks 
+that denote proportional and multiplicative change simply and explicitly.  
 
-The main function in this package, `scale_*_ratio()`, is ggplot-friendly
-and works similarly to existing`scale_*_*` functions from **ggplot2**
-and **scales**.
+The main function in this package, `scale_*_ratio()`, is ggplot-friendly and 
+works similarly to existing`scale_*_*` functions from **ggplot2** and 
+**scales**. 
 
 ## Installation
 
-You can install the development version of ratioScales from
+You can install the development version of ratioScales from 
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("mikeroswell/ratioScales")
+# install.packages("remotes")
+remotes::install_github("mikeroswell/ratioScales")
 ```
 
 ## Example
 
 Consider exchange rates between US and Canadian dollars:
 
-``` r
+
+```r
 
 exch %>% 
   ggplot(aes(date, exRate, color = direction)) + 
@@ -43,20 +49,20 @@ exch %>%
 ```
 
 <div class="figure">
-
 <img src="man/figures/README-raw_exchange-1.png" alt="this was the alt-text" width="50%" />
-<p class="caption">
-this was the caption
-</p>
-
+<p class="caption">this was the caption</p>
 </div>
 
-    #> [1] "Figure 1: Exchange rates between US and Canada during the COVID-19 Pandemic"
 
-Let’s see, relative to some baseline (1 April 2020), is the Canadian
-dollar gaining or losing ground against the US dollar, and by how much?
+```
+#> [1] "Figure  1: Exchange rates between US and Canada during the COVID-19 Pandemic"
+```
 
-``` r
+Let's see, relative to some baseline (1 April 2020), is the Canadian dollar
+gaining or losing ground against the US dollar, and by how much?
+
+
+```r
 
  exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
@@ -71,21 +77,25 @@ dollar gaining or losing ground against the US dollar, and by how much?
    labs(y = "proportional change in exchange rate") 
 ```
 
-<img src="man/figures/README-scaled_exchange-1.png" width="50%" />
+<div class="figure">
+<img src="man/figures/README-scaled_exchange-1.png" alt="plot of chunk scaled_exchange" width="50%" />
+<p class="caption">plot of chunk scaled_exchange</p>
+</div>
 
-But this is strange! Somehow the Canadian dollar *weakend* by **a
-maximum of 15%** before rebounding, but the US dollar *strengthened* by
-**much more than 15%**. Maybe not the best way to think about this?
+But this is strange! Somehow the Canadian dollar *weakend* by 
+**a maximum of 15%** before rebounding, but the US dollar *strengthened* by 
+**much more than 15%**. Maybe not the best way to think about this? 
 
-**ratioScales** provides “rational” alternatives.
+**ratioScales** provides "rational" alternatives.
 
 ### divMult scale
 
-The “divMult” scale in **ratioScales** shows absolute ratios, prefaced
-by an operator sign (e.g., × or ÷), allowing easy and accurate
-comparison of multiplicative changes.
+The "divMult" scale in **ratioScales** shows absolute ratios, prefaced by an
+operator sign (e.g., × or ÷), allowing easy and accurate comparison of
+multiplicative changes.
 
-``` r
+
+```r
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
@@ -109,14 +119,18 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "multiplicative change in exchange rate") 
 ```
 
-<img src="man/figures/README-divMult_example-1.png" width="50%" />
+<div class="figure">
+<img src="man/figures/README-divMult_example-1.png" alt="plot of chunk divMult_example" width="50%" />
+<p class="caption">plot of chunk divMult_example</p>
+</div>
 
 ### percDiff
 
-Prefer percentage differences? You can do this in a principled fashion
-using `scale_y_ratio(tickVal = "percDiff")`.
+Prefer percentage differences? You can do this in a principled fashion using
+`scale_y_ratio(tickVal = "percDiff")`.
 
-``` r
+
+```r
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
@@ -140,20 +154,20 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "percentage difference in exchange rate") 
 ```
 
-<img src="man/figures/README-percDiff_example-1.png" width="50%" />
+<div class="figure">
+<img src="man/figures/README-percDiff_example-1.png" alt="plot of chunk percDiff_example" width="50%" />
+<p class="caption">plot of chunk percDiff_example</p>
+</div>
 
-\[caption: explain the four lines (maybe we’ve very briefly explained
-two of the lines in an earlier caption\]
+[caption: explain the four lines (maybe we've very briefly explained two of the lines in an earlier caption]
 
-This preserves the true ratio-based differences on the visual plot, but
-the values on the guide do not correspond simply to ratio differences
-(and are not symmetric, see plot).
+This preserves the true ratio-based differences on the visual plot, but the values on the guide do not correspond simply to ratio differences (and are not symmetric, see plot).
 
 ### centiNels
 
-<metatext> We can also make a plot that will often be very similar to
-the percDiff plot, but which uses numbers that are better for
-quantitative analysis. </metatext>
+<metatext>
+We can also make a plot that will often be very similar to the percDiff plot, but which uses numbers that are better for quantitative analysis.
+</metatext>
 
 <!-- some COMMENTS here to keep track of 
 We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
