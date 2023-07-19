@@ -60,7 +60,7 @@ reference point.
 
 ref_date <- vid %>% filter(date =="2021-10-17") %>%  select(state, ref_case_rate = cases_avg_per_100k)
 
-new_vid<-vid %>% left_join(ref_date, by = "state")
+new_vid <- vid %>% left_join(ref_date, by = "state")
 ```
 
 Just to make my life easier, I'm going to add a couple columns that rescale the
@@ -71,7 +71,7 @@ easier I'll drop all states except my imediate neighbors in Maryland.
 ```{r rescale data and filter states }
 near_states <-c("Maryland", "Virginia", "Delaware", "District of Columbia", "West Virginia", "Pennsylvania")
 
-nel_vid<-new_vid %>% mutate(nel_rate = log(cases_avg_per_100k/ref_case_rate)
+nel_vid <- new_vid %>% mutate(nel_rate = log(cases_avg_per_100k/ref_case_rate)
                           , prop_rate = cases_avg_per_100k/ref_case_rate
                           , date = as.Date(date)) %>%
   filter(state %in% near_states) 
@@ -143,7 +143,8 @@ instead. This is the same idea as changing from a proportion to a percent.
 
 ```{r nel_to_centinel}
 # drop before april 2020
-cut_vid <-nel_vid %>% filter(date > as.Date("2020-04-01"))
+    
+cut_vid <- nel_vid %>% filter(date > as.Date("2020-04-01"))
 
 # we are used to using percents instead of proportions
 cut_vid %>%  
