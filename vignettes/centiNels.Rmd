@@ -37,12 +37,12 @@ it would cost 0.736 USD, by  1 October, 0.753 USD, by 4 January 2021, 0.782 USD,
 and by April fools day 2021, 0.796 USD. How much is the exchange rate changing?
 
 Often, such changes are described in terms of percent difference, even though
-this is sort of insane. Below is a brief peek at the insanity of percentage
+this doesn't always make sense. Below is a brief peek at the insanity of percentage
 differences: any change in the exchange rate will be reflected as different
 percentage changes, depending on which direction you're hoping to exchange
 currency.
 
-```{r percents are insane}
+```{r percents don't make sense}
 exch %>% 
   filter(date %in% as.Date(c("2020-04-01"
                      , "2020-07-01"

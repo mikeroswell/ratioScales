@@ -107,7 +107,7 @@ The "divMult" scale in **ratioScales** shows absolute ratios, prefaced by an
 operator sign (e.g., × or ÷), allowing easy and accurate comparison of
 multiplicative changes.
 
-```{r divMult_example, warning = FALSE}
+```{r divMult_example, warning = FALSE, fig.cap = "exchange rate changes on the divMult scale}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
