@@ -25,8 +25,8 @@ knitr::opts_chunk$set(
 library(ratioScales)
 library(tidyverse)
 library(captioner)
-tab_cap <- captioner(prefix = "Table")
-fig_cap <- captioner(prefix = "Figure")
+# tab_cap <- captioner(prefix = "Table")
+# fig_cap <- captioner(prefix = "Figure")
 theme_set(theme_classic() +
           theme(axis.text.x = element_text(angle = 45,
                                            vjust = 1, hjust = 1)
@@ -74,7 +74,7 @@ exch %>%
 ```
 
 ```{r first fig cap, echo = FALSE}
-fig_cap("fig1", "Exchange rates between US and Canada during the COVID-19 Pandemic")
+# fig_cap("fig1", "Exchange rates between US and Canada during the COVID-19 Pandemic")
 ```
 
 Let's see, relative to some baseline (1 April 2020), is the Canadian dollar
