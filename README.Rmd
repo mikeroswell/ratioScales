@@ -5,11 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <style>
-.caption {
-    color: #3399ff;		
-	font-weight: bold;
-		}
-</style>
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -24,14 +20,6 @@ knitr::opts_chunk$set(
 ```{r setup, message = FALSE, include = FALSE}
 library(ratioScales)
 library(tidyverse)
-# library(captioner)
-# tab_cap <- captioner(prefix = "Table")
-# fig_cap <- captioner(prefix = "Figure")
-theme_set(theme_classic() +
-          theme(axis.text.x = element_text(angle = 45,
-                                           vjust = 1, hjust = 1)
-                , text = element_text(size = 14)))
-
 ```
 
 # ratioScales
@@ -48,7 +36,7 @@ that denote proportional and multiplicative change simply and explicitly.
 
 The main function in this package, `scale_*_ratio()`, is ggplot-friendly and 
 works similarly to existing`scale_*_*` functions from **ggplot2** and 
-**scales**. 
+**scales**. To learn more, please visit [https://mikeroswell.github.io/ratioScales/](https://mikeroswell.github.io/ratioScales/)
 
 ## Installation
 
@@ -60,118 +48,3 @@ You can install the development version of ratioScales from
 remotes::install_github("mikeroswell/ratioScales")
 ```
 
-## Example
-
-Consider exchange rates between US and Canadian dollars:
-
-```{r raw_exchange, warning = FALSE, fig.cap = "Exchange rates between US and Canada during the COVID-19 pandemic", fig.alt = "Exchange rates between US and Canada during the COVID-19 pandemic. x-axis: dates from April 2020 to April 2022. y-axis: exchange rate (Canadian to US in Blue, US to Canadian in Magenta). Two curves with imperfect mirroring on arithmetic scale."}
-
-exch %>% 
-  ggplot(aes(date, exRate, color = direction)) + 
-  geom_point() +
-  scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-  labs(y = "exchange rate") 
-```
-
-```{r first fig cap, echo = FALSE}
-# fig_cap("fig1", "Exchange rates between US and Canada during the COVID-19 Pandemic")
-```
-
-Let's see, relative to some baseline (1 April 2020), is the Canadian dollar
-gaining or losing ground against the US dollar, and by how much?
-
-```{r scaled_exchange, warning = FALSE, fig.cap = "Proportional change in exchange rate from 1 April 2020 to 1 April 2022", fig.alt = "add alt text here"}
-
- exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
-   geom_hline(yintercept = 1, color = "black")+
-   geom_point() +
-   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-   geom_hline(yintercept = 0.85
-              , color = hcl.colors(4, "Plasma")[1], linetype = 3) +
-   geom_hline(yintercept = 1.15
-              , color = hcl.colors(4, "Plasma")[2], linetype = 5) +
-  # FUNCTION FROM ggplot2
-   scale_y_continuous(breaks = seq(80, 130, 5)/100) +
-   labs(y = "proportional change in exchange rate") 
-```
-
-But this is strange! Somehow the Canadian dollar *weakened* by 
-**a maximum of 15%** before rebounding, but the US dollar *strengthened* by 
-**much more than 15%**. Maybe not the best way to think about this? 
-
-**ratioScales** provides "rational" alternatives.
-
-### divMult scale
-
-The "divMult" scale in **ratioScales** shows absolute ratios, prefaced by an
-operator sign (e.g., × or ÷), allowing easy and accurate comparison of
-multiplicative changes.
-
-```{r divMult_example, warning = FALSE, fig.cap = "exchange rate changes on the divMult scale", fig.alt = "Add alt text"}
-exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
-   geom_hline(yintercept = 1, color = "black")+
-  # times and divided by 1.15; longdash
-   geom_hline(yintercept = 1/1.15
-              , color = hcl.colors(4, "Plasma")[1]
-              , linetype = 5) +
-   geom_hline(yintercept = 1.15
-              , color = hcl.colors(4, "Plasma")[2]
-              , linetype = 5) +
-  # times and divided by 0.85; dotted
-   geom_hline(yintercept = 1/0.85
-              , color = hcl.colors(4, "Plasma")[2]
-              , linetype = 3) +
-   geom_hline(yintercept = 0.85
-              , color = hcl.colors(4, "Plasma")[1]
-              , linetype = 3) +
-   geom_point() +
-   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-  # FUNCTION FROM ratioScales
-   scale_y_ratio(tickVal = "divMult", n = 12, nmin = 12, slashStar = FALSE) +
-   labs(y = "multiplicative change in exchange rate") 
-```
-
-### percDiff
-
-Prefer percentage differences? You can do this in a principled fashion using
-`scale_y_ratio(tickVal = "percDiff")`.
-
-```{r percDiff_example, warning = FALSE, fig.cap = "caption explaining the reference lines"}
-exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
-   geom_hline(yintercept = 1, color = "black")+
-  # times and divided by 1.15; longdash
-   geom_hline(yintercept = 1/1.15
-              , color = hcl.colors(4, "Plasma")[1]
-              , linetype = 5) +
-   geom_hline(yintercept = 1.15
-              , color = hcl.colors(4, "Plasma")[2]
-              , linetype = 5) +
-  # times and divided by 0.85; dotted
-   geom_hline(yintercept = 1/0.85
-              , color = hcl.colors(4, "Plasma")[2]
-              , linetype = 3) +
-   geom_hline(yintercept = 0.85
-              , color = hcl.colors(4, "Plasma")[1]
-              , linetype = 3) +
-   geom_point() +
-   scale_color_manual(values = hcl.colors(4, "Plasma")[c(1,2)]) +
-    # FUNCTION FROM ratioScales
-   scale_y_ratio(tickVal = "percDiff") +
-   labs(y = "percentage difference in exchange rate") 
-```
-
-This preserves the true ratio-based differences on the visual plot, but the values on the guide do not correspond simply to ratio differences (and are not symmetric, see plot).
-
-### centiNels
-
-<metatext>
-We can also make a plot that will often be very similar to the percDiff plot, but which uses numbers that are better for quantitative analysis.
-</metatext>
-
-<!-- some COMMENTS here to keep track of 
-We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
-
-Add alt-text (and consider adding short captions as well) to all figures
--->
