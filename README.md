@@ -57,8 +57,6 @@ Exchange rates between US and Canada during the COVID-19 pandemic
 
 </div>
 
-    #> [1] "Figure  1: Exchange rates between US and Canada during the COVID-19 Pandemic"
-
 Let’s see, relative to some baseline (1 April 2020), is the Canadian
 dollar gaining or losing ground against the US dollar, and by how much?
 
@@ -160,10 +158,14 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "percentage difference in exchange rate") 
 ```
 
-<img src="man/figures/README-percDiff_example-1.png" width="50%" />
+<div class="figure">
 
-\[caption: explain the four lines (maybe we’ve very briefly explained
-two of the lines in an earlier caption\]
+<img src="man/figures/README-percDiff_example-1.png" alt="caption explaining the reference lines" width="50%" />
+<p class="caption">
+caption explaining the reference lines
+</p>
+
+</div>
 
 This preserves the true ratio-based differences on the visual plot, but
 the values on the guide do not correspond simply to ratio differences
@@ -177,6 +179,8 @@ quantitative analysis. </metatext>
 
 <!-- some COMMENTS here to keep track of 
 We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-&#10;When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
-&#10;Add alt-text (and consider adding short captions as well) to all figures
+
+When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+Add alt-text (and consider adding short captions as well) to all figures
 -->
