@@ -53,7 +53,7 @@ works similarly to existing`scale_*_*` functions from **ggplot2** and
 ## Installation
 
 You can install the development version of ratioScales from 
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/mikeroswell/ratioScales) with:
 
 ``` r
 # install.packages("remotes")
