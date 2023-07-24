@@ -1,5 +1,8 @@
 ---
-output: html_document
+title: "ratioScales"
+output: 
+  html_document:
+    fig_caption: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
