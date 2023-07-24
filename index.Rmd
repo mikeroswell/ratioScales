@@ -37,8 +37,6 @@ theme_set(theme_classic() +
 
 ```
 
-# ratioScales
-
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mikeroswell/ratioScales/actions/workflows/R-CMD-check.yaml)
