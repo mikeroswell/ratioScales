@@ -1,5 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<style>
+.caption {
+    color: #3399ff;     
+    font-weight: bold;
+        }
+</style>
 
 # ratioScales
 
@@ -44,9 +50,9 @@ exch %>%
 
 <div class="figure">
 
-<img src="man/figures/README-raw_exchange-1.png" alt="Exchange rates between US and Canada during the COVID-19 Pandemic" width="50%" />
+<img src="man/figures/README-raw_exchange-1.png" alt="Exchange rates between US and Canada during the COVID-19 pandemic. x-axis: dates from April 2020 to April 2022. y-axis: exchange rate (Canadian to US in Blue, US to Canadian in Magenta). Two curves with imperfect mirroring on arithmetic scale." width="50%" />
 <p class="caption">
-Exchange rates between US and Canada during the COVID-19 Pandemic
+Exchange rates between US and Canada during the COVID-19 pandemic
 </p>
 
 </div>
@@ -71,7 +77,14 @@ dollar gaining or losing ground against the US dollar, and by how much?
    labs(y = "proportional change in exchange rate") 
 ```
 
-<img src="man/figures/README-scaled_exchange-1.png" width="50%" />
+<div class="figure">
+
+<img src="man/figures/README-scaled_exchange-1.png" alt="add alt text here" width="50%" />
+<p class="caption">
+Proportional change in exchange rate from 1 April 2020 to 1 April 2022
+</p>
+
+</div>
 
 But this is strange! Somehow the Canadian dollar *weakened* by **a
 maximum of 15%** before rebounding, but the US dollar *strengthened* by
@@ -109,7 +122,14 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "multiplicative change in exchange rate") 
 ```
 
-<img src="man/figures/README-divMult_example-1.png" width="50%" />
+<div class="figure">
+
+<img src="man/figures/README-divMult_example-1.png" alt="Add alt text" width="50%" />
+<p class="caption">
+exchange rate changes on the divMult scale
+</p>
+
+</div>
 
 ### percDiff
 

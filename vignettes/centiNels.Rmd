@@ -42,7 +42,7 @@ differences: any change in the exchange rate will be reflected as different
 percentage changes, depending on which direction you're hoping to exchange
 currency.
 
-```{r percents don't make sense}
+```{r percents}
 exch %>% 
   filter(date %in% as.Date(c("2020-04-01"
                      , "2020-07-01"

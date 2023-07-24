@@ -107,7 +107,7 @@ The "divMult" scale in **ratioScales** shows absolute ratios, prefaced by an
 operator sign (e.g., × or ÷), allowing easy and accurate comparison of
 multiplicative changes.
 
-```{r divMult_example, warning = FALSE, fig.cap = "exchange rate changes on the divMult scale"}
+```{r divMult_example, warning = FALSE, fig.cap = "exchange rate changes on the divMult scale", fig.alt = "Add alt text"}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
@@ -136,7 +136,7 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
 Prefer percentage differences? You can do this in a principled fashion using
 `scale_y_ratio(tickVal = "percDiff")`.
 
-```{r percDiff_example, warning = FALSE}
+```{r percDiff_example, warning = FALSE, fig.cap = "caption explaining the reference lines"}
 exch %>%  ggplot(aes(date, exRate_scale, color = direction)) + 
    geom_hline(yintercept = 1, color = "black")+
   # times and divided by 1.15; longdash
@@ -159,8 +159,6 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    scale_y_ratio(tickVal = "percDiff") +
    labs(y = "percentage difference in exchange rate") 
 ```
-
-[caption: explain the four lines (maybe we've very briefly explained two of the lines in an earlier caption]
 
 This preserves the true ratio-based differences on the visual plot, but the values on the guide do not correspond simply to ratio differences (and are not symmetric, see plot).
 
