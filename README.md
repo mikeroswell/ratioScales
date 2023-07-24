@@ -17,7 +17,9 @@ and explicitly.
 
 The main function in this package, `scale_*_ratio()`, is ggplot-friendly
 and works similarly to existing`scale_*_*` functions from **ggplot2**
-and **scales**. To learn more, please visit
+and **scales**.
+
+For examples and to learn more, please visit
 <https://mikeroswell.github.io/ratioScales/>
 
 ## Installation
