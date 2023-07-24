@@ -28,7 +28,7 @@ and **scales**.
 ## Installation
 
 You can install the development version of ratioScales from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/mikeroswell/ratioScales) with:
 
 ``` r
 # install.packages("remotes")
@@ -179,6 +179,8 @@ quantitative analysis. </metatext>
 
 <!-- some COMMENTS here to keep track of 
 We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-&#10;When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
-&#10;Add alt-text (and consider adding short captions as well) to all figures
+
+When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+Add alt-text (and consider adding short captions as well) to all figures
 -->
