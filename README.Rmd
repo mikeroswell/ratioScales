@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 ```{r setup, message = FALSE, include = FALSE}
 library(ratioScales)
 library(tidyverse)
-library(captioner)
+# library(captioner)
 # tab_cap <- captioner(prefix = "Table")
 # fig_cap <- captioner(prefix = "Figure")
 theme_set(theme_classic() +
