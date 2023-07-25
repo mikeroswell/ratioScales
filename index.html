@@ -86,23 +86,133 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="ratioscales">ratioScales<a class="anchor" aria-label="anchor" href="#ratioscales"></a>
-</h1></div>
-<!-- badges: start -->
-
+  <main id="main" class="col-md-9">
 <p>Logarithmic axis scales can clearly communicate multiplicative changes; they can also confuse. <strong>ratioScales</strong> annotates logarithmic axis scales with tickmarks that denote proportional and multiplicative change simply and explicitly.</p>
 <p>The main function in this package, <code>scale_*_ratio()</code>, is ggplot-friendly and works similarly to existing<code>scale_*_*</code> functions from <strong>ggplot2</strong> and <strong>scales</strong>.</p>
-<p>For examples and to learn more, please visit <a href="https://mikeroswell.github.io/ratioScales/" class="uri">https://mikeroswell.github.io/ratioScales/</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of ratioScales from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of ratioScales from <a href="https://github.com/mikeroswell/ratioScales" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mikeroswell/ratioScales"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<p>Consider exchange rates between US and Canadian dollars:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">exch</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"exchange rate"</span><span class="op">)</span> </span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-raw_exchange-1.png" alt="Exchange rates between US and Canada during the COVID-19 pandemic. x-axis: dates from April 2020 to April 2022. y-axis: exchange rate (Canadian to US in Blue, US to Canadian in Magenta). Two curves with imperfect mirroring on arithmetic scale." width="50%"><p class="caption">
+Exchange rates between US and Canada during the COVID-19 pandemic
+</p>
 </div>
+<p>Let’s see, relative to some baseline (1 April 2020), is the Canadian dollar gaining or losing ground against the US dollar, and by how much?</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span> <span class="va">exch</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate_scale</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span></span>
+<span>   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0.85</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, linetype <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1.15</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, linetype <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># FUNCTION FROM ggplot2</span></span>
+<span>   <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">130</span>, <span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"proportional change in exchange rate"</span><span class="op">)</span> </span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-scaled_exchange-1.png" alt="add alt text here" width="50%"><p class="caption">
+Proportional change in exchange rate from 1 April 2020 to 1 April 2022
+</p>
+</div>
+<p>But this is strange! Somehow the Canadian dollar <em>weakened</em> by <strong>a maximum of 15%</strong> before rebounding, but the US dollar <em>strengthened</em> by <strong>much more than 15%</strong>. Maybe not the best way to think about this?</p>
+<p><strong>ratioScales</strong> provides “rational” alternatives.</p>
+<div class="section level3">
+<h3 id="divmult-scale">divMult scale<a class="anchor" aria-label="anchor" href="#divmult-scale"></a>
+</h3>
+<p>The “divMult” scale in <strong>ratioScales</strong> shows absolute ratios, prefaced by an operator sign (e.g., × or ÷), allowing easy and accurate comparison of multiplicative changes.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exch</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate_scale</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="co"># times and divided by 1.15; longdash</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1.15</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1.15</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># times and divided by 0.85; dotted</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">0.85</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0.85</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># FUNCTION FROM ratioScales</span></span>
+<span>   <span class="fu"><a href="reference/scale_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"divMult"</span>, n <span class="op">=</span> <span class="fl">12</span>, nmin <span class="op">=</span> <span class="fl">12</span>, slashStar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"multiplicative change in exchange rate"</span><span class="op">)</span> </span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-divMult_example-1.png" alt="Add alt text" width="50%"><p class="caption">
+exchange rate changes on the divMult scale
+</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="percdiff">percDiff<a class="anchor" aria-label="anchor" href="#percdiff"></a>
+</h3>
+<p>Prefer percentage differences? You can do this in a principled fashion using <code>scale_y_ratio(tickVal = "percDiff")</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exch</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">exRate_scale</span>, color <span class="op">=</span> <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="co"># times and divided by 1.15; longdash</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1.15</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1.15</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># times and divided by 0.85; dotted</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">0.85</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0.85</span></span>
+<span>              , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>              , linetype <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Plasma"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="co"># FUNCTION FROM ratioScales</span></span>
+<span>   <span class="fu"><a href="reference/scale_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"percDiff"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"percentage difference in exchange rate"</span><span class="op">)</span> </span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-percDiff_example-1.png" alt="caption explaining the reference lines" width="50%"><p class="caption">
+caption explaining the reference lines
+</p>
+</div>
+<p>This preserves the true ratio-based differences on the visual plot, but the values on the guide do not correspond simply to ratio differences (and are not symmetric, see plot).</p>
+</div>
+<div class="section level3">
+<h3 id="centinels">centiNels<a class="anchor" aria-label="anchor" href="#centinels"></a>
+</h3>
+<p><metatext> We can also make a plot that will often be very similar to the percDiff plot, but which uses numbers that are better for quantitative analysis. </metatext></p>
+<!-- some COMMENTS here to keep track of 
+We think we are currently using GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+
+When you add a new plot, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+Add alt-text (and consider adding short captions as well) to all figures
+-->
+</div>
+</div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
