@@ -1,3 +1,6 @@
+# grab the data on US college admissions by income bracket
+admit <- read.csv("https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Data.csv")
+
 # get some COVID data for the Nel and propDiff examples
 library(tidyverse)
 vid <- read.csv("https://github.com/nytimes/covid-19-data/raw/master/rolling-averages/us-states.csv")
@@ -32,4 +35,5 @@ exch<-get_alfred_series(series_id ="DEXCAUS"
 usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
 usethis::use_data(exch, overwrite = TRUE)
+usethis::use_data(admit, overwrite = TRUE)
 

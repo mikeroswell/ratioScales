@@ -8,7 +8,7 @@
 Data frame with 4368 observations of 11 variables:
 \itemize{
 \item \strong{date} Date, YYYY-MM-DD
-\item *\emph{geoid} Character, code for US state or territory
+\item \strong{geoid} Character, code for US state or territory
 \item \strong{state} Character, name of US state or territory
 \item \strong{cases} Integer, reported daily COVID cases
 \item \strong{cases_avg} Numeric, rolling daily average number of cases within
