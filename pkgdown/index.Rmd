@@ -7,11 +7,11 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<!-- set font blue and bold for captions -->
 <style>
-.caption {
-    color: #3399ff;		
-	font-weight: bold;
-		}
+.figcaption {
+color: #3399ff; font-weight: bold;
+}
 </style>
 
 ```{r, include = FALSE}

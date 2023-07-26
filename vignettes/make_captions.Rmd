@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 <!-- set font blue and bold for captions -->
 <style>
-.figcaption {
+.figcaption{
 color: #3399ff; font-weight: bold;
 }
 </style>
