@@ -1,0 +1,29 @@
+---
+title: "make_captions"
+output: 
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{make_captions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+<!-- set font blue and bold for captions -->
+<style>
+.figcaption {
+color: #3399ff; font-weight: bold;
+}
+</style>
+
+
+```{r make plot, fig.cap = "test caption"}
+plot(mtcars$disp, mtcars$mpg)
+```
+
+text that isn't a caption
