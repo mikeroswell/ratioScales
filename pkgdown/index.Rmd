@@ -9,7 +9,7 @@ output:
 
 <!-- set font blue and bold for captions -->
 <style>
-.figcaption {
+.caption{
 color: #3399ff; font-weight: bold;
 }
 </style>
