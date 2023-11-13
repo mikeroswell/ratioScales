@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(ratioScales)
+library(dplyr)
+library(ggplot2)
 ```
 
 # Gallery
@@ -27,13 +29,56 @@ topics ranging from exchange rates and college admissions to <!--everything else
 ## Wealth and college admissions
 In July 2023, Chetty et al. published [a
 study](https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Paper.pdf)
-that showed, among other things, that wealthy students had much higher
-admissions rates among all colleges and universities, with many of the largest
-gaps at the most selective schools. Their data were visualized by Bhatia et al.
-in the [New York
+that showed, among other things, that after controlling for SAT scores, wealthy
+students had much higher attendance rates at the most elite US colleges. Their
+data were visualized by Bhatia et al. in the [New York
 Times](https://www.nytimes.com/interactive/2023/07/24/upshot/ivy-league-elite-college-admissions.html),
 and later developed into an [interactive
 toolkit](https://www.nytimes.com/interactive/2023/09/11/upshot/college-income-lookup.html)
-that used ratio scales; the original Chetty et al. manuscript did not. Here, we
-re-create some of their images, side by side, with and without ratio scales.
+that used the kinds of "divmult" labels we use in **ratioScales**, but they
+plotted proportional differences linearly as in the original manuscript. Here,
+we re-create some of their images, side by side, with and without ratio scales.
+
+```{r admit}
+admit %>% 
+  filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>% 
+  ggplot(aes(par_income_lab
+             , y =  rel_att_cond_app
+             # , y = rel_attend
+             # , y = rel_attend_sat
+             , group = 1 )) +
+  geom_hline(yintercept = 1) +
+  stat_summary(fun = "mean"
+               , geom = "line",  size = 1, color = "chocolate1") +
+  stat_summary( fun.data = "mean_se"
+                , geom = "pointrange", fatten  = 4, color = "chocolate") +
+  labs(x = "parent income (percentile)"
+       , y = "relative attendance rate, given application") + 
+  # stat_summary(aes(y = rel_apply), geom = "line") +
+  #  stat_summary(aes(y = rel_apply), geom = "pointrange") +
+  # scale_y_ratio(tickVal = "divMult", slashStar = FALSE, n = 12) + 
+  theme_classic()  
+
+admit %>% 
+  filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>% 
+  ggplot(aes(par_income_lab, rel_attend, group = 1 )) +
+  geom_hline(yintercept = 1) +
+  stat_summary(geom = "line", size = 1, color = "chocolate1") +
+  stat_summary(geom = "pointrange",  fatten  = 4, color = "chocolate") + 
+  # scale_x_sqrt() +
+  # scale_x_log10() +
+  theme_classic()  
+
+admit %>% 
+  filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>% 
+  ggplot(aes(par_income_lab, rel_attend, group = 1 )) +
+  geom_hline(yintercept = 1) +
+  stat_summary(geom = "line", size = 1, color = "chocolate1") +
+  stat_summary(geom = "pointrange",  fatten  = 4, color = "chocolate") + 
+  # scale_x_sqrt() +
+  # scale_x_log10() +
+  theme_classic()  
+  
+
+```
 
