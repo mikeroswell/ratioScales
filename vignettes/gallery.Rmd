@@ -1,0 +1,39 @@
+---
+title: "gallery"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ratioScales)
+```
+
+# Gallery
+
+This vignette illustrates the use of ratioScales in data visualizations on
+topics ranging from exchange rates and college admissions to <!--everything else
+-->
+
+## Wealth and college admissions
+In July 2023, Chetty et al. published [a
+study](https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Paper.pdf)
+that showed, among other things, that wealthy students had much higher
+admissions rates among all colleges and universities, with many of the largest
+gaps at the most selective schools. Their data were visualized by Bhatia et al.
+in the [New York
+Times](https://www.nytimes.com/interactive/2023/07/24/upshot/ivy-league-elite-college-admissions.html),
+and later developed into an [interactive
+toolkit](https://www.nytimes.com/interactive/2023/09/11/upshot/college-income-lookup.html)
+that used ratio scales; the original Chetty et al. manuscript did not. Here, we
+re-create some of their images, side by side, with and without ratio scales.
+
