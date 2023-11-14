@@ -89,7 +89,9 @@
 #'  -	**stderr_rel_apply_instate_sat**
 #'  -	**rel_attend_instate_sat**
 #'  -	**stderr_rel_attend_instate_sat**
-#'  -	**rel_att_cond_app_instate_sat**	rel_apply_oostate_sat	stderr_rel_apply_oostate_sat	rel_attend_oostate_sat	stderr_rel_attend_oostate_sat	rel_att_cond_app_oostate_sat	public	flagship	tier	tier_name	test_band_tier
+#'  -	**rel_att_cond_app_instate_sat**
+#'  - **rel_apply_oostate_sat**
+#'  -	**stderr_rel_apply_oostate_sat**	rel_attend_oostate_sat	stderr_rel_attend_oostate_sat	rel_att_cond_app_oostate_sat	public	flagship	tier	tier_name	test_band_tier
 #'
 #'
 #'
