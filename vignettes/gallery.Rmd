@@ -35,9 +35,9 @@ data were visualized by Bhatia et al. in the [New York
 Times](https://www.nytimes.com/interactive/2023/07/24/upshot/ivy-league-elite-college-admissions.html),
 and later developed into an [interactive
 toolkit](https://www.nytimes.com/interactive/2023/09/11/upshot/college-income-lookup.html)
-that used the kinds of "divmult" labels we use in **ratioScales**, but they
-plotted proportional differences linearly as in the original manuscript. Here,
-we re-create some of their images, side by side, with and without ratio scales.
+the ratio scale we call "divmult"  in **ratioScales**. Here, we re-create some
+of their images, side by side, i.e., visualizing the same data, with and without
+ratio scales.
 
 ```{r admit}
 admit %>% 
