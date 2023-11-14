@@ -168,7 +168,8 @@ differences (and are not symmetric, see plot).
 ### centiNels
 
 <metatext>
-We can also make a plot that will often be very similar to the percDiff plot, but which uses numbers that are better for quantitative analysis.
+We can also make a plot that will often be very similar to the percDiff plot,
+but which uses numbers that are better for quantitative analysis.
 </metatext>
 
 <!-- some COMMENTS here to keep track of 
