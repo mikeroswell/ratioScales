@@ -30,40 +30,77 @@ that showed, among other things, that after controlling for SAT scores, wealthy
 students had much higher attendance rates at the most elite US colleges. Their
 data were visualized by Bhatia et al. in the [New York
 Times](https://www.nytimes.com/interactive/2023/07/24/upshot/ivy-league-elite-college-admissions.html),
-and later developed into an [interactive
+where the headline highlighted how at the most "Selective" colleges, parent
+income boosted admissions rates after controlling for standardized test scores.
+Their visualizations were later developed into an [interactive
 toolkit](https://www.nytimes.com/interactive/2023/09/11/upshot/college-income-lookup.html)
-the ratio scale we call "divmult"  in **ratioScales**. Here, we re-create some
-of their images, side by side, i.e., visualizing the same data, with and without
-ratio scales.
+Although the original Chetty et al. paper used traditional linear scales, the
+NYT/upshot visualizations used the ratio scale we call "divmult"  in
+**ratioScales**.
+
+Here, we pulled out some additional relationships revealed by Chetty et al.'s
+data, visualizing them, with and without ratio scales.
+
+These data conflate admissions and "yield"... showing relative attendance rates
+for students with parents in each income bracket after controlling (within
+school tier/type) and relative application rates. A rate >1 may mean students
+are admitted at higher rates, or that they choose to attend once offered
+admission at higher rates, or a combination of both factors, compared to
+expectations given by their test scores.
 ```{r admit}
+# create a base plot (linear scale)
 bp <- admit %>%
   # filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>%
-  filter(tier %in% c("Highly selective public", "Ivy Plus", "Highly selective private"), par_income_lab != "Top 1") %>%
+  # not using: , "Highly selective private"
+  filter(tier %in% c("Highly selective public", "Ivy Plus", "Other elite schools (public and private)")
+         , par_income_lab != "Top 1") %>%
+  group_by(tier, par_income_lab) %>% 
+  summarize(mean_rel_att = mean(rel_att_cond_app)
+            , sd_rel_att = sd(rel_att_cond_app)) %>% 
   ggplot(aes(par_income_lab
-             , y =  rel_att_cond_app
+             , y =  mean_rel_att
              , color = tier
              , group = tier
-             # , y = rel_attend
-             # , y = rel_attend_sat
-             # , group = 1 
              )) +
   geom_hline(yintercept = 1) +
-  stat_summary(fun = "mean"
-               , geom = "line",  size = 1) +
-  stat_summary( fun.data = "mean_se"
-                , geom = "point", size = 2) +
+  geom_line(size = 1) +
+  geom_point(size = 2) + 
   labs(x = "parent income (percentile)"
-       , y = "relative attendance rate, given application") +
-  # stat_summary(aes(y = rel_apply), geom = "line") +
-  #  stat_summary(aes(y = rel_apply), geom = "pointrange") +
-  # scale_y_ratio(tickVal = "divMult", slashStar = FALSE, n = 12) +
-  theme_classic()
+       , y = "relative attendance rate \n(controlling for test score and application rate)") +
+  theme_classic() +
+  scale_y_continuous(breaks = c(0.5, 1/1.5, 1/1.25, 1, 1.25, 1.5, 2)
+                     , limits = c(0.48, 2.5)
+                     , labels = function(x){round(x,2)}
+                     ) +
+  scale_color_viridis_d()
 
+# add ratio scale
 ratioscaled <- bp +
-  scale_y_ratio(tickVal = "divMult", slashStar = FALSE) +
-   annotate(x = "80-90", y = 2, label = "divMult ratio scale", geom = "text") +
-  theme_classic()
+  scale_y_ratio(tickVal = "divMult"
+                , slashStar = FALSE
+                , breaks = c(0.5, 1/1.5, 1/1.25, 1, 1.25, 1.5, 2)
+                , limits = c(0.48, 2.5)
+                ) +
+   annotate(x = "80-90", y = 2, label = "divMult ratio scale", geom = "text") 
 
-bp + annotate(x = "80-90", y = 2, label = "traditional linear scale", geom = "text") + theme(legend.position = "none") +ratioscaled
+#print plots side by side
+bp + 
+  annotate(x = "80-90", y = 2, label = "traditional linear scale", geom = "text") +
+  theme(legend.position = "none") + 
+  ratioscaled +
+  labs(y = NULL, color = NULL)
 
 ```
+
+Of course, both plots show the same data, but they seem to tell somewhat
+different stories. Both plots show that the wealthiest students attend the most
+selective colleges... "Ivy Plus" and "Other elite," at much higher-than-expected
+rates... over double for the top 0.1% at the Ivy Plus schools. A tier down, the
+"Highly selective colleges" show an opposing pattern, where the wealthiest
+students disproportionately do not attend. Presumably these students don't
+receive an admissions disadvantage at these public schools, but instead are
+choosing to attend those most selective colleges.
+
+The ratio scale highlights, among the "Highly selective public" colleges, the
+dramatically low attendance rate for the wealthiest students. This dramatic
+difference is compressed on the linear scale.
