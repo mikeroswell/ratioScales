@@ -1,32 +1,29 @@
 ---
-title: "gallery"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{gallery}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "gallery" output: rmarkdown::html_vignette vignette: >
+%\VignetteIndexEntry{gallery} %\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
 ---
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
-
 ```{r setup}
 library(ratioScales)
 library(dplyr)
 library(ggplot2)
+library(patchwork)
 ```
-
 # Gallery
-
 This vignette illustrates the use of ratioScales in data visualizations on
 topics ranging from exchange rates and college admissions to <!--everything else
 -->
-
 ## Wealth and college admissions
+<!-- I think this is the right basic idea, but the data series to visualize
+could be smarter. Overall, we want something that gives a nice clear picture
+with the ratioScales. Also, simpler story (relative relative relative stuff is
+infuriating) would be better. Keep exploring. --> 
 In July 2023, Chetty et al. published [a
 study](https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Paper.pdf)
 that showed, among other things, that after controlling for SAT scores, wealthy
@@ -38,47 +35,35 @@ toolkit](https://www.nytimes.com/interactive/2023/09/11/upshot/college-income-lo
 the ratio scale we call "divmult"  in **ratioScales**. Here, we re-create some
 of their images, side by side, i.e., visualizing the same data, with and without
 ratio scales.
-
 ```{r admit}
-admit %>% 
-  filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>% 
+bp <- admit %>%
+  # filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>%
+  filter(tier %in% c("Highly selective public", "Ivy Plus", "Highly selective private"), par_income_lab != "Top 1") %>%
   ggplot(aes(par_income_lab
              , y =  rel_att_cond_app
+             , color = tier
+             , group = tier
              # , y = rel_attend
              # , y = rel_attend_sat
-             , group = 1 )) +
+             # , group = 1 
+             )) +
   geom_hline(yintercept = 1) +
   stat_summary(fun = "mean"
-               , geom = "line",  size = 1, color = "chocolate1") +
+               , geom = "line",  size = 1) +
   stat_summary( fun.data = "mean_se"
-                , geom = "pointrange", fatten  = 4, color = "chocolate") +
+                , geom = "point", size = 2) +
   labs(x = "parent income (percentile)"
-       , y = "relative attendance rate, given application") + 
+       , y = "relative attendance rate, given application") +
   # stat_summary(aes(y = rel_apply), geom = "line") +
   #  stat_summary(aes(y = rel_apply), geom = "pointrange") +
-  # scale_y_ratio(tickVal = "divMult", slashStar = FALSE, n = 12) + 
-  theme_classic()  
+  # scale_y_ratio(tickVal = "divMult", slashStar = FALSE, n = 12) +
+  theme_classic()
 
-admit %>% 
-  filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>% 
-  ggplot(aes(par_income_lab, rel_attend, group = 1 )) +
-  geom_hline(yintercept = 1) +
-  stat_summary(geom = "line", size = 1, color = "chocolate1") +
-  stat_summary(geom = "pointrange",  fatten  = 4, color = "chocolate") + 
-  # scale_x_sqrt() +
-  # scale_x_log10() +
-  theme_classic()  
+ratioscaled <- bp +
+  scale_y_ratio(tickVal = "divMult", slashStar = FALSE) +
+   geom_text(aes(x = "80-90", y = 2, label = "divMult ratio scale"), color = "black", show.legend = FALSE) +
+  theme_classic()
 
-admit %>% 
-  filter(tier == "Ivy Plus", par_income_lab != "Top 1") %>% 
-  ggplot(aes(par_income_lab, rel_attend, group = 1 )) +
-  geom_hline(yintercept = 1) +
-  stat_summary(geom = "line", size = 1, color = "chocolate1") +
-  stat_summary(geom = "pointrange",  fatten  = 4, color = "chocolate") + 
-  # scale_x_sqrt() +
-  # scale_x_log10() +
-  theme_classic()  
-  
+bp + geom_text(aes(x = "80-90", y = 2, label = "traditional linear scale"), show.legend = FALSE, color = "black") + theme(legend.position = "none") +ratioscaled
 
 ```
-
