@@ -1,15 +1,19 @@
 ---
-title: "gallery" 
-output: rmarkdown::html_vignette vignette: >
-%\VignetteIndexEntry{gallery} %\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+title: "gallery"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
+
 ```{r setup}
 library(ratioScales)
 library(dplyr)
@@ -105,3 +109,4 @@ choosing to attend those most selective colleges.
 The ratio scale highlights, among the "Highly selective public" colleges, the
 dramatically low attendance rate for the wealthiest students. This dramatic
 difference is compressed on the linear scale.
+
