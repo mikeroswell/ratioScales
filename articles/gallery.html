@@ -103,10 +103,10 @@ SAT scores, wealthy students had much higher attendance rates at the
 most elite US colleges. Their data were visualized by Bhatia et al. in
 the <a href="https://www.nytimes.com/interactive/2023/07/24/upshot/ivy-league-elite-college-admissions.html" class="external-link">New
 York Times</a>, and later developed into an <a href="https://www.nytimes.com/interactive/2023/09/11/upshot/college-income-lookup.html" class="external-link">interactive
-toolkit</a> that used the kinds of “divmult” labels we use in
-<strong>ratioScales</strong>, but they plotted proportional differences
-linearly as in the original manuscript. Here, we re-create some of their
-images, side by side, with and without ratio scales.</p>
+toolkit</a> the ratio scale we call “divmult” in
+<strong>ratioScales</strong>. Here, we re-create some of their images,
+side by side, i.e., visualizing the same data, with and without ratio
+scales.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">admit</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">tier</span> <span class="op">==</span> <span class="st">"Ivy Plus"</span>, <span class="va">par_income_lab</span> <span class="op">!=</span> <span class="st">"Top 1"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
