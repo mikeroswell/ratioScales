@@ -49,7 +49,25 @@ of-state students matriculating from public schools
 school-tier test band
 \item \strong{stderr_attend_oostate_sat} Numeric, standard error in
 attend_oostate_sat
-\item \strong{attend_level_oostate_sat} 	rel_apply_instate	stderr_rel_apply_instate	rel_attend_instate	stderr_rel_attend_instate	rel_att_cond_app_instate	rel_apply_oostate	stderr_rel_apply_oostate	rel_attend_oostate	stderr_rel_attend_oostate	rel_att_cond_app_oostate	rel_apply_instate_sat	stderr_rel_apply_instate_sat	rel_attend_instate_sat	stderr_rel_attend_instate_sat	rel_att_cond_app_instate_sat	rel_apply_oostate_sat	stderr_rel_apply_oostate_sat	rel_attend_oostate_sat	stderr_rel_attend_oostate_sat	rel_att_cond_app_oostate_sat	public	flagship	tier	tier_name	test_band_tier
+\item \strong{attend_level_oostate_sat}
+\item \strong{rel_apply_instate}
+\item \strong{stderr_rel_apply_instate}
+\item \strong{rel_attend_instate}
+\item \strong{stderr_rel_attend_instate}
+\item \strong{rel_att_cond_app_instate}
+\item \strong{rel_apply_oostate}
+\item \strong{stderr_rel_apply_oostate}
+\item \strong{rel_attend_oostate}
+\item \strong{stderr_rel_attend_oostate}
+\item \strong{rel_att_cond_app_oostate}
+\item \strong{rel_apply_instate_sat}
+\item \strong{stderr_rel_apply_instate_sat}
+\item \strong{rel_attend_instate_sat}
+\item \strong{stderr_rel_attend_instate_sat}
+\item \strong{rel_att_cond_app_instate_sat}
+\item \strong{rel_apply_oostate_sat}
+\item \strong{stderr_rel_apply_oostate_sat}
+\item \strong{rel_attend_oostate_sat}	stderr_rel_attend_oostate_sat	rel_att_cond_app_oostate_sat	public	flagship	tier	tier_name	test_band_tier
 }
 }
 \source{
