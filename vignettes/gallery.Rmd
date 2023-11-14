@@ -61,9 +61,9 @@ bp <- admit %>%
 
 ratioscaled <- bp +
   scale_y_ratio(tickVal = "divMult", slashStar = FALSE) +
-   geom_text(aes(x = "80-90", y = 2, label = "divMult ratio scale"), color = "black", show.legend = FALSE) +
+   annotate(x = "80-90", y = 2, label = "divMult ratio scale", geom = "text") +
   theme_classic()
 
-bp + geom_text(aes(x = "80-90", y = 2, label = "traditional linear scale"), show.legend = FALSE, color = "black") + theme(legend.position = "none") +ratioscaled
+bp + annotate(x = "80-90", y = 2, label = "traditional linear scale", geom = "text") + theme(legend.position = "none") +ratioscaled
 
 ```
