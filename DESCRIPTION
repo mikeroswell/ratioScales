@@ -47,7 +47,8 @@ Suggests:
     tidyverse,
     scales,
     testthat (>= 3.0.0),
-    remotes
+    remotes,
+    patchwork
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://mikeroswell.github.io/ratioScales/
