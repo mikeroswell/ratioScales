@@ -23,7 +23,7 @@ jobs:
 # this deviates slightly from the template, which uses /setup-renv@v2 instead
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-pacakges: local::.
+          extra-packages: local::.
 
       - name: Render Rmarkdown files and Commit Results
         run: |
