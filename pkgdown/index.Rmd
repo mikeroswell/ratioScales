@@ -161,7 +161,9 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
    labs(y = "percentage difference in exchange rate") 
 ```
 
-This preserves the true ratio-based differences on the visual plot, but the values on the guide (round number percents) do not correspond simply to ratio differences (and are not symmetric, see plot).
+This preserves the true ratio-based differences on the visual plot, but the
+values on the guide (round number percents) do not correspond simply to ratio
+differences (and are not symmetric, see plot).
 
 ### centiNels
 
