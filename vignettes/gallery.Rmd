@@ -1,5 +1,6 @@
 ---
-title: "gallery" output: rmarkdown::html_vignette vignette: >
+title: "gallery" 
+output: rmarkdown::html_vignette vignette: >
 %\VignetteIndexEntry{gallery} %\VignetteEngine{knitr::rmarkdown}
 %\VignetteEncoding{UTF-8}
 ---
