@@ -1,6 +1,6 @@
 #' Ratio labels
 #'
-#'
+#' @import ggplot2
 #' @param logscale Logical, are breaks already on the log scale?
 #' @param slashStar Logical, should division and multiplication symbols be "*"
 #'   and "/" (default). Prettier symbols \eqn{\times, \div} are available when
