@@ -164,12 +164,15 @@ exch %>%  ggplot(aes(date, exRate_scale, color = direction)) +
 <p class="caption">caption explaining the reference lines</p>
 </div>
 
-This preserves the true ratio-based differences on the visual plot, but the values on the guide do not correspond simply to ratio differences (and are not symmetric, see plot).
+This preserves the true ratio-based differences on the visual plot, but the
+values on the guide (round number percents) do not correspond simply to ratio
+differences (and are not symmetric, see plot).
 
 ### centiNels
 
 <metatext>
-We can also make a plot that will often be very similar to the percDiff plot, but which uses numbers that are better for quantitative analysis.
+We can also make a plot that will often be very similar to the percDiff plot,
+but which uses numbers that are better for quantitative analysis.
 </metatext>
 
 <!-- some COMMENTS here to keep track of 

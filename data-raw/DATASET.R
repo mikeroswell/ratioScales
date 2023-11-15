@@ -32,8 +32,24 @@ exch<-get_alfred_series(series_id ="DEXCAUS"
   mutate(exRate_scale = exRate/first(exRate)) %>%
   arrange(direction)
 
+## Home sales in US
+ushs <- read.csv("https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv?t=1700060680")
+head(ushs)
+
+
+
+ushs <- ushs %>%
+  tidyr::pivot_longer(names_to = "RecordDate"
+                      , values_to = "TypicalHomeValue"
+                      , cols = 6:291) %>%
+  mutate(RecordDate = as.Date(gsub("\\.", "-", gsub("X", "", RecordDate))),
+         RegionName = stringi::stri_trans_general(RegionName, "latin-ascii"))
+
+str(ushs)
+
 usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
 usethis::use_data(exch, overwrite = TRUE)
 usethis::use_data(admit, overwrite = TRUE)
+usethis::use_data(ushs, overwrite = TRUE)
 

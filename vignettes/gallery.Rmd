@@ -110,3 +110,47 @@ The ratio scale highlights, among the "Highly selective public" colleges, the
 dramatically low attendance rate for the wealthiest students. This dramatic
 difference is compressed on the linear scale.
 
+## Home value change during great recession
+
+Across the United States, home values plummeted during the great recession, but 
+unevenly across regions. 
+
+It is [common to describe
+appreciation](https://www.investopedia.com/terms/a/appreciation.asp) as a
+percentage difference relative to the starting value.  Here, we visualize
+changes in home values, where for each region the Zillow Home Value Index is
+computed, the baseline value is the value in the first reporting period.
+
+```{r US home value}
+
+base_HV_plot <- ushs %>% 
+  filter(RegionType == "msa", !is.na(TypicalHomeValue)) %>% 
+  group_by(RegionID) %>% 
+  mutate(NormTypicalHomeValue = TypicalHomeValue/TypicalHomeValue[1] ) %>% 
+  ggplot(aes(RecordDate, NormTypicalHomeValue, color = RegionName)) +
+  geom_line() + 
+  facet_wrap(~StateName
+             # , scales = "free_y"
+             , ncol = 10
+             ) +
+
+  labs(y = "percent change in typical home value", x = "date") +
+  theme_minimal() + 
+  theme(legend.position = "none"
+        , axis.text.x = element_text(angle = 90
+                                     # , hjust =1
+                                     , vjust = 0.5
+                                     )) 
+
+base_HV_plot + scale_y_ratio(tickVal = "percDiff"
+                # , n = 6
+                # , limits = c(0.5, 4.3)
+                , breaks = c(0.5, 0.75, 1, 1.5, 2, 3.5)
+                ) 
+
+```
+
+These pictures show that losing 50% of a value is as big a change as gaining 
+100% (and much bigger than gaining 50%).
+
+

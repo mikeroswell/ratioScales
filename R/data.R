@@ -92,13 +92,40 @@
 #'  -	**rel_att_cond_app_instate_sat**
 #'  - **rel_apply_oostate_sat**
 #'  -	**stderr_rel_apply_oostate_sat**
-#'  -	**rel_attend_oostate_sat**	stderr_rel_attend_oostate_sat	rel_att_cond_app_oostate_sat	public	flagship	tier	tier_name	test_band_tier
+#'  -	**rel_attend_oostate_sat**
+#'  - **stderr_rel_attend_oostate_sat**
+#'  -	**rel_att_cond_app_oostate_sat**
+#'  -	**public**
+#'  -	**flagship**
+#'  -	**tier**
+#'  - **tier_name**
+#'  -	**test_band_tier**
 #'
 #'
 #'
 #' @source  Data from Opportunity Insights \url{https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Data.csv}
 
 "admit"
+
+#' US home values by region
+#'
+#' A dataset containing seasonally adjusted, monthly estimated typical home
+#' values within the middle 30th percentiles (35th to 65th) for regions across
+#' the United States
+#'
+#' @format Data frame with 255,970 observations of 7 variables:
+#'  - **RegionID** Integer, numeric region identifier
+#'  - **Size_Rank** Integer, rank of region size
+#'  - **RegionName** Character, name of region
+#'  - **RegionType** Character, one of `c("country", "msa")`
+#'  - **StateName** Character, name of state in which region falls, if applicable
+#'  - **RecordDate** Date, time for which home values were estimated
+#'  - **TypicalHomeValue** Numeric, estimated mean value, in US dollars, of
+#'    typical homes within region and time period
+#'
+#' @source Zillow Home Value Index \url{https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_month.csv?t=1700060680}
+
+"ushs"
 
 
 

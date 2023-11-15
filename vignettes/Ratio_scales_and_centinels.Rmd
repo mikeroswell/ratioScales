@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 library(ratioScales)
-library(tidyverse)
+library(dplyr)
+library(tidyr)
 theme_set(theme_classic() +
           theme(axis.text.x = element_text(angle = 45,
                                            vjust = 1, hjust = 1)))

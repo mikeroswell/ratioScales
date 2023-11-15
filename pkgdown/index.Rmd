@@ -26,11 +26,10 @@ knitr::opts_chunk$set(
 
 ```{r setup, message = FALSE, include = FALSE}
 library(ratioScales)
-library(tidyverse)
 # library(captioner)
 # tab_cap <- captioner(prefix = "Table")
 # fig_cap <- captioner(prefix = "Figure")
-theme_set(theme_classic() +
+ggplot2::theme_set(theme_classic() +
           theme(axis.text.x = element_text(angle = 45,
                                            vjust = 1, hjust = 1)
                 , text = element_text(size = 14)))

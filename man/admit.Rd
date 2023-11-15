@@ -67,7 +67,14 @@ attend_oostate_sat
 \item \strong{rel_att_cond_app_instate_sat}
 \item \strong{rel_apply_oostate_sat}
 \item \strong{stderr_rel_apply_oostate_sat}
-\item \strong{rel_attend_oostate_sat}	stderr_rel_attend_oostate_sat	rel_att_cond_app_oostate_sat	public	flagship	tier	tier_name	test_band_tier
+\item \strong{rel_attend_oostate_sat}
+\item \strong{stderr_rel_attend_oostate_sat}
+\item \strong{rel_att_cond_app_oostate_sat}
+\item \strong{public}
+\item \strong{flagship}
+\item \strong{tier}
+\item \strong{tier_name}
+\item \strong{test_band_tier}
 }
 }
 \source{
