@@ -18,4 +18,11 @@ Function used as argument to \code{labels} in \verb{scale_*_*}
 \description{
 Scale breakpoints based on percentage difference from reference
 }
-\concept{labels}
+\seealso{
+Other {labels}: 
+\code{\link{label_centiNel}()},
+\code{\link{label_divMult}()},
+\code{\link{label_nel}()},
+\code{\link{label_propDiff}()}
+}
+\concept{{labels}}

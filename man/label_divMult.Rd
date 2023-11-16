@@ -27,4 +27,11 @@ Ratio labels
 label_divMult()(c(1:4,2))
 
 }
-\concept{labels}
+\seealso{
+Other {labels}: 
+\code{\link{label_centiNel}()},
+\code{\link{label_nel}()},
+\code{\link{label_percDiff}()},
+\code{\link{label_propDiff}()}
+}
+\concept{{labels}}

@@ -113,4 +113,4 @@ smaller \%>\%  ggplot2::ggplot(ggplot2::aes(x,y)) +
         ggplot2::labs(y = "propDiff (perentage difference) scale")
 
 }
-\concept{scales}
+\concept{{scales}}

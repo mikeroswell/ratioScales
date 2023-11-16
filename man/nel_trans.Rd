@@ -36,4 +36,9 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2)
 
 }
-\concept{transformation}
+\seealso{
+Other {transformations}: 
+\code{\link{divMult_trans}()},
+\code{\link{propDiff_trans}()}
+}
+\concept{{transformations}}

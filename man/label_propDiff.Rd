@@ -22,5 +22,11 @@ Scale breakpoints based on percentage difference from reference
 }
 \seealso{
 \code{\link[scales]{label_number}}
+
+Other {labels}: 
+\code{\link{label_centiNel}()},
+\code{\link{label_divMult}()},
+\code{\link{label_nel}()},
+\code{\link{label_percDiff}()}
 }
-\concept{labels}
+\concept{{labels}}

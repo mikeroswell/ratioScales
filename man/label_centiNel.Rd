@@ -12,4 +12,11 @@ Function used as argument to \code{labels} in \verb{scale_*_*}
 \description{
 100x Natural log (centinel) transformation of breaks
 }
-\concept{labels}
+\seealso{
+Other {labels}: 
+\code{\link{label_divMult}()},
+\code{\link{label_nel}()},
+\code{\link{label_percDiff}()},
+\code{\link{label_propDiff}()}
+}
+\concept{{labels}}
