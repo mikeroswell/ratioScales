@@ -146,7 +146,7 @@ reference value in advance.</p>
 <span class="r-in"><span>     , sec.axis <span class="op">=</span> <span class="va">ax2</span></span></span>
 <span class="r-in"><span>     <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>        <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"divMult scale (fold change)"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="scale_ratio-1.png" alt="" width="700" height="1133"></span>
+<span class="r-plt img"><img src="scale_ratio-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">smaller</span> <span class="op"><a href="pipe.html">%&gt;%</a></span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>     <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -154,7 +154,7 @@ reference value in advance.</p>
 <span class="r-in"><span>    , sec.axis <span class="op">=</span> <span class="va">ax2</span></span></span>
 <span class="r-in"><span>     <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>        <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"centiNels"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="scale_ratio-2.png" alt="" width="700" height="1133"></span>
+<span class="r-plt img"><img src="scale_ratio-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># propDiff is a little strange</span></span></span>
 <span class="r-in"><span><span class="va">bigger</span> <span class="op"><a href="pipe.html">%&gt;%</a></span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -164,7 +164,7 @@ reference value in advance.</p>
 <span class="r-in"><span>        <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>        <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"propDiff (proportional difference) scale"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'base = 2' chosen by defaut. Setting base of log affects breaking function behavior, and 'exp(1)' may give strange-looking numbers for the propDiff scale</span>
-<span class="r-plt img"><img src="scale_ratio-3.png" alt="" width="700" height="1133"></span>
+<span class="r-plt img"><img src="scale_ratio-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># percDiff should be familiar</span></span></span>
 <span class="r-in"><span><span class="va">smaller</span> <span class="op"><a href="pipe.html">%&gt;%</a></span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -172,7 +172,7 @@ reference value in advance.</p>
 <span class="r-in"><span>     <span class="fu">scale_y_ratio</span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"percDiff"</span></span></span>
 <span class="r-in"><span>     , sec.axis <span class="op">=</span> <span class="va">ax2</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>        <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"propDiff (perentage difference) scale"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="scale_ratio-4.png" alt="" width="700" height="1133"></span>
+<span class="r-plt img"><img src="scale_ratio-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
