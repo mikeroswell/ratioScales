@@ -126,7 +126,7 @@ in home values, where for each region the Zillow Home Value Index <!-- does this
 need a trademark or something? --> is computed, the baseline value is the value
 in the first reporting period.
 
-```{r US home value, out.width = "100%", fig.width = 8, fig.height = 8}
+```{r US_home_value, out.width = "100%", fig.width = 8, fig.height = 8}
 
 base_HV_plot <- ushs %>% 
   filter(RegionType == "msa", !is.na(TypicalHomeValue)) %>% 
