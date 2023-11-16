@@ -1,5 +1,5 @@
 ---
-title: "gallery"
+title: "Gallery"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{gallery}
@@ -24,7 +24,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 ```
-# Gallery
+
 This vignette illustrates the use of ratioScales in data visualizations on
 topics ranging from exchange rates and college admissions to <!--everything else
 -->
