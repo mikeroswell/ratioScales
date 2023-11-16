@@ -5,16 +5,16 @@ template:
 reference:
 - title: Main function
 - contents:
-  - has_concept("scale")
+  - has_concept("scales")
 - title: Transformations
 - contents:
-  - has_concept("trans")
+  - has_family("transformations")
 - title: Breaking
 - contents:
-  - has_concept("breaking")
+  - has_family("breaking")
 - title: Labels
 - contents:
-  - has_concept("labels")
+  - has_family("labels")
 - title: data
 - contents:
   - has_keyword("datasets")
