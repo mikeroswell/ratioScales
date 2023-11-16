@@ -47,6 +47,26 @@ ushs <- ushs %>%
 
 str(ushs)
 
+# Ocean acidification
+#
+# OA <- read.csv("https://www.ncei.noaa.gov/data/oceans/ncei/ocads/data/0283442/GLODAPv2.2023_Merged_Master_File.csv")
+#
+# OA_good <- OA %>% filter(G2temperature == 2)
+#
+#
+#
+# OA %>%
+#   mutate(CollDate = as.Date(paste(G2year, G2month, G2day, sep ="-"))) %>%
+#   ggplot(
+#     aes(CollDate, G2temperature, color = G2latitude)) +
+#   geom_point(size = 0.01, alpha = 0.2) +
+#   scale_color_viridis_c() +
+#   theme_classic()
+#
+#
+# head(OA)
+#
+# OA %>% filter(G2)
 usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
 usethis::use_data(exch, overwrite = TRUE)
