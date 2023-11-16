@@ -18,3 +18,4 @@ Function used as argument to \code{labels} in \verb{scale_*_*}
 \description{
 Scale breakpoints based on percentage difference from reference
 }
+\concept{labels}

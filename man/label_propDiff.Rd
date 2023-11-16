@@ -23,3 +23,4 @@ Scale breakpoints based on percentage difference from reference
 \seealso{
 \code{\link[scales]{label_number}}
 }
+\concept{labels}

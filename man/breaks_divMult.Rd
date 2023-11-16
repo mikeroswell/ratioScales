@@ -57,3 +57,4 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      , labels = label_divMult()
      )
 }
+\concept{breaking}

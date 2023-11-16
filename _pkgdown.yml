@@ -1,14 +1,20 @@
 url: https://mikeroswell.github.io/ratioScales/
 template:
   bootstrap: 5
-figures:
-  dev: ragg::agg_png
-  dpi: 96
-  dev.args: []
-  fig.ext: png
-  fig.width: 7.2916667
-  fig.height: ~
-  fig.retina: 2
-  fig.asp: 1.618
-  bg: NA
-  other.parameters: []
+
+reference:
+- title: Main function
+- contents:
+  - has_concept("scale")
+- title: Transformations
+- contents:
+  - has_concept("trans")
+- title: Breaking
+- contents:
+  - has_concept("breaking")
+- title: Labels
+- contents:
+  - has_concept("labels")
+- title: data
+- contents:
+  - has_keyword("datasets")

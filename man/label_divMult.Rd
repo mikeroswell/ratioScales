@@ -27,4 +27,4 @@ Ratio labels
 label_divMult()(c(1:4,2))
 
 }
-\concept{Visualization}
+\concept{labels}

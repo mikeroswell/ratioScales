@@ -8,7 +8,7 @@
 #'   distinguishing \eqn{\div} from \eqn{+} difficult.
 #' @inheritParams base::log
 #'
-#' @concept Visualization
+#' @concept labels
 #'
 #' @return Function for generating labeling expressions based on breaks
 #' @export
@@ -49,6 +49,7 @@ label_divMult <- function(logscale = FALSE
 
 #' 100x Natural log (centinel) transformation of breaks
 #'
+#' @concept labels
 #' @return Function used as argument to `labels` in `scale_*_*`
 #' @export
 #'
@@ -58,6 +59,7 @@ label_centiNel <- function(){
 
 #' Natural log (nel) transformation of breaks
 #'
+#' @concept labels
 #' @return Function used as argument to `labels` in `scale_*_*`
 #' @export
 #'
@@ -71,6 +73,8 @@ label_nel <- function(){
 #' Scale breakpoints based on percentage difference from reference
 #'
 #' @inheritParams label_divMult
+#'
+#' @concept labels
 #'
 #' @return Function used as argument to `labels` in `scale_*_*`
 #' @export
@@ -90,6 +94,8 @@ label_percDiff <- function(logscale = FALSE, base = 10){
 #' @inheritParams label_divMult
 #' @param accuracy Numeric scalar, determines rounding precision
 #'
+#'
+#' @concept labels
 #' @return Function used as argument to `labels` in `scale_*_*`
 #' @seealso \code{\link[scales]{label_number}}
 #'
@@ -110,6 +116,7 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
 #' @inheritParams divMult_trans
 #' @param use_centiNel Logical, should units be "centiNels" (default is "nel")
 #'
+#' @concept transformation
 #' @export
 #'
 #' @examples
@@ -145,6 +152,8 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #' @inheritParams breaks_divMult
 #' @inheritParams label_divMult
 #' @param ... Additional arguments passed to breaking function, labeller
+#'
+#' @concept transformation
 #'
 #' @export
 #'
@@ -188,6 +197,8 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #' @inheritParams label_propDiff
 #' @param ... additional arguments passed to `label_propDiff`
 #' @seealso \code{\link[scales]{log_breaks}}
+#'
+#' @concept transformation
 #' @export
 #' @examples
 #' dat<-data.frame(x = 1:10, y = exp(-2:7))
@@ -240,6 +251,8 @@ propDiff_trans <- function(n = 7, base = exp(1), ...){
 #' @param v Vector on the unlogged scale to be examined and split
 #' @inheritParams breaks_divMult
 #'
+#' @concept breaking
+#'
 #' @return Vector with splits added
 split_decades <- function(v, splits = c(1, 2, 3)){
 	l <- length(v)
@@ -260,6 +273,7 @@ split_decades <- function(v, splits = c(1, 2, 3)){
 #' @inheritParams breaks_divMult
 #' @param v Numeric vector, data or data range
 #'
+#' @concept breaking
 #'
 #' @return Vector of numeric values for axis breaks
 #' @export
@@ -294,6 +308,8 @@ limit_breaks <- function(v
 #' @param splits Integer, one of \code{c(1,2,3)}. How many tick marks per
 #'   "decade?"
 #' @inheritParams base::log
+#'
+#' @concept breaking
 #'
 #' @return Vector of values to generate axis breaks
 #' @export
@@ -538,6 +554,7 @@ scale_y_ratio <- function(tickVal = "divMult", ...){
 }
 
 #' @rdname scale_ratio
+#' @concept scales
 #' @export
 scale_x_ratio <- function(tickVal = "divMult", ...){
   doCall2(ggplot2::scale_x_continuous

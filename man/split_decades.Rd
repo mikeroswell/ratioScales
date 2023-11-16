@@ -18,3 +18,4 @@ Vector with splits added
 \description{
 Split stingy limit_breaks into three parts per complete decade
 }
+\concept{breaking}
