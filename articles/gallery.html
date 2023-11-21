@@ -138,24 +138,26 @@ test scores.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"parent income (percentile)"</span></span>
 <span>       , y <span class="op">=</span> <span class="st">"relative attendance rate \n(controlling for test score and application rate)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1.5</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1.25</span>, <span class="fl">1</span>, <span class="fl">1.25</span>, <span class="fl">1.5</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span>                     , limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.48</span>, <span class="fl">2.5</span><span class="op">)</span></span>
-<span>                     , labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>,<span class="fl">2</span><span class="op">)</span><span class="op">}</span></span>
-<span>                     <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># scale_y_continuous(breaks = c(0.5, 1/1.5, 1/1.25, 1, 1.25, 1.5, 2)</span></span>
+<span>  <span class="co">#                    , limits = c(0.48, 2.5)</span></span>
+<span>  <span class="co">#                    , labels = function(x){round(x,2)}</span></span>
+<span>  <span class="co">#                    ) +</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_d</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `summarise()` has grouped output by 'tier'. You can override using the</span></span>
 <span><span class="co">#&gt; `.groups` argument.</span></span>
+<span></span>
+<span></span>
+<span></span>
 <span></span>
 <span><span class="co"># add ratio scale</span></span>
 <span><span class="va">ratioscaled</span> <span class="op">&lt;-</span> <span class="va">bp</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_ratio.html">scale_y_ratio</a></span><span class="op">(</span>tickVal <span class="op">=</span> <span class="st">"divMult"</span></span>
 <span>                , slashStar <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>                <span class="co"># custom breaks to get more guidelines over small y-range</span></span>
 <span>                , breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1.5</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1.25</span>, <span class="fl">1</span>, <span class="fl">1.25</span>, <span class="fl">1.5</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span>                , limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.48</span>, <span class="fl">2.5</span><span class="op">)</span></span>
 <span>                <span class="op">)</span> <span class="op">+</span></span>
 <span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html" class="external-link">annotate</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"80-90"</span>, y <span class="op">=</span> <span class="fl">2</span>, label <span class="op">=</span> <span class="st">"divMult ratio scale"</span>, geom <span class="op">=</span> <span class="st">"text"</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
-<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span></span>
 <span></span>
 <span><span class="co">#print plots side by side</span></span>
 <span><span class="va">bp</span> <span class="op">+</span> </span>
@@ -188,17 +190,22 @@ starting value. Here, we visualize changes in home values, where for
 each region the Zillow Home Value Index <!-- does this
 need a trademark or something? --> is computed, the baseline value is
 the value in the first reporting period.</p>
+<!-- figure out what to highlight here, and focus on that (this is too much info)
+Nevada might be a good one
+-->
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">base_HV_plot</span> <span class="op">&lt;-</span> <span class="va">ushs</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">RegionType</span> <span class="op">==</span> <span class="st">"msa"</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">TypicalHomeValue</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># zoom in on SW</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">StateName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NV"</span>, <span class="st">"AZ"</span>, <span class="st">"CO"</span>, <span class="st">"UT"</span>, <span class="st">"NM"</span>, <span class="st">"CA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">RegionID</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>NormTypicalHomeValue <span class="op">=</span> <span class="va">TypicalHomeValue</span><span class="op">/</span><span class="va">TypicalHomeValue</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">RecordDate</span>, <span class="va">NormTypicalHomeValue</span>, color <span class="op">=</span> <span class="va">RegionName</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">StateName</span></span>
 <span>             <span class="co"># , scales = "free_y"</span></span>
-<span>             , ncol <span class="op">=</span> <span class="fl">10</span></span>
+<span>             , ncol <span class="op">=</span> <span class="fl">3</span></span>
 <span>             <span class="op">)</span> <span class="op">+</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"percent change in typical home value"</span>, x <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span> <span class="op">+</span></span>
