@@ -4,7 +4,7 @@
 \alias{breaks_divMult}
 \title{Compute breaks for ratio scale}
 \usage{
-breaks_divMult(n = 6, nmin = 5, anchor = TRUE, splits = 1, base = exp(1))
+breaks_divMult(n = 6, nmin = 5, anchor = TRUE, splits = 3, base = exp(1))
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}
@@ -28,7 +28,7 @@ Compute breaks for ratio scale
 }
 \examples{
 y <- exp(seq(-2,5, length.out = 10))
-v <- log(y) # data or data range
+v <- log(y) # log data or data range
 n <- 5
 
 # axisTicks takes giant steps, returns values way beyond data
@@ -56,6 +56,23 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      , breaks = breaks_divMult()
      , labels = label_divMult()
      )
+
+# custom breaks might still be needed when y-range is small
+y2 <- seq(0.68, 2.2, length.out = 10)
+
+dat2 <- data.frame(x, y2)
+
+dat2 \%>\% ggplot2::ggplot(ggplot2::aes(x, y2))+
+     ggplot2::geom_point()+
+     ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
+     ggplot2::scale_y_continuous(
+     trans = "log"
+    # , breaks = breaks_divMult()
+    , breaks = c(seq(0.4, 2.2, by = 0.2))
+     , labels = label_divMult()
+     )
+
+
 }
 \seealso{
 Other {breaking}: 
