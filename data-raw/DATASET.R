@@ -67,9 +67,14 @@ str(ushs)
 # head(OA)
 #
 # OA %>% filter(G2)
+
+rockfish <- read.csv("~/Downloads/striped_bass.csv")
+
+
 usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
 usethis::use_data(exch, overwrite = TRUE)
 usethis::use_data(admit, overwrite = TRUE)
 usethis::use_data(ushs, overwrite = TRUE)
+usethis::use_data(rockfish, overwrite = TRUE)
 

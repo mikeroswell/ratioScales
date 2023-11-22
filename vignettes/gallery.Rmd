@@ -170,4 +170,21 @@ These pictures show that losing 50% of a value is as big a change as gaining
 trends are synchronous and asynchronous in a short time period or across time
 series with different starting points.
 
+### Striped Bass (a.k.a. Rockfish) catch
+
+<!--FIGURE out if there is a story here and tell it. Would be good to illustrate
+another scale, e.g. propDiff -->
+
+```{r rockfish catch}
+rockfish %>% 
+  group_by(Region, Fishing.Mode) %>% 
+  mutate(normCatch = PSE.Total.Catch..A.B1.B2./PSE.Total.Catch..A.B1.B2.[1]) %>% 
+  ggplot(aes(Year, normCatch, color = Fishing.Mode)) +
+  geom_line()+
+  facet_wrap(~Region) +
+  theme_classic() +
+  scale_y_ratio(tickVal = "propDiff")
+```
+  
+
 

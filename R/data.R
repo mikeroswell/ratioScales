@@ -175,4 +175,29 @@
 
  "exch"
 
+ #' Rockfish catch by region and vessel type
+ #'
+ #' A dataset with annual catch of striped bass ("Rockfish") in Atlantic fishing
+ #' regions between 2005 and first 3 quarters of 2023
+ #'
+ #' @format Data frame with 234 observations of 14 variables
+ #'
+ #' - **Estimate.Status** Character, one of "FINAL" or
+ #' - **Year**
+ #' - **Fishing.Year**
+ #' - **Region**
+ #' - **Common.Name**
+ #' - **Fishing.Mode**
+ #' - **Cumulative.Through**
+ #' - **PSE.Total.Catch..A.B1.B2.**
+ #' - **Does.Total.Catch..A.B1.B2..Meet.MRIP.Standard**
+ #' - **Is.Total.Catch..A.B1.B2..Significantly.Different.From.0**
+ #' - **Total.Catch..A.B1.B2.**
+ #' - **Total.Catch..A.B1.B2..Lower.95..Confidence.Limit**
+ #' - **Total.Catch..A.B1.B2..Upper.95..Confidence.Limit**
+ #' - **X...Contribution.of.Imputed.Data.to.Total.Catch.Rate**
+ #'
+ #'
+ #' @source Data from NOAA NMFS \url{https://www.st.nmfs.noaa.gov/SASStoredProcess/guest?_program=%2F%2FFoundation%2FSTP%2Fmrip_qry_index&qrycatch=Time+Series&subcatch=Goto+Query&qryeffort=Time+Series&qryparticipation=Select+a+Participation+Query}
+
 
