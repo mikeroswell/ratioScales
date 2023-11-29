@@ -19,7 +19,7 @@ reference:
   - starts_with("label")
 - title: Convenience Functions
 - contents:
-  - has_concept("convience")
+  - has_concept("Convenience")
 - title: Data
 - contents:
   - has_keyword("datasets")

@@ -35,4 +35,4 @@ test_df \%>\%
   rel_start(col_vars = "val", group_vars = "grp") \%>\%
   print(n = 30)
 }
-\concept{convenience}
+\concept{Convenience}
