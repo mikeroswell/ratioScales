@@ -17,6 +17,8 @@ reference:
 - title: Labels
 - contents:
   - starts_with("label")
-- title: data
+- title: Data
 - contents:
   - has_keyword("datasets")
+- title: Convenience Functions
+  - has_concept("convience")

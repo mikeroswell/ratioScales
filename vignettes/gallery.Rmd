@@ -2,7 +2,7 @@
 title: "Gallery"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{gallery}
+  %\VignetteIndexEntry{Gallery}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -175,7 +175,7 @@ series with different starting points.
 <!--FIGURE out if there is a story here and tell it. Would be good to illustrate
 another scale, e.g. propDiff -->
 
-```{r rockfish catch}
+```{r rockfish_catch}
 rockfish %>% 
   group_by(Region, Fishing.Mode) %>% 
   mutate(normCatch = PSE.Total.Catch..A.B1.B2./PSE.Total.Catch..A.B1.B2.[1]) %>% 

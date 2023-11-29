@@ -69,7 +69,12 @@ str(ushs)
 # OA %>% filter(G2)
 
 rockfish <- read.csv("~/Downloads/striped_bass.csv")
+rockfish_popests <- read.csv("~/Downloads/rockfish_popests.csv")
+head(rockfish_popests)
+rfp <- rockfish_popests
 
+rfp %>% ggplot(aes(year, full.F)) + geom_point() + theme_classic()
+rfp %>% ggplot(aes(year, recruitment..million.fish.)) + geom_point() + theme_classic()
 
 usethis::use_data(vid, overwrite = TRUE)
 usethis::use_data(nel_vid, overwrite = TRUE)
