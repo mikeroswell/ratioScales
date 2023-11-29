@@ -10,11 +10,13 @@
 #' values
 #' @param group_vars variable names (quoted or unquoted) to group `col_vars` by
 #'
+#'
+#' @concept convenience
 #' @return data.frame with all original data and new `rel_` columns for each
 #' rescaled variable
 #' @export
 #'
-#' @concept convenience
+
 #'
 #' @examples
 #' test_df <- data.frame(grp = rep(1:3, each = 10)
