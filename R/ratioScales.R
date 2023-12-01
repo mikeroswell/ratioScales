@@ -254,7 +254,7 @@ propDiff_trans <- function(n = 7, base = exp(1), ...){
 #' @family {breaking}
 #'
 #' @return Vector with splits added
-split_decades <- function(v, splits = c(1, 2, 3)){
+split_decades <- function(v, splits = c(0, 1, 2, 3)){
 	l <- length(v)
 	w <- numeric(0)
 	if (l>1) for (i in 1:(l-1)){
@@ -263,6 +263,7 @@ split_decades <- function(v, splits = c(1, 2, 3)){
 		if (v[[i + 1]] == 10 * v[[i]]) {
 		  if (splits == 3) {w <- c(w, 2*v[[i]], 5*v[[i]])}
 		  if (splits == 2) {w <- c(w, 3*v[[i]])}
+		  if (splits == 0 ){w <- v}
 		}
 	}
 	return(c(w, v[[l]]))
@@ -579,6 +580,30 @@ scale_x_ratio <- function(tickVal = "divMult", ...){
           , trans_picker(tickVal, ...))
 }
 
+
+
+
+#' Expand limits for symmetry on log scale
+#'
+#' @param v Numeric vector of length > 1, data range or limits
+#'
+#' @return Numeric vector at least as long as v, with upper and lower range
+#' limits symmetrical around 1 on log scale.
+#' @export
+#'
+#'
+#' @examples
+#'
+#' limitimil(c(0.66, 2.1))
+#' \dontrun{
+#' imitimil(c (-1, 3))
+#' }
+#'
+limitimil <- function(v){
+  if(any(v<=0)){stop("range must be positive to produce symmetrical, log-scale limits")}
+  outer = max(abs(log(v)))
+  return(c(v, exp(-outer), exp(outer)))
+}
 
 
 
