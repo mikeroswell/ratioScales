@@ -24,3 +24,10 @@ imitimil(c (-1, 3))
 }
 
 }
+\seealso{
+Other {breaking}: 
+\code{\link{breaks_divMult}()},
+\code{\link{limit_breaks}()},
+\code{\link{split_decades}()}
+}
+\concept{{breaking}}

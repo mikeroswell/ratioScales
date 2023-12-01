@@ -35,6 +35,7 @@ limit_breaks(v = v, n = n)
 \seealso{
 Other {breaking}: 
 \code{\link{breaks_divMult}()},
+\code{\link{limitimil}()},
 \code{\link{split_decades}()}
 }
 \concept{{breaking}}

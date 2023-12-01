@@ -21,6 +21,7 @@ Split stingy limit_breaks into three parts per complete decade
 \seealso{
 Other {breaking}: 
 \code{\link{breaks_divMult}()},
-\code{\link{limit_breaks}()}
+\code{\link{limit_breaks}()},
+\code{\link{limitimil}()}
 }
 \concept{{breaking}}

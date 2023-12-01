@@ -587,10 +587,14 @@ scale_x_ratio <- function(tickVal = "divMult", ...){
 #'
 #' @param v Numeric vector of length > 1, data range or limits
 #'
+#' @family {breaking}
+#'
 #' @return Numeric vector at least as long as v, with upper and lower range
 #' limits symmetrical around 1 on log scale.
-#' @export
 #'
+
+#'
+#' @export
 #'
 #' @examples
 #'

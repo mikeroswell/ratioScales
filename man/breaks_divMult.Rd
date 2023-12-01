@@ -77,6 +77,7 @@ dat2 \%>\% ggplot2::ggplot(ggplot2::aes(x, y2))+
 \seealso{
 Other {breaking}: 
 \code{\link{limit_breaks}()},
+\code{\link{limitimil}()},
 \code{\link{split_decades}()}
 }
 \concept{{breaking}}
