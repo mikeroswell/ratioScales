@@ -7,7 +7,8 @@
 label_propDiff(logscale = FALSE, base = 10, accuracy = 0.01)
 }
 \arguments{
-\item{logscale}{Logical, are breaks already on the log scale?}
+\item{logscale}{Logical, are breaks provided on the log scale (default is
+\code{FALSE})?}
 
 \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
