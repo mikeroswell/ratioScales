@@ -20,6 +20,7 @@
 
 # RStudio files
 .Rproj.user/
+ratioScales.Rproj
 
 # produced vignettes
 vignettes/*.html
