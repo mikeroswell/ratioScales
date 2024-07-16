@@ -22,10 +22,10 @@ dat<-data.frame(x = 1:10, y = exp(-2:7))
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
     ggplot2::geom_point() +
     ggplot2::scale_y_continuous(
-      trans = propDiff_trans(base = 2)
+      transform = propDiff_trans(base = 2)
       , sec.axis = ggplot2::sec_axis(
           labels = function(x) {x}
-          , trans = ~.
+          , transform = ~.
           , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
           , name = "original scale"
         )
@@ -36,10 +36,10 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
  ggplot2::geom_point() +
  ggplot2::scale_y_continuous(
-   trans = propDiff_trans()
+   transform = propDiff_trans()
    , sec.axis = ggplot2::sec_axis(
      labels = function(x) {x}
-     , trans = ~.
+     , transform = ~.
      , breaks = c(0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2)
      , name = "original scale"
    )

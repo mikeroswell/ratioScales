@@ -2,9 +2,9 @@
 % Please edit documentation in R/ratioScales.R
 \name{split_decades}
 \alias{split_decades}
-\title{Split stingy limit_breaks into three parts per complete decade}
+\title{Split stingy limit_breaks into more parts per complete decade}
 \usage{
-split_decades(v, splits = c(0, 1, 2, 3))
+split_decades(v, splits = c(0, 1, 2, 3, 4, 5, 10))
 }
 \arguments{
 \item{v}{Vector on the unlogged scale to be examined and split}
@@ -16,7 +16,7 @@ split_decades(v, splits = c(0, 1, 2, 3))
 Vector with splits added
 }
 \description{
-Split stingy limit_breaks into three parts per complete decade
+Split stingy limit_breaks into more parts per complete decade
 }
 \seealso{
 Other {breaking}: 

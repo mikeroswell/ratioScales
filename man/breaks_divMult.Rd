@@ -4,7 +4,7 @@
 \alias{breaks_divMult}
 \title{Compute breaks for ratio scale}
 \usage{
-breaks_divMult(n = 6, nmin = 5, anchor = TRUE, splits = 3, base = exp(1))
+breaks_divMult(n = 6, nmin = 5, anchor = TRUE, splits = 5, base = exp(1))
 }
 \arguments{
 \item{n}{Scalar, target number of breaks}
@@ -52,7 +52,7 @@ dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y))+
      ggplot2::geom_point()+
      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
      ggplot2::scale_y_continuous(
-     trans = "log"
+     transform = "log"
      , breaks = breaks_divMult()
      , labels = label_divMult()
      )
@@ -66,7 +66,7 @@ dat2 \%>\% ggplot2::ggplot(ggplot2::aes(x, y2))+
      ggplot2::geom_point()+
      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
      ggplot2::scale_y_continuous(
-     trans = "log"
+     transform = "log"
     # , breaks = breaks_divMult()
     , breaks = c(seq(0.4, 2.2, by = 0.2))
      , labels = label_divMult()

@@ -126,10 +126,10 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
 #'   ggplot2::geom_point() +
 #'     ggplot2::scale_y_continuous(
-#'        trans = "nel"
+#'        transform = "nel"
 #'       , sec.axis = ggplot2::sec_axis(
 #'            labels = function(x) {x}
-#'            , trans = ~.
+#'            , transform = ~.
 #'            , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
 #'            , name = "original scale"
 #'          )
@@ -141,7 +141,7 @@ label_propDiff <- function(logscale = FALSE, base = 10, accuracy = 0.01){
 nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
   scales::trans_new(
     name = "nel"
-    , trans = function(x){log(x, base = base)}
+    , transform = function(x){log(x, base = base)}
     , inverse = function(x) {base ^ x}
     , breaks = function(x){exp(scales::breaks_extended(n = n)(log(x)))}
     , format = if(use_centiNel){label_centiNel()} else{label_nel()}
@@ -164,13 +164,13 @@ nel_trans <- function(n = 7, base = exp(1), use_centiNel = FALSE, ...){
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
 #'   ggplot2::geom_point() +
 #'     ggplot2::scale_y_continuous(
-#'        trans = "divMult"
+#'        transform = "divMult"
 #'        # default breaks aren't perfect; sometimes adding more helps
-#'        #  trans = nel_trans(n = 9)
+#'        #  transform = nel_trans(n = 9)
 #'        , labels = label_divMult()
 #'        , sec.axis = ggplot2::sec_axis(
 #'            labels = function(x) {x}
-#'            , trans = ~.
+#'            , transform = ~.
 #'            , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
 #'            , name = "original scale"
 #'          )
@@ -182,7 +182,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
                           , slashStar = TRUE,  ...){
   scales::trans_new(
     name = "divMult"
-    , trans = function(x) log(x, base = base)
+    , transform = function(x) log(x, base = base)
     , inverse = function(x) base^x
     , breaks = doCall2(breaks_divMult
                        , list(splits = splits , ...))
@@ -207,10 +207,10 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, y)) +
 #'     ggplot2::geom_point() +
 #'     ggplot2::scale_y_continuous(
-#'       trans = propDiff_trans(base = 2)
+#'       transform = propDiff_trans(base = 2)
 #'       , sec.axis = ggplot2::sec_axis(
 #'           labels = function(x) {x}
-#'           , trans = ~.
+#'           , transform = ~.
 #'           , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
 #'           , name = "original scale"
 #'         )
@@ -221,10 +221,10 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 #' dat %>% ggplot2::ggplot(ggplot2::aes(x, exp(seq(-1, 0.8, 0.2)))) +
 #'  ggplot2::geom_point() +
 #'  ggplot2::scale_y_continuous(
-#'    trans = propDiff_trans()
+#'    transform = propDiff_trans()
 #'    , sec.axis = ggplot2::sec_axis(
 #'      labels = function(x) {x}
-#'      , trans = ~.
+#'      , transform = ~.
 #'      , breaks = c(0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2)
 #'      , name = "original scale"
 #'    )
@@ -238,7 +238,7 @@ divMult_trans <- function(n = 7, base = exp(1), splits = 2
 propDiff_trans <- function(n = 7, base = exp(1), ...){
   scales::trans_new(
     "propDiff"
-    , trans = function(x) { log(x, base = base) }
+    , transform = function(x) { log(x, base = base) }
     , inverse = function(x) { base^x}
     , breaks = scales::breaks_log(n = n, base = base)
     , format = label_propDiff(base = base, ...)
@@ -249,20 +249,25 @@ propDiff_trans <- function(n = 7, base = exp(1), ...){
 
 
 
-#' Split stingy limit_breaks into three parts per complete decade
+#' Split stingy limit_breaks into more parts per complete decade
 #' @param v Vector on the unlogged scale to be examined and split
 #' @inheritParams breaks_divMult
 #'
 #' @family {breaking}
 #'
 #' @return Vector with splits added
-split_decades <- function(v, splits = c(0, 1, 2, 3)){
+split_decades <- function(v, splits = c(0, 1, 2, 3, 4, 5, 10)){
+  magic10 <- c(1.25, 1.6, 2, 2.5, 3.2, 4, 5, 6.4, 8)
+  magic4 <- c(1.8, 3.2, 5.5)
 	l <- length(v)
 	w <- numeric(0)
 	if (l>1) for (i in 1:(l-1)){
 		w <- c(w, v[[i]])
 		if (splits == 1) { return(c(w, v[[l]])) }
 		if (v[[i + 1]] == 10 * v[[i]]) {
+		  if (splits == 10) {w <- c(w, magic10*v[i])}
+		  if (splits == 5) {w <- c(w, magic10[seq(2, 8, 2)]*v[i] ) }
+		  if (splits == 4) {w <- c(w, magic4*v[i])}
 		  if (splits == 3) {w <- c(w, 2*v[[i]], 5*v[[i]])}
 		  if (splits == 2) {w <- c(w, 3*v[[i]])}
 		  if (splits == 0 ){w <- v}
@@ -343,7 +348,7 @@ limit_breaks <- function(v
 #'      ggplot2::geom_point()+
 #'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
 #'      ggplot2::scale_y_continuous(
-#'      trans = "log"
+#'      transform = "log"
 #'      , breaks = breaks_divMult()
 #'      , labels = label_divMult()
 #'      )
@@ -357,7 +362,7 @@ limit_breaks <- function(v
 #'      ggplot2::geom_point()+
 #'      ggplot2::geom_hline(yintercept = 1, linewidth = 0.2) +
 #'      ggplot2::scale_y_continuous(
-#'      trans = "log"
+#'      transform = "log"
 #'     # , breaks = breaks_divMult()
 #'     , breaks = c(seq(0.4, 2.2, by = 0.2))
 #'      , labels = label_divMult()
@@ -369,7 +374,7 @@ limit_breaks <- function(v
 breaks_divMult <- function(n = 6
                            , nmin = 5
                            , anchor = TRUE
-                           , splits = 3
+                           , splits = 5
                            , base = exp(1)){
   function(v){
     if(anchor){v <- unique(c(v, 1))}
@@ -431,25 +436,25 @@ trans_picker <- function(tickVal, ... ){
     #   slashStar <- slashStar
     # }
     # else slashStar <- TRUE
-    return(list(trans = doCall2(divMult_trans, args = list(...)), ...))
+    return(list(transform = doCall2(divMult_trans, args = list(...)), ...))
   }
   if(tickVal %in% c("nel", "Nel")){
-    return(list(trans = doCall2(nel_trans, args = list(...)), ...)
+    return(list(transform = doCall2(nel_trans, args = list(...)), ...)
     )
   }
   if(tickVal %in% c("centinel", "centiNel")){
-    return(list(trans = doCall2(nel_trans, args = list(...))
+    return(list(transform = doCall2(nel_trans, args = list(...))
                 , labels = label_centiNel(), ...)
     )
   }
   if(tickVal %in% c("propDiff", "propdiff")){
     warning("'base = 2' chosen by defaut. Setting base of log affects breaking function behavior, and 'exp(1)' may give strange-looking numbers for the propDiff scale")
-    return(list(trans = doCall2(propDiff_trans, args = list(base = 2, ...))
+    return(list(transform = doCall2(propDiff_trans, args = list(base = 2, ...))
                                  , ...)
     )
   }
   if(tickVal %in% c("propDiff", "percDiff")){
-    return(list(trans = doCall2(propDiff_trans, args = list(...))
+    return(list(transform = doCall2(propDiff_trans, args = list(...))
                                  , labels = doCall2(label_percDiff
                                                     , args = list(...))
                                  , ...)
@@ -529,7 +534,7 @@ trans_picker <- function(tickVal, ... ){
 #' bigger <- data.frame(x = 1:10, y = exp(-2:7))
 #' ax2 <- ggplot2::sec_axis(
 #'           labels = function(x) {x}
-#'           , trans = ~.
+#'           , transform = ~.
 #'           , breaks = breaks_divMult(n = 7, splits = 2)
 #'           , name = "original scale"
 #'         )

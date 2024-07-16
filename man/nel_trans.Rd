@@ -24,10 +24,10 @@ dat<-data.frame(x = 1:10, y = exp(-2:7))
 dat \%>\% ggplot2::ggplot(ggplot2::aes(x, y)) +
   ggplot2::geom_point() +
     ggplot2::scale_y_continuous(
-       trans = "nel"
+       transform = "nel"
       , sec.axis = ggplot2::sec_axis(
            labels = function(x) {x}
-           , trans = ~.
+           , transform = ~.
            , breaks = c(0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000)
            , name = "original scale"
          )

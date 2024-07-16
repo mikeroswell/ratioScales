@@ -76,7 +76,7 @@ smaller <- data.frame(x = 1:10, y = exp(seq(-0.2, 0.7, 0.1)))
 bigger <- data.frame(x = 1:10, y = exp(-2:7))
 ax2 <- ggplot2::sec_axis(
           labels = function(x) {x}
-          , trans = ~.
+          , transform = ~.
           , breaks = breaks_divMult(n = 7, splits = 2)
           , name = "original scale"
         )
