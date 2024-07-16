@@ -1,96 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/404.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/articles/Ratio_scales_and_centinels.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/articles/centiNels.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/articles/divMult.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/articles/gallery.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/articles/make_captions.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/admit.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/breaks_divMult.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/divMult_trans.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/exch.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/label_centiNel.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/label_divMult.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/label_nel.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/label_percDiff.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/label_propDiff.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/limit_breaks.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/limitimil.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/nel_trans.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/nel_vid.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/propDiff_trans.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/rel_start.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/rockfish.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/scale_ratio.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/split_decades.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/ushs.html</loc>
-  </url>
-  <url>
-    <loc>https://mikeroswell.github.io/ratioScales/reference/vid.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://mikeroswell.github.io/ratioScales/404.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/articles/Ratio_scales_and_centinels.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/articles/centiNels.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/articles/divMult.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/articles/gallery.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/articles/index.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/articles/make_captions.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/authors.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/index.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/admit.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/breaks_divMult.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/divMult_trans.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/exch.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/index.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/label_centiNel.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/label_divMult.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/label_nel.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/label_percDiff.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/label_propDiff.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/limit_breaks.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/limitimil.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/nel_trans.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/nel_vid.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/pipe.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/propDiff_trans.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/rel_start.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/rockfish.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/scale_ratio.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/split_decades.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/ushs.html</loc></url>
+<url><loc>https://mikeroswell.github.io/ratioScales/reference/vid.html</loc></url>
 </urlset>
+
